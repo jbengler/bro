@@ -14,3 +14,4 @@ LazyData: true
 RoxygenNote: 6.1.1
 URL: https://github.com/jbengler/bro
 BugReports: https://github.com/jbengler/bro/issues
+Roxygen: list(markdown = TRUE)

@@ -1,4 +1,5 @@
 
+#' @export
 bro_gg_barscatter <- function(df, x, y, title = NULL, bar_color = "#EA883D") {
   df %>%
     ggplot(aes({{x}}, {{y}})) +
@@ -8,6 +9,7 @@ bro_gg_barscatter <- function(df, x, y, title = NULL, bar_color = "#EA883D") {
     ggtitle(title)
 }
 
+#' @export
 bro_gg_lollipop <- function(df, x, y, point_color = "#EA883D") {
   df %>%
     ggplot(aes({{x}}, {{y}})) +
@@ -15,6 +17,7 @@ bro_gg_lollipop <- function(df, x, y, point_color = "#EA883D") {
     geom_point(color = point_color)
 }
 
+#' @export
 multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
   require(grid)
 
@@ -51,6 +54,7 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
   }
 }
 
+#' @export
 set_panel_size <- function(p=NULL, g=ggplotGrob(p), file=NULL,
                            margin = unit(1,"mm"),
                            width=unit(4, "cm"),
