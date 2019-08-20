@@ -1,0 +1,44 @@
+
+bro_style_white_bg <- theme(
+  plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "mm"),
+  plot.background = element_rect(fill = NA, colour = NA),
+  legend.background = element_rect(fill = NA, colour = NA),
+  legend.key = element_rect(fill = NA, colour = NA),
+  panel.background = element_rect(fill = NA, colour = NA),
+  panel.border = element_rect(fill = NA, colour = "black", size = 0.5),
+  panel.grid.major = element_blank(),
+  panel.grid.minor = element_blank()
+)
+
+bro_style_font_size <- function(fs = 7) {
+  theme(
+    plot.title = element_text(size = fs, colour = "black", hjust = 0.5, vjust = 0.5),
+    plot.subtitle=element_text(size = fs, colour = "black", hjust = 0.5, vjust = 0.5),
+    text = element_text(size = fs, colour = "black"),
+    axis.text = element_text(size = fs, colour = "black"),
+    axis.title = element_text(size = fs, colour = "black"),
+    legend.title = element_text(size = fs, colour = "black"),
+    legend.text = element_text(size = fs, colour = "black")
+  )}
+
+bro_style_just_xy <- theme(
+  panel.border = element_blank(),
+  axis.line = element_line(size = 0.5, colour = "black")
+)
+
+bro_style_no_axis <- theme(
+  panel.border = element_blank()
+)
+
+bro_style_no_legend <- theme(
+  legend.position="none"
+)
+
+bro_style_centered_title <- theme(
+  plot.title = element_text(hjust = 0.5)
+)
+
+bro_style_rotate_labels <- function(angle = 45) {
+  theme(
+    axis.text.x = element_text(angle = angle, hjust = 1, vjust = -1)
+  )}

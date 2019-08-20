@@ -1,13 +1,13 @@
 Package: bro
-Title: What the Package Does (One Line, Title Case)
+Title: bro's little helpers
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Jan Broder",
+           family = "Engler",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+           email = "broder.engler@gmail.com",
+           comment = c(ORCID = "0000-0002-3169-2076"))
+Description: This package contains a collection of helper funtions for data analysis and plotting.
 License: What license it uses
 Encoding: UTF-8
 LazyData: true
