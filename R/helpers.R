@@ -1,14 +1,17 @@
 
+#' @export
 bro_duplicated <- function(x){
   duplicated(x) | duplicated(x, fromLast = TRUE)
 }
 
+#' @export
 bro_top_n <- function(df, n, ...) {
   df %>%
     arrange(...) %>%
     filter(row_number() %in% 1:n)
 }
 
+#' @export
 bro_str_capture <- function(string, pattern) {
   m <- stringr::str_match(string, pattern)
   if (ncol(m) > 1) {
@@ -18,16 +21,19 @@ bro_str_capture <- function(string, pattern) {
   }
 }
 
+#' @export
 bro_breaks <- function(low, mid, high, n) {
   c(seq(low, mid, length.out = ceiling(n/2)),
     seq(mid, high, length.out = ceiling(n/2))[-1]
   )
 }
 
+#' @export
 bro_style_decimals <- function(value, n = 1) {
   sprintf(paste0("%0.",n,"f"), round(value, digits = n))
 }
 
+#' @export
 bro_pca <- function(object, ntop=500, scale){
   rv <- apply(object, 1, var)
   select <- order(rv, decreasing = TRUE)[seq_len(min(ntop, length(rv)))]

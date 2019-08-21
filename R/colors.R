@@ -21,35 +21,42 @@ get_colors <- function(x) {
 }
 
 bro_pals <- get_colors()
-
 bro_colors <- unlist(unname(bro_pals))
 
+usethis::use_data(bro_pals, bro_colors)
+
+#' @export
 bro_pal <- function(palette = "metro_ui", reverse = FALSE, ...) {
   pal <- bro_pals[[palette]]
   if (reverse) pal <- rev(pal)
   colorRampPalette(pal, ...)
 }
 
+#' @export
 scale_color_bro_c <- function(palette = "blue_pink_yellow", reverse = FALSE, ...) {
   pal <- bro_pal(palette = palette, reverse = reverse)
   scale_color_gradientn(colours = pal(256), ...)
 }
 
+#' @export
 scale_color_bro_d <- function(palette = "metro_ui", reverse = FALSE, ...) {
   pal <- bro_pal(palette = palette, reverse = reverse)
   discrete_scale("colour", paste0("bro_", palette), palette = pal, ...)
 }
 
+#' @export
 scale_fill_bro_c <- function(palette = "blue_pink_yellow", reverse = FALSE, ...) {
   pal <- bro_pal(palette = palette, reverse = reverse)
   scale_fill_gradientn(colours = pal(256), ...)
 }
 
+#' @export
 scale_fill_bro_d <- function(palette = "metro_ui", reverse = FALSE, ...) {
   pal <- bro_pal(palette = palette, reverse = reverse)
   discrete_scale("fill", paste0("bro_", palette), palette = pal, ...)
 }
 
+#' @export
 bro_pals_show <- function() {
   pals <-
     tibble::enframe(bro_pals, name = "pal") %>%
@@ -59,19 +66,16 @@ bro_pals_show <- function() {
                   nr_value = paste0(nr,value)
     )
 
-  p <-
-    ggplot(pals, aes(x = nr, y = 1, fill = haven::as_factor(nr_value))) +
+  ggplot(pals, aes(x = nr, y = 1, fill = haven::as_factor(nr_value))) +
     geom_tile() +
     #geom_text(data = . %>% filter((nr %% 2) == 0), aes(label = value), angle = 90) +
     scale_fill_manual(values = pals$value, guide = "none") +
     theme_void() +
     theme(aspect.ratio=0.2) +
     facet_wrap(~pal, scales = "free_x", ncol = 2)
-
-  return(p)
 }
 
-# realtive modification of HLS values
+#' @export
 bro_modify_HLS <- function(x, H=1, L=1, S=1) {
   require(colorspace)
   hls_cols <- as(hex2RGB(x), "HLS")
