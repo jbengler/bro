@@ -1,5 +1,5 @@
 
-## attach color_schemes
+# do not @export
 get_colors <- function(x) {
 
   files <- list.files(path = "~/GoogleDrive/lab/R/color_schemes/", pattern = ".txt")
@@ -20,12 +20,11 @@ get_colors <- function(x) {
   return(bro_pals)
 }
 
-bro_pals <- get_colors()
-bro_colors <- unlist(unname(bro_pals))
-
+# bro_pals <- get_colors()
+# bro_colors <- unlist(unname(bro_pals))
 # usethis::use_data(bro_pals, bro_colors)
 
-#' @export
+# do not @export
 bro_pal <- function(palette = "metro_ui", reverse = FALSE, ...) {
   pal <- bro_pals[[palette]]
   if (reverse) pal <- rev(pal)
