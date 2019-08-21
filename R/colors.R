@@ -76,8 +76,7 @@ bro_pals_show <- function() {
 
 #' @export
 bro_modify_HLS <- function(x, H=1, L=1, S=1) {
-  require(colorspace)
-  hls_cols <- as(hex2RGB(x), "HLS")
+  hls_cols <- as(colorspace::hex2RGB(x), "HLS")
   hls_cols@coords[,1] <- hls_cols@coords[,1] * H
   hls_cols@coords[,2] <- hls_cols@coords[,2] * L
   hls_cols@coords[,3] <- hls_cols@coords[,3] * S
