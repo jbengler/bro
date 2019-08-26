@@ -56,9 +56,9 @@ scale_fill_bro_d <- function(palette = "metro_ui", reverse = FALSE, ...) {
 }
 
 #' @export
-bro_pals_show <- function() {
+bro_pals_show <- function(pals = bro_pals) {
   pals <-
-    tibble::enframe(bro_pals, name = "pal") %>%
+    tibble::enframe(pals, name = "pal") %>%
     tidyr::unnest() %>%
     tibble::rownames_to_column("nr") %>%
     dplyr::mutate(nr = as.double(nr),
@@ -75,11 +75,11 @@ bro_pals_show <- function() {
 }
 
 #' @export
-bro_modify_HLS <- function(x, H=1, L=1, S=1) {
+bro_modify_HLS <- function(x, H = 1, L = 1, S = 1) {
   hls_cols <- as(colorspace::hex2RGB(x), "HLS")
   hls_cols@coords[,1] <- hls_cols@coords[,1] * H
   hls_cols@coords[,2] <- hls_cols@coords[,2] * L
   hls_cols@coords[,3] <- hls_cols@coords[,3] * S
-  return(hex(as(hls_cols, "RGB")))
+  return(colorspace::hex(as(hls_cols, "sRGB")))
 }
 

@@ -14,10 +14,26 @@ bro_style_white_bg <- function() {
 }
 
 #' @export
+bro_style_minimal <- function() {
+  theme(
+    plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "mm"),
+    plot.background = element_rect(fill = NA, colour = NA),
+    legend.background = element_rect(fill = NA, colour = NA),
+    legend.key = element_rect(fill = NA, colour = NA),
+    panel.background = element_rect(fill = NA, colour = NA),
+    panel.border = element_rect(fill = NA, colour = NA),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    axis.ticks = element_blank(),
+    panel.grid.major.y = element_line(colour = "grey", size = 0.5)
+  )
+}
+
+#' @export
 bro_style_font_size <- function(fs = 7) {
   theme(
     plot.title = element_text(size = fs, colour = "black", hjust = 0.5, vjust = 0.5),
-    plot.subtitle=element_text(size = fs, colour = "black", hjust = 0.5, vjust = 0.5),
+    plot.subtitle = element_text(size = fs, colour = "black", hjust = 0.5, vjust = 0.5),
     text = element_text(size = fs, colour = "black"),
     axis.text = element_text(size = fs, colour = "black"),
     axis.title = element_text(size = fs, colour = "black"),
