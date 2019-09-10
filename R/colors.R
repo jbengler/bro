@@ -32,25 +32,25 @@ bro_pal <- function(palette = "metro_ui", reverse = FALSE, ...) {
 }
 
 #' @export
-scale_color_bro_c <- function(palette = "blue_pink_yellow", reverse = FALSE, ...) {
+bro_scale_color_c <- function(palette = "blue_pink_yellow", reverse = FALSE, ...) {
   pal <- bro_pal(palette = palette, reverse = reverse)
   scale_color_gradientn(colours = pal(256), ...)
 }
 
 #' @export
-scale_color_bro_d <- function(palette = "metro_ui", reverse = FALSE, ...) {
+bro_scale_color_d <- function(palette = "metro_ui", reverse = FALSE, ...) {
   pal <- bro_pal(palette = palette, reverse = reverse)
   discrete_scale("colour", paste0("bro_", palette), palette = pal, ...)
 }
 
 #' @export
-scale_fill_bro_c <- function(palette = "blue_pink_yellow", reverse = FALSE, ...) {
+bro_scale_fill_c <- function(palette = "blue_pink_yellow", reverse = FALSE, ...) {
   pal <- bro_pal(palette = palette, reverse = reverse)
   scale_fill_gradientn(colours = pal(256), ...)
 }
 
 #' @export
-scale_fill_bro_d <- function(palette = "metro_ui", reverse = FALSE, ...) {
+bro_scale_fill_d <- function(palette = "metro_ui", reverse = FALSE, ...) {
   pal <- bro_pal(palette = palette, reverse = reverse)
   discrete_scale("fill", paste0("bro_", palette), palette = pal, ...)
 }
