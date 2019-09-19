@@ -22,7 +22,7 @@ get_colors <- function(x) {
 
 # bro_pals <- get_colors()
 # bro_colors <- unlist(unname(bro_pals))
-# usethis::use_data(bro_pals, bro_colors)
+# usethis::use_data(bro_pals, bro_colors, overwrite = TRUE)
 
 # do not @export
 bro_pal <- function(palette = "metro_ui", reverse = FALSE, ...) {
