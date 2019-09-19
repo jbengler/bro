@@ -5,6 +5,11 @@ bro_duplicated <- function(x){
 }
 
 #' @export
+bro_order <- function(...) {
+  order(order(...))
+}
+
+#' @export
 bro_top_n <- function(df, n, ...) {
   df %>%
     arrange(...) %>%
