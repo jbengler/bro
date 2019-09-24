@@ -25,7 +25,7 @@ bro_style_minimal <- function() {
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(),
     axis.ticks = element_blank(),
-    panel.grid.major.y = element_line(colour = "grey", size = 0.5)
+    panel.grid.major.y = element_line(colour = "grey", size = 0.25)
   )
 }
 

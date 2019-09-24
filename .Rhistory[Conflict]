@@ -1,0 +1,512 @@
+scale_color_manual(values = bro_pals$metro_ui[3:5] %>% unname())
+mtcars %>%
+ggplot(aes(x = as.factor(gear), y = mpg, fill = as.factor(gear), color = as.factor(gear))) +
+stat_summary(fun.y = mean, geom = "bar", width = 0.4) +
+stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2) +
+geom_point(position = position_jitter(width = 0.1, height = 0)) +
+scale_fill_manual(values = bro_pals$metro_ui[3:4] %>% unname()) +
+scale_color_manual(values = bro_pals$metro_ui[3:4] %>% unname())
+mtcars %>%
+ggplot(aes(x = as.factor(gear), y = mpg, fill = as.factor(gear), color = as.factor(gear))) +
+stat_summary(fun.y = mean, geom = "bar", width = 0.4) +
+stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2) +
+geom_point(position = position_jitter(width = 0.1, height = 0)) +
+scale_fill_manual(values = bro_pals$metro_ui[2:4] %>% unname()) +
+scale_color_manual(values = bro_pals$metro_ui[2:4] %>% unname())
+mtcars %>%
+ggplot(aes(x = as.factor(gear), y = mpg, fill = as.factor(gear), color = as.factor(gear))) +
+stat_summary(fun.y = mean, geom = "bar", width = 0.4) +
+stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2) +
+geom_point(position = position_jitter(width = 0.1, height = 0)) +
+scale_fill_manual(values = bro_pals$metro_ui[2:4] %>% unname()) +
+scale_color_manual(values = bro_pals$metro_ui[2:4] %>% unname() %>% bro_modify_HLS(1, 1.4, 1))
+mtcars %>%
+ggplot(aes(x = as.factor(gear), y = mpg, fill = as.factor(gear), color = as.factor(gear))) +
+stat_summary(fun.y = mean, geom = "bar", width = 0.4) +
+stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2) +
+geom_point(position = position_jitter(width = 0.1, height = 0)) +
+scale_fill_manual(values = bro_pals$metro_ui[2:4] %>% unname() %>%bro_modify_HLS(1, 1.4, 1)) +
+scale_color_manual(values = bro_pals$metro_ui[2:4] %>% unname())
+mtcars %>%
+ggplot(aes(x = as.factor(gear), y = mpg, fill = as.factor(gear), color = as.factor(gear))) +
+stat_summary(fun.y = mean, geom = "bar", width = 0.4, color = NA) +
+stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2) +
+geom_point(position = position_jitter(width = 0.1, height = 0)) +
+scale_fill_manual(values = bro_pals$metro_ui[2:4] %>% unname() %>% bro_modify_HLS(1, 1.4, 1)) +
+scale_color_manual(values = bro_pals$metro_ui[2:4] %>% unname())
+mtcars %>%
+ggplot(aes(x = as.factor(gear), y = mpg, fill = as.factor(gear), color = as.factor(gear))) +
+stat_summary(fun.y = mean, geom = "bar", width = 0.4, color = NA) +
+stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2) +
+geom_point(position = position_jitter(width = 0.1, height = 0)) +
+scale_fill_manual(values = bro_pals$metro_ui[2:4] %>% unname() %>% bro_modify_HLS(1, 1.4, 1)) +
+scale_color_manual(values = bro_pals$metro_ui[2:4] %>% unname()) +
+theme_minimal()
+mtcars %>%
+ggplot(aes(x = as.factor(gear), y = mpg, fill = as.factor(gear), color = as.factor(gear))) +
+stat_summary(fun.y = mean, geom = "bar", width = 0.4, color = NA) +
+stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2) +
+geom_point(position = position_jitter(width = 0.1, height = 0)) +
+scale_fill_manual(values = bro_pals$metro_ui[2:4] %>% unname() %>% bro_modify_HLS(1, 1.4, 0.9)) +
+scale_color_manual(values = bro_pals$metro_ui[2:4] %>% unname()) +
+theme_minimal()
+mtcars %>%
+ggplot(aes(x = as.factor(gear), y = mpg, fill = as.factor(gear), color = as.factor(gear))) +
+stat_summary(fun.y = mean, geom = "bar", width = 0.4, color = NA) +
+stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2) +
+geom_point(position = position_jitter(width = 0.1, height = 0)) +
+scale_fill_manual(values = bro_pals$metro_ui[2:4] %>% unname() %>% bro_modify_HLS(1, 1.4, 0.8)) +
+scale_color_manual(values = bro_pals$metro_ui[2:4] %>% unname()) +
+theme_minimal()
+mtcars %>%
+ggplot(aes(x = as.factor(gear), y = mpg, fill = as.factor(gear), color = as.factor(gear))) +
+stat_summary(fun.y = mean, geom = "bar", width = 0.4, color = NA) +
+stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2) +
+geom_point(position = position_jitter(width = 0.1, height = 0)) +
+scale_fill_manual(values = bro_pals$metro_ui[2:4] %>% unname() %>% bro_modify_HLS(1, 1.4, 0.5)) +
+scale_color_manual(values = bro_pals$metro_ui[2:4] %>% unname()) +
+theme_minimal()
+mtcars %>%
+ggplot(aes(x = as.factor(gear), y = mpg, fill = as.factor(gear), color = as.factor(gear))) +
+stat_summary(fun.y = mean, geom = "bar", width = 0.4, color = NA) +
+stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2) +
+geom_point(position = position_jitter(width = 0.1, height = 0)) +
+scale_fill_manual(values = bro_pals$metro_ui[2:4] %>% unname() %>% bro_modify_HLS(1, 1.6, 0.6)) +
+scale_color_manual(values = bro_pals$metro_ui[2:4] %>% unname()) +
+theme_minimal()
+mtcars %>%
+ggplot(aes(x = as.factor(gear), y = mpg, fill = as.factor(gear), color = as.factor(gear))) +
+stat_summary(fun.y = mean, geom = "bar", width = 0.4, color = NA) +
+stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2) +
+geom_point(position = position_jitter(width = 0.1, height = 0)) +
+scale_fill_manual(values = bro_pals$metro_ui[2:4] %>% unname() %>% bro_modify_HLS(1, 1.6, 0.6)) +
+scale_color_manual(values = bro_pals$metro_ui[2:4] %>% unname()) +
+theme_minimal()
+mtcars %>%
+ggplot(aes(x = as.factor(gear), y = mpg, fill = as.factor(gear), color = as.factor(gear))) +
+stat_summary(fun.y = mean, geom = "bar", width = 0.4, color = NA) +
+stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2) +
+geom_point(position = position_jitter(width = 0.1, height = 0)) +
+scale_fill_manual(values = bro_pals$metro_ui[2:4] %>% unname() %>% bro_modify_HLS(1, 1.5, 0.6)) +
+scale_color_manual(values = bro_pals$metro_ui[2:4] %>% unname()) +
+theme_minimal()
+mtcars %>%
+ggplot(aes(x = as.factor(gear), y = mpg, fill = as.factor(gear), color = as.factor(gear))) +
+stat_summary(fun.y = mean, geom = "bar", width = 0.4, color = NA) +
+stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2) +
+geom_point(position = position_jitter(width = 0.1, height = 0)) +
+scale_fill_manual(values = bro_pals$metro_ui[2:4] %>% unname() %>% bro_modify_HLS(1, 1.4, 0.6)) +
+scale_color_manual(values = bro_pals$metro_ui[2:4] %>% unname()) +
+theme_minimal()
+mtcars %>%
+ggplot(aes(x = as.factor(gear), y = mpg, fill = as.factor(gear), color = as.factor(gear))) +
+stat_summary(fun.y = mean, geom = "bar", width = 0.4, color = NA) +
+stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2) +
+geom_point(position = position_jitter(width = 0.1, height = 0)) +
+scale_fill_manual(values = bro_pals$metro_ui[2:4] %>% unname() %>% bro_modify_HLS(1, 1.4, 1.2)) +
+scale_color_manual(values = bro_pals$metro_ui[2:4] %>% unname()) +
+theme_minimal()
+mtcars %>%
+ggplot(aes(x = as.factor(gear), y = mpg, fill = as.factor(gear), color = as.factor(gear))) +
+stat_summary(fun.y = mean, geom = "bar", width = 0.4, color = NA) +
+stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2) +
+geom_point(position = position_jitter(width = 0.1, height = 0)) +
+scale_fill_manual(values = bro_pals$metro_ui[2:4] %>% unname() %>% bro_modify_HLS(1, 1.4, 1.1)) +
+scale_color_manual(values = bro_pals$metro_ui[2:4] %>% unname()) +
+theme_minimal()
+mtcars %>%
+ggplot(aes(x = as.factor(gear), y = mpg, fill = as.factor(gear), color = as.factor(gear))) +
+stat_summary(fun.y = mean, geom = "bar", width = 0.4, color = NA) +
+stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2) +
+geom_point(position = position_jitter(width = 0.1, height = 0)) +
+scale_fill_manual(values = bro_pals$metro_ui[2:4] %>% unname() %>% bro_modify_HLS(1, 1.4, 1)) +
+scale_color_manual(values = bro_pals$metro_ui[2:4] %>% unname()) +
+theme_minimal()
+mtcars %>%
+ggplot(aes(x = as.factor(gear), y = mpg, fill = as.factor(gear), color = as.factor(gear))) +
+stat_summary(fun.y = mean, geom = "bar", width = 0.4, color = NA) +
+stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2) +
+geom_point(position = position_jitter(width = 0.1, height = 0)) +
+scale_fill_manual(values = bro_pals$metro_ui[2:4] %>% unname() %>% bro_modify_HLS(1, 1.5, 1)) +
+scale_color_manual(values = bro_pals$metro_ui[2:4] %>% unname()) +
+theme_minimal()
+mtcars %>%
+ggplot(aes(x = as.factor(gear), y = mpg, fill = as.factor(gear), color = as.factor(gear))) +
+stat_summary(fun.y = mean, geom = "bar", width = 0.4, color = NA) +
+stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2) +
+geom_point(position = position_jitter(width = 0.1, height = 0)) +
+scale_fill_manual(values = bro_pals$metro_ui[2:4] %>% unname() %>% bro_modify_HLS(1, 1.4, 1)) +
+scale_color_manual(values = bro_pals$metro_ui[2:4] %>% unname()) +
+theme_minimal()
+bro_pals[10] %>%
+map(bro_modify_HLS, 1, 1.4, 1) %>%
+bro_pals_show()
+bro_pals[10] %>%
+bro_pals_show()
+mtcars %>%
+bro_gg_barscatter(gear, mpg)
+mtcars %>%
+bro_gg_lollipop(gear, mpg)
+mtcars %>%
+bro_gg_barscatter(gear, mpg)
+ggplot(mtcars, aes(gear, mpg, fill = mpg)) +
+geom_col() +
+scale_fill_bro_c()
+bro_colors
+bro_pals
+bro_pals_show()
+bro_pals[10] %>%
+map(bro_modify_HLS, 1, 1.4, 1) %>%
+bro_pals_show()
+bro_pals[10] %>%
+bro_pals_show()
+bro_pals[10] %>%
+bro_pals_show()
+bro_pals[10] %>%
+map(bro_modify_HLS, 1, 1.4, 1) %>%
+bro_pals_show()
+mtcars %>%
+ggplot(aes(x = as.factor(gear), y = mpg, fill = as.factor(gear), color = as.factor(gear))) +
+stat_summary(fun.y = mean, geom = "bar", width = 0.4, color = NA) +
+stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2) +
+geom_point(position = position_jitter(width = 0.1, height = 0)) +
+scale_fill_manual(values = bro_pals$metro_ui[2:4] %>% unname() %>% bro_modify_HLS(1, 1.4, 1)) +
+scale_color_manual(values = bro_pals$metro_ui[2:4] %>% unname()) +
+theme_minimal()
+mtcars %>%
+ggplot(aes(x = as.factor(gear), y = mpg, fill = as.factor(gear), color = as.factor(gear))) +
+stat_summary(fun.y = mean, geom = "bar", width = 0.4, color = NA) +
+stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2) +
+geom_point(position = position_jitter(width = 0.1, height = 0)) +
+scale_fill_manual(values = bro_pals$metro_ui[2:4] %>% unname() %>% bro_modify_HLS(1, 1.3, 1)) +
+scale_color_manual(values = bro_pals$metro_ui[2:4] %>% unname()) +
+theme_minimal()
+mtcars %>%
+ggplot(aes(x = as.factor(gear), y = mpg, fill = as.factor(gear), color = as.factor(gear))) +
+stat_summary(fun.y = mean, geom = "bar", width = 0.4, color = NA) +
+stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2) +
+geom_point(position = position_jitter(width = 0.1, height = 0), shape = 1) +
+scale_fill_manual(values = bro_pals$metro_ui[2:4] %>% unname() %>% bro_modify_HLS(1, 1.3, 1)) +
+scale_color_manual(values = bro_pals$metro_ui[2:4] %>% unname()) +
+theme_minimal()
+mtcars %>%
+ggplot(aes(x = as.factor(gear), y = mpg, fill = as.factor(gear), color = as.factor(gear))) +
+stat_summary(fun.y = mean, geom = "bar", width = 0.4, color = NA) +
+stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2) +
+geom_point(position = position_jitter(width = 0.1, height = 0), shape = 1, size = 2) +
+scale_fill_manual(values = bro_pals$metro_ui[2:4] %>% unname() %>% bro_modify_HLS(1, 1.3, 1)) +
+scale_color_manual(values = bro_pals$metro_ui[2:4] %>% unname()) +
+theme_minimal()
+mtcars %>%
+ggplot(aes(x = as.factor(gear), y = mpg, fill = as.factor(gear), color = as.factor(gear))) +
+stat_summary(fun.y = mean, geom = "bar", width = 0.4, color = NA) +
+stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2) +
+geom_point(position = position_jitter(width = 0.1, height = 0), shape = 1, size = 3) +
+scale_fill_manual(values = bro_pals$metro_ui[2:4] %>% unname() %>% bro_modify_HLS(1, 1.3, 1)) +
+scale_color_manual(values = bro_pals$metro_ui[2:4] %>% unname()) +
+theme_minimal()
+mtcars %>%
+ggplot(aes(x = as.factor(gear), y = mpg, fill = as.factor(gear), color = as.factor(gear))) +
+stat_summary(fun.y = mean, geom = "bar", width = 0.4, color = NA) +
+stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2) +
+geom_point(position = position_jitter(width = 0.1, height = 0), shape = 1, size = 2) +
+scale_fill_manual(values = bro_pals$metro_ui[2:4] %>% unname() %>% bro_modify_HLS(1, 1.3, 1)) +
+scale_color_manual(values = bro_pals$metro_ui[2:4] %>% unname()) +
+theme_minimal()
+mtcars %>%
+ggplot(aes(x = as.factor(gear), y = mpg, fill = as.factor(gear), color = as.factor(gear))) +
+stat_summary(fun.y = mean, geom = "bar", width = 0.4, color = NA) +
+stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2) +
+geom_point(position = position_jitter(width = 0.1, height = 0), shape = 1, size = 2.5) +
+scale_fill_manual(values = bro_pals$metro_ui[2:4] %>% unname() %>% bro_modify_HLS(1, 1.3, 1)) +
+scale_color_manual(values = bro_pals$metro_ui[2:4] %>% unname()) +
+theme_minimal()
+mtcars %>%
+ggplot(aes(x = as.factor(gear), y = mpg, fill = as.factor(gear), color = as.factor(gear))) +
+stat_summary(fun.y = mean, geom = "bar", width = 0.4, color = NA) +
+stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2) +
+geom_point(position = position_jitter(width = 0.1, height = 0), shape = 21, size = 2.5) +
+scale_fill_manual(values = bro_pals$metro_ui[2:4] %>% unname() %>% bro_modify_HLS(1, 1.3, 1)) +
+scale_color_manual(values = bro_pals$metro_ui[2:4] %>% unname()) +
+theme_minimal()
+mtcars %>%
+ggplot(aes(x = as.factor(gear), y = mpg, fill = as.factor(gear), color = as.factor(gear))) +
+stat_summary(fun.y = mean, geom = "bar", width = 0.4, color = NA) +
+stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2) +
+geom_point(position = position_jitter(width = 0.1, height = 0), shape = 1, size = 2.5) +
+scale_fill_manual(values = bro_pals$metro_ui[2:4] %>% unname() %>% bro_modify_HLS(1, 1.3, 1)) +
+scale_color_manual(values = bro_pals$metro_ui[2:4] %>% unname()) +
+theme_minimal()
+mtcars %>%
+ggplot(aes(x = as.factor(gear), y = mpg, fill = as.factor(gear), color = as.factor(gear))) +
+stat_summary(fun.y = mean, geom = "bar", width = 0.4, color = NA) +
+stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2) +
+geom_point(position = position_jitter(width = 0.1, height = 0), shape = 2, size = 2.5) +
+scale_fill_manual(values = bro_pals$metro_ui[2:4] %>% unname() %>% bro_modify_HLS(1, 1.3, 1)) +
+scale_color_manual(values = bro_pals$metro_ui[2:4] %>% unname()) +
+theme_minimal()
+mtcars %>%
+ggplot(aes(x = as.factor(gear), y = mpg, fill = as.factor(gear), color = as.factor(gear))) +
+stat_summary(fun.y = mean, geom = "bar", width = 0.4, color = NA) +
+stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2) +
+geom_point(position = position_jitter(width = 0.1, height = 0), shape = 1, size = 2.5) +
+scale_fill_manual(values = bro_pals$metro_ui[2:4] %>% unname() %>% bro_modify_HLS(1, 1.3, 1)) +
+scale_color_manual(values = bro_pals$metro_ui[2:4] %>% unname()) +
+theme_minimal()
+mtcars %>%
+bro_gg_barscatter(gear, mpg)
+#' @export
+bro_style_minimal <- function() {
+theme(
+plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "mm"),
+plot.background = element_rect(fill = NA, colour = NA),
+legend.background = element_rect(fill = NA, colour = NA),
+legend.key = element_rect(fill = NA, colour = NA),
+panel.background = element_rect(fill = NA, colour = NA),
+panel.border = element_rect(fill = NA, colour = NA),
+panel.grid.major = element_blank(),
+panel.grid.minor = element_blank(),
+panel.grid.major.x = element_rect(fill = NA, colour = "black", size = 0.5)
+)
+}
+mtcars %>%
+bro_gg_barscatter(gear, mpg) +
+bro_style_minimal()
+#' @export
+bro_style_minimal <- function() {
+theme(
+plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "mm"),
+plot.background = element_rect(fill = NA, colour = NA),
+legend.background = element_rect(fill = NA, colour = NA),
+legend.key = element_rect(fill = NA, colour = NA),
+panel.background = element_rect(fill = NA, colour = NA),
+panel.border = element_rect(fill = NA, colour = NA),
+panel.grid.major = element_blank(),
+panel.grid.minor = element_blank(),
+panel.grid.major.x = element_lin(colour = "black", size = 0.5)
+)
+}
+mtcars %>%
+bro_gg_barscatter(gear, mpg) +
+bro_style_minimal()
+#' @export
+bro_style_minimal <- function() {
+theme(
+plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "mm"),
+plot.background = element_rect(fill = NA, colour = NA),
+legend.background = element_rect(fill = NA, colour = NA),
+legend.key = element_rect(fill = NA, colour = NA),
+panel.background = element_rect(fill = NA, colour = NA),
+panel.border = element_rect(fill = NA, colour = NA),
+panel.grid.major = element_blank(),
+panel.grid.minor = element_blank(),
+panel.grid.major.x = element_line(colour = "black", size = 0.5)
+)
+}
+mtcars %>%
+bro_gg_barscatter(gear, mpg) +
+bro_style_minimal()
+theme(
+plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "mm"),
+plot.background = element_rect(fill = NA, colour = NA),
+legend.background = element_rect(fill = NA, colour = NA),
+legend.key = element_rect(fill = NA, colour = NA),
+panel.background = element_rect(fill = NA, colour = NA),
+panel.border = element_rect(fill = NA, colour = NA),
+panel.grid.major = element_blank(),
+panel.grid.minor = element_blank(),
+panel.grid.major.y = element_line(colour = "grey", size = 0.5)
+)
+#' @export
+bro_style_minimal <- function() {
+theme(
+plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "mm"),
+plot.background = element_rect(fill = NA, colour = NA),
+legend.background = element_rect(fill = NA, colour = NA),
+legend.key = element_rect(fill = NA, colour = NA),
+panel.background = element_rect(fill = NA, colour = NA),
+panel.border = element_rect(fill = NA, colour = NA),
+panel.grid.major = element_blank(),
+panel.grid.minor = element_blank(),
+panel.grid.major.y = element_line(colour = "grey", size = 0.5)
+)
+}
+mtcars %>%
+bro_gg_barscatter(gear, mpg) +
+bro_style_minimal()
+mtcars %>%
+bro_gg_barscatter(as.factor(gear), mpg) +
+bro_style_minimal()
+#' @export
+bro_style_minimal <- function() {
+theme(
+plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "mm"),
+plot.background = element_rect(fill = NA, colour = NA),
+legend.background = element_rect(fill = NA, colour = NA),
+legend.key = element_rect(fill = NA, colour = NA),
+panel.background = element_rect(fill = NA, colour = NA),
+panel.border = element_rect(fill = NA, colour = NA),
+panel.grid.major = element_blank(),
+panel.grid.minor = element_blank(),
+axis.ticks = element_blank(),
+panel.grid.major.y = element_line(colour = "grey", size = 0.5),
+axis.ticks.y = element_line(colour = "grey", size = 0.5)
+)
+}
+mtcars %>%
+bro_gg_barscatter(as.factor(gear), mpg) +
+bro_style_minimal()
+mtcars %>%
+ggplot(aes(x = as.factor(gear), y = mpg, fill = as.factor(gear), color = as.factor(gear))) +
+stat_summary(fun.y = mean, geom = "bar", width = 0.4, color = NA) +
+stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2) +
+geom_point(position = position_jitter(width = 0.1, height = 0), shape = 1, size = 2.5) +
+scale_fill_manual(values = bro_pals$metro_ui[2:4] %>% unname() %>% bro_modify_HLS(1, 1.3, 1)) +
+scale_color_manual(values = bro_pals$metro_ui[2:4] %>% unname()) +
+theme_minimal()
+mtcars %>%
+bro_gg_barscatter(as.factor(gear), mpg) +
+bro_style_minimal()
+#' @export
+bro_style_minimal <- function() {
+theme(
+plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "mm"),
+plot.background = element_rect(fill = NA, colour = NA),
+legend.background = element_rect(fill = NA, colour = NA),
+legend.key = element_rect(fill = NA, colour = NA),
+panel.background = element_rect(fill = NA, colour = NA),
+panel.border = element_rect(fill = NA, colour = NA),
+panel.grid.major = element_blank(),
+panel.grid.minor = element_blank(),
+axis.ticks = element_blank(),
+panel.grid.major.y = element_line(colour = "grey", size = 0.5)
+)
+}
+mtcars %>%
+bro_gg_barscatter(as.factor(gear), mpg) +
+bro_style_minimal()
+mtcars %>%
+bro_gg_barscatter(as.factor(gear), mpg) +
+bro_style_minimal() +
+scale_y_continuous(expand = expand_scale(c(0, 1.05)))
+mtcars %>%
+bro_gg_barscatter(as.factor(gear), mpg) +
+bro_style_minimal() +
+scale_y_continuous(expand = expand_scale(c(1, 1.05)))
+mtcars %>%
+bro_gg_barscatter(as.factor(gear), mpg) +
+bro_style_minimal() +
+scale_y_continuous(expand = expand_scale(mult = c(0, .05)))
+mtcars %>%
+bro_gg_barscatter(as.factor(gear), mpg) +
+bro_style_minimal() +
+scale_y_continuous(expand = expand_scale(mult = c(0, .05))) +
+coord_flip()
+mtcars %>%
+bro_gg_barscatter(as.factor(gear), mpg) +
+bro_style_minimal() +
+scale_y_continuous(expand = expand_scale(mult = c(0, .05)))
+devtools::load_all(".")
+mtcars %>%
+bro_gg_lollipop(gear, mpg)
+mtcars %>%
+bro_gg_barscatter(gear, mpg)
+ggplot(mtcars, aes(gear, mpg, fill = mpg)) +
+geom_col() +
+scale_fill_bro_c()
+bro_colors
+bro_pals
+bro_pals_show()
+bro_pals_show()
+bro_pals[10] %>%
+bro_pals_show()
+bro_pals[10] %>%
+map(bro_modify_HLS, 1, 1.4, 1) %>%
+bro_pals_show()
+mtcars %>%
+ggplot(aes(x = as.factor(gear), y = mpg, fill = as.factor(gear), color = as.factor(gear))) +
+stat_summary(fun.y = mean, geom = "bar", width = 0.4, color = NA) +
+stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2) +
+geom_point(position = position_jitter(width = 0.1, height = 0), shape = 1, size = 2.5) +
+scale_fill_manual(values = bro_pals$metro_ui[2:4] %>% unname() %>% bro_modify_HLS(1, 1.3, 1)) +
+scale_color_manual(values = bro_pals$metro_ui[2:4] %>% unname()) +
+theme_minimal()
+mtcars %>%
+ggplot(aes(x = as.factor(gear), y = mpg, fill = as.factor(gear), color = as.factor(gear))) +
+stat_summary(fun.y = mean, geom = "bar", width = 0.4, color = NA) +
+stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2) +
+geom_point(position = position_jitter(width = 0.1, height = 0), shape = 1, size = 2.5) +
+scale_fill_manual(values = bro_pals$metro_ui[1:4] %>% unname() %>% bro_modify_HLS(1, 1.3, 1)) +
+scale_color_manual(values = bro_pals$metro_ui[1:4] %>% unname()) +
+theme_minimal()
+mtcars %>%
+bro_gg_barscatter(as.factor(gear), mpg) +
+bro_style_minimal() +
+scale_y_continuous(expand = expand_scale(mult = c(0, .05)))
+install.packages("roxygen2md")
+install.packages("roxygen2md")
+devtools::install_github("jbengler/bro")
+roxygen2md::roxygen2md()
+devtools::install_github("jbengler/bro")
+bro_pals <- get_colors()
+# do not @export
+get_colors <- function(x) {
+files <- list.files(path = "~/GoogleDrive/lab/R/color_schemes/", pattern = ".txt")
+file.names <- gsub(".txt", "", files)
+bro_pals <- list()
+for (i in 1:length(files)) {
+lines <- readLines(paste0("~/GoogleDrive/lab/R/color_schemes/",files[i]))
+library(stringr)
+cols <- str_match(lines, "#\\w{6}")[, 1]
+names(cols) <- str_match(lines, "\\$(.*):")[, 2]
+bro_pals[[i]] <- toupper(cols)
+names(bro_pals)[i] <- file.names[i]
+}
+return(bro_pals)
+}
+bro_pals <- get_colors()
+bro_colors <- unlist(unname(bro_pals))
+usethis::use_data(bro_pals, bro_colors)
+bro_pals <- get_colors()
+bro_colors <- unlist(unname(bro_pals))
+usethis::use_data(bro_pals, bro_colors, overwrite = TRUE)
+# do not @export
+get_colors <- function(x) {
+files <- list.files(path = "~/GoogleDrive/lab/R/color_schemes/", pattern = ".txt")
+file.names <- gsub(".txt", "", files)
+bro_pals <- list()
+for (i in 1:length(files)) {
+lines <- readLines(paste0("~/GoogleDrive/lab/R/color_schemes/",files[i]))
+library(stringr)
+cols <- str_match(lines, "#\\w{6}")[, 1]
+names(cols) <- str_match(lines, "\\$(.*):")[, 2]
+bro_pals[[i]] <- toupper(cols)
+names(bro_pals)[i] <- file.names[i]
+}
+return(bro_pals)
+}
+bro_pals <- get_colors()
+bro_pals
+bro_colors <- unlist(unname(bro_pals))
+usethis::use_data(bro_pals, bro_colors)
+usethis::use_data(bro_pals, bro_colors, overwrite = TRUE)
+usethis::use_data(bro_pals, bro_colors, overwrite = TRUE)
+load("~/GoogleDrive/lab/R/packages/bro/data/bro_pals.rda")
+# do not @export
+get_colors <- function(x) {
+files <- list.files(path = "~/GoogleDrive/lab/R/color_schemes/", pattern = ".txt")
+file.names <- gsub(".txt", "", files)
+bro_pals <- list()
+for (i in 1:length(files)) {
+lines <- readLines(paste0("~/GoogleDrive/lab/R/color_schemes/",files[i]))
+library(stringr)
+cols <- str_match(lines, "#\\w{6}")[, 1]
+names(cols) <- str_match(lines, "\\$(.*):")[, 2]
+bro_pals[[i]] <- toupper(cols)
+names(bro_pals)[i] <- file.names[i]
+}
+return(bro_pals)
+}
+bro_pals <- get_colors()
+bro_colors <- unlist(unname(bro_pals))
+usethis::use_data(bro_pals, bro_colors, overwrite = TRUE)
