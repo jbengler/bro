@@ -9,23 +9,8 @@ bro_style_white_bg <- function() {
     panel.background = element_rect(fill = NA, colour = NA),
     panel.border = element_rect(fill = NA, colour = "black", size = 0.5),
     panel.grid.major = element_blank(),
-    panel.grid.minor = element_blank()
-  )
-}
-
-#' @export
-bro_style_minimal <- function() {
-  theme(
-    plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "mm"),
-    plot.background = element_rect(fill = NA, colour = NA),
-    legend.background = element_rect(fill = NA, colour = NA),
-    legend.key = element_rect(fill = NA, colour = NA),
-    panel.background = element_rect(fill = NA, colour = NA),
-    panel.border = element_rect(fill = NA, colour = NA),
-    panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(),
-    axis.ticks = element_blank(),
-    panel.grid.major.y = element_line(colour = "grey", size = 0.25)
+    axis.ticks = element_line(colour = "black", size = 0.25)
   )
 }
 
@@ -44,9 +29,11 @@ bro_style_font_size <- function(fs = 7) {
 
 #' @export
 bro_style_just_xy <- function() {
+  bro_style_white_bg() +
   theme(
     panel.border = element_blank(),
-    axis.line = element_line(size = 0.5, colour = "black")
+    axis.line = element_line(size = 0.25, colour = "black"),
+    axis.ticks = element_line(size = 0.25, colour = "black")
   )
 }
 
@@ -77,3 +64,34 @@ bro_style_rotate_labels <- function(angle = 45) {
     axis.text.x = element_text(angle = angle, hjust = 1, vjust = -1)
   )
 }
+
+#' @export
+bro_style_minimal <- function() {
+  theme(
+    plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "mm"),
+    plot.background = element_rect(fill = NA, colour = NA),
+    legend.background = element_rect(fill = NA, colour = NA),
+    legend.key = element_rect(fill = NA, colour = NA),
+    panel.background = element_rect(fill = NA, colour = NA),
+    panel.border = element_rect(fill = NA, colour = NA),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    axis.ticks = element_blank(),
+    panel.grid.major.y = element_line(colour = "grey", size = 0.25)
+  )
+}
+
+#' @export
+bro_theme_bw <- function() {
+    bro_style_no_legend() +
+    bro_style_just_xy() +
+    bro_style_font_size()
+}
+
+library(tidyverse)
+
+ggplot(mtcars, aes(mpg, cyl)) +
+  geom_col() +
+  bro_theme_bw()
+
+
