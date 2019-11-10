@@ -24,6 +24,9 @@ get_colors <- function(x) {
 # bro_colors <- unlist(unname(bro_pals))
 # usethis::use_data(bro_pals, bro_colors, overwrite = TRUE)
 
+# construction of ggplot2 palettes inspired by this blog post:
+# https://drsimonj.svbtle.com/creating-corporate-colour-palettes-for-ggplot2
+
 # do not @export
 bro_pal <- function(palette = "metro_ui", reverse = FALSE, ...) {
   pal <- bro_pals[[palette]]
