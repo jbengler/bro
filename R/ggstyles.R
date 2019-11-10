@@ -63,7 +63,7 @@ bro_style_centered_title <- function() {
 #' @export
 bro_style_rotate_labels <- function(angle = 45) {
   theme(
-    axis.text.x = element_text(angle = angle, hjust = 1, vjust = -1)
+    axis.text.x = element_text(angle = angle, hjust = 1)
   )
 }
 

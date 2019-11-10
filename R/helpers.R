@@ -39,6 +39,18 @@ bro_style_decimals <- function(value, n = 1) {
 }
 
 #' @export
+bro_overlap_lists <- function(ll) {
+  ll %>%
+    enframe(name = "list_name", value = "list_entry") %>%
+    unnest(cols = c(list_entry)) %>%
+    group_by(list_entry) %>%
+    summarise(
+      is_in_list = paste(list_name, collapse = "+"),
+      is_in_n_lists = length(list_name)
+    )
+}
+
+#' @export
 bro_pca <- function(object, ntop=500, scale){
   rv <- apply(object, 1, var)
   select <- order(rv, decreasing = TRUE)[seq_len(min(ntop, length(rv)))]
@@ -49,3 +61,4 @@ bro_pca <- function(object, ntop=500, scale){
   attr(d, "percentVar") <- percentVar[1:2]
   return(d)
 }
+
