@@ -85,7 +85,6 @@ bro_style_minimal <- function() {
 
 #' @export
 bro_theme_nature <- function() {
-    bro_style_no_legend() +
     bro_style_just_xy() +
     bro_style_font_size()
 }
