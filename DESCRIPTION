@@ -22,4 +22,6 @@ Imports:
     tidyr,
     colorspace,
     stringr,
-    grid
+    grid,
+    RColorBrewer,
+    pheatmap
