@@ -1,0 +1,25 @@
+---
+title: "bro package"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{bro-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(tidyverse)
+library(bro)
+```
+
+```{r}
+bro_gg_barscatter(mtcars, cyl, mpg)
+```
+
