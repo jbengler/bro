@@ -80,7 +80,7 @@ bro_plot_heatmap <- function(df, rows, columns, values, ann_row = NA, ann_col = 
 # )
 #
 # my_df <-
-#   df %>%
+#   bro_dataset_expression %>%
 #   filter(external_gene_name %in% my_genes) %>%
 #   mutate(external_gene_name = fct_relevel(external_gene_name, my_genes)) %>%
 #   arrange(external_gene_name, sample_type, desc(timepoint), desc(genotype)) %>%
@@ -92,6 +92,8 @@ bro_plot_heatmap <- function(df, rows, columns, values, ann_row = NA, ann_col = 
 #                  values = expression,
 #                  ann_col = c("genotype", "timepoint", "sample_type"),
 #                  ann_row = c("candidate"),
+#                  gaps_row = NULL,
+#                  gaps_col = NULL,
 #                  ann_colors = ann_colors,
 #                  color_scale_min = -2,
 #                  color_scale_max = 2
