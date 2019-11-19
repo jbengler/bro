@@ -1,4 +1,10 @@
 
+#' @title Determine duplicate elements
+#' @description This function determines which elements of a vector or data frame exists
+#' more than once, and returns a logical vector indicating those elements (rows) as duplicates.
+#' In contrast to the base R function `duplicated()` it marks all occurences of the duplicated element,
+#' including the first occurence.
+#' @param x A vector of elements
 #' @export
 bro_duplicated <- function(x){
   duplicated(x) | duplicated(x, fromLast = TRUE)
@@ -9,6 +15,13 @@ bro_order <- function(...) {
   order(order(...))
 }
 
+#' @title Filter top n rows by value
+#' @description This function sorts a data frame by one or more columns and returns the top n rows.
+#' In contrast to `dplyr::top_n`, this function alows to sort by multiple columns and returns
+#' exactly n rows even if ties are present in the columns used for sorting.
+#' @param df data frame to filter
+#' @param n number of rows to return
+#' @param ... names of columns to sort by
 #' @export
 bro_top_n <- function(df, n, ...) {
   df %>%

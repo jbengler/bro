@@ -3,7 +3,7 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of bro is to ...
+The bro package is a collection of helper funtions for data analysis and plotting.
 
 ## Installation
 

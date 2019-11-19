@@ -7,7 +7,7 @@ Authors@R:
            role = c("aut", "cre"),
            email = "broder.engler@gmail.com",
            comment = c(ORCID = "0000-0002-3169-2076"))
-Description: This package contains a collection of helper funtions for data analysis and plotting.
+Description: Collection of helper funtions for data analysis and plotting.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -24,8 +24,7 @@ Imports:
     stringr,
     grid,
     RColorBrewer,
-    pheatmap
-Suggests: 
-    knitr,
-    rmarkdown
-VignetteBuilder: knitr
+    pheatmap,
+    egg,
+    ggpubr,
+    ggforce
