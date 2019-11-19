@@ -68,13 +68,16 @@ bro_pals_show <- function(pals = bro_pals) {
                   nr_value = paste0(nr,value)
     )
 
-  ggplot(pals, aes(x = nr, y = 1, fill = haven::as_factor(nr_value))) +
+  gg <-
+    ggplot(pals, aes(x = nr, y = 1, fill = haven::as_factor(nr_value))) +
     geom_tile() +
     #geom_text(data = . %>% filter((nr %% 2) == 0), aes(label = value), angle = 90) +
     scale_fill_manual(values = pals$value, guide = "none") +
     theme_void() +
-    theme(aspect.ratio=0.2) +
+    theme(aspect.ratio = 0.2) +
     facet_wrap(~pal, scales = "free_x", ncol = 2)
+
+  return(gg)
 }
 
 #' @export
