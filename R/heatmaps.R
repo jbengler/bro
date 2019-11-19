@@ -64,35 +64,3 @@ bro_plot_heatmap <- function(df, rows, columns, values, ann_row = NA, ann_col = 
                      breaks = breaks,
                      ...)
 }
-
-########### bro heatmap function
-
-library(tidyverse)
-library(bro)
-
-my_genes <- c("Tex26", "Syngr4", "Plekhb1", "Tia1", "Nhlh1", "Mxd3")
-
-ann_colors <- list(
-  timepoint = c("9w" = "#1B9E77", "14w" = "#D95F02"),
-  genotype = c(WT = "#7570B3", TDP43.WT = "#E7298A", TDP43.MUT = "#66A61E"),
-  sample_type = c(SC = "#C0C0C0", TRAP = "#000000"),
-  candidate = c(up = "#00CCFC", down = "#CF0CF0")
-)
-
-my_df <-
-  df %>%
-  filter(external_gene_name %in% my_genes) %>%
-  mutate(external_gene_name = fct_relevel(external_gene_name, my_genes)) %>%
-  arrange(external_gene_name, sample_type, desc(timepoint), desc(genotype)) %>%
-  mutate(candidate = if_else(external_gene_name %in% c("Tex26", "Syngr4", "Mxd3"), "up", "down"))
-
-bro_plot_heatmap(my_df,
-                 rows = external_gene_name,
-                 columns = sample,
-                 values = expression,
-                 ann_col = c("genotype", "timepoint", "sample_type"),
-                 ann_row = c("candidate"),
-                 ann_colors = ann_colors,
-                 color_scale_min = -2,
-                 color_scale_max = 2
-)
