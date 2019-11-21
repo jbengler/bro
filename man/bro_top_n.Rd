@@ -15,6 +15,6 @@ bro_top_n(df, n, ...)
 }
 \description{
 This function sorts a data frame by one or more columns and returns the top n rows.
-In contrast to \code{dplyr::top_n}, this function (i) alows to sort by multiple columns and (ii) returns
+In contrast to \code{dplyr::top_n}, this function alows to sort by multiple columns and returns
 exactly n rows even if ties are present in the columns used for sorting.
 }

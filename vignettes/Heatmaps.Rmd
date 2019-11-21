@@ -1,0 +1,23 @@
+---
+title: "Heatmaps"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Heatmaps}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(bro)
+```
+
+# Heatmaps
+
+This is the heatmaps vignette.

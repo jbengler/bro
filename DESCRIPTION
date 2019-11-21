@@ -28,3 +28,7 @@ Imports:
     egg,
     ggpubr,
     ggforce
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
