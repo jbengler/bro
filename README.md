@@ -13,3 +13,12 @@ You can install the released version of bro from [GitHub](https://github.com) wi
 devtools::install_github("jbengler/bro")
 ```
 
+## Usage
+
+``` r
+library(bro)
+```
+
+## Documentation
+
+https://jbengler.github.io/bro/

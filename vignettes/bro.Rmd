@@ -1,8 +1,8 @@
 ---
-title: "Heatmaps"
+title: "Introduction to bro"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Heatmaps}
+  %\VignetteIndexEntry{bro}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -17,7 +17,3 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(bro)
 ```
-
-## Motivation
-
-This is the heatmaps vignette.
