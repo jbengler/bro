@@ -1,3 +1,27 @@
+bro_get_ggsize <- function(plot) {
+  gtab <- patchwork:::plot_table(plot, 'auto')
+
+  has_fixed_dimensions <-
+    !gtab$widths %>% map(~is.null(attr(.x, "unit"))) %>% unlist() %>% any() |
+    !gtab$heights %>% map(~is.null(attr(.x, "unit"))) %>% unlist() %>% any()
+
+  if (has_fixed_dimensions) {
+    width <- grid::convertWidth(sum(gtab$widths) + unit(1, "mm"), unitTo = "mm", valueOnly = TRUE)
+    height <- grid::convertHeight(sum(gtab$heights) + unit(1, "mm"), unitTo = "mm", valueOnly = TRUE)
+    c(width = width, height = height)
+  } else {
+    c(width = NA, height = NA)
+  }
+}
+
+#' @export
+bro_ggsave <- function(plot = last_plot(), filename, width = NA, height = NA, units = c("in", "cm", "mm"), ...) {
+  width <- bro_get_ggsize(plot)[["width"]]
+  height <- bro_get_ggsize(plot)[["height"]]
+  if(!is.na(width)) message("Saving plot with fixed dimensions: ", round(width, 1), " x ", round(height, 1), " mm")
+  ggsave(filename = filename, plot = plot, width = width, height = height, units = "mm", ...)
+}
+
 #' @export
 bro_gg_export <- function(gg, file = "test.pdf", facet_var = NULL, nrow = NULL, ncol = NULL, width = 30, height = 30, style = NULL, scales = "free", ...) {
   # check input
