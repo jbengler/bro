@@ -1,1 +1,14 @@
 destination: docs
+
+reference:
+  - title: "Multiple plots"
+    contents:
+      - bro_get_ggsize
+      - bro_ggsave
+      - bro_wrap_plots_paged
+      - bro_facet_wrap_paged
+      - bro_set_panel_size
+  - title: "Helpers"
+    contents:
+      - bro_top_n
+      - bro_duplicated

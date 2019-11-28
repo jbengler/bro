@@ -17,3 +17,5 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(bro)
 ```
+
+See also `vignette("Heatmaps")` and `bro_wrap_plots_paged()`

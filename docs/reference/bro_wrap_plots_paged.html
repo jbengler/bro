@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Universal ggplot export function — bro_ggsave • bro</title>
+<title>Wrap mutiple plots in a (multipage) layout — bro_wrap_plots_paged • bro</title>
 
 
 <!-- jquery -->
@@ -35,10 +35,8 @@
 
 
 
-<meta property="og:title" content="Universal ggplot export function — bro_ggsave" />
-<meta property="og:description" content="This function takes a ggplot (for single page) or list of ggplots (for multi page) and writes them to file.
-In case the input has absolute dimensions (e.g. as a result of egg:set_panel_size or
-patchwork::plot_layout), width and height of the outpu are adjusted to fit the content." />
+<meta property="og:title" content="Wrap mutiple plots in a (multipage) layout — bro_wrap_plots_paged" />
+<meta property="og:description" content="Wrap mutiple plots in a (multipage) layout" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -128,55 +126,44 @@ patchwork::plot_layout), width and height of the outpu are adjusted to fit the c
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Universal ggplot export function</h1>
+    <h1>Wrap mutiple plots in a (multipage) layout</h1>
     <small class="dont-index">Source: <a href='https://github.com/jbengler/bro/blob/master/R/multiple_plots.R'><code>R/multiple_plots.R</code></a></small>
-    <div class="hidden name"><code>bro_ggsave.Rd</code></div>
+    <div class="hidden name"><code>bro_wrap_plots_paged.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function takes a ggplot (for single page) or list of ggplots (for multi page) and writes them to file.
-In case the input has absolute dimensions (e.g. as a result of egg:set_panel_size or
-patchwork::plot_layout), width and height of the outpu are adjusted to fit the content.</p>
+    <p>Wrap mutiple plots in a (multipage) layout</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bro_ggsave</span>(<span class='kw'>gg</span> <span class='kw'>=</span> <span class='fu'>last_plot</span>(), <span class='no'>filename</span>, <span class='kw'>device</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>height</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>units</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"in"</span>, <span class='st'>"cm"</span>, <span class='st'>"mm"</span>),
-  <span class='kw'>dpi</span> <span class='kw'>=</span> <span class='fl'>300</span>, <span class='kw'>limitsize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>bro_wrap_plots_paged</span>(<span class='no'>plotlist</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>height</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>gg</th>
-      <td><p>ggplot or list of ggplots</p></td>
+      <th>plotlist</th>
+      <td><p>A list of ggplots</p></td>
     </tr>
     <tr>
-      <th>filename</th>
-      <td><p>Filename for export</p></td>
+      <th>ncol</th>
+      <td><p>Number of columns in the layout. If more plots are provided than fit on one page, a list of patchworks is returned.</p></td>
     </tr>
     <tr>
-      <th>device</th>
-      <td><p>Device to use. Can either be a device function (e.g. png()), or one of "eps", "ps", "tex" (pictex), "pdf", "jpeg", "tiff", "png", "bmp", "svg" or "wmf" (windows only).</p></td>
+      <th>nrow</th>
+      <td><p>Number of rows in the layout. If more plots are provided than fit on one page, a list of patchworks is returned.</p></td>
     </tr>
     <tr>
-      <th>path</th>
-      <td><p>Path to save plot to (combined with filename).</p></td>
+      <th>width</th>
+      <td><p>Widths of individual plots. For absolute dimensions use somehting like <code>unit(40, "mm")</code>.</p></td>
     </tr>
     <tr>
-      <th>scale</th>
-      <td><p>Multiplicative scaling factor.</p></td>
-    </tr>
-    <tr>
-      <th>dpi</th>
-      <td><p>Plot resolution. Also accepts a string input: "retina" (320), "print" (300), or "screen" (72). Applies only to raster output types.</p></td>
-    </tr>
-    <tr>
-      <th>limitsize</th>
-      <td><p>When TRUE (the default), ggsave will not save images larger than 50x50 inches, to prevent the common error of specifying dimensions in pixels.</p></td>
+      <th>height</th>
+      <td><p>Heights of individual plots. For absolute dimensions use somehting like <code>unit(40, "mm")</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Other arguments passed on to the graphics device function, as specified by device.</p></td>
+      <td><p>Other arguments passed on to <code><a href='https://patchwork.data-imaginist.com/reference/wrap_plots.html'>patchwork::wrap_plots()</a></code></p></td>
     </tr>
     </table>
 

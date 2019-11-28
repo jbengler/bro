@@ -1,9 +1,9 @@
 
 #' Determine maximum plot dimensions
 #'
-#' @param gg ggplot or list of ggplots
+#' @param gg A ggplot or list of ggplots
 #'
-#' @return returns a named vector with the maximum overall width and height found in the input.
+#' @return Returns a named vector with the maximum overall width and height found in the input.
 #' @export
 bro_get_ggsize <- function(gg) {
   # BUG!
@@ -39,19 +39,21 @@ bro_get_ggsize <- function(gg) {
   }
 }
 
-
 #' Universal ggplot export function
 #'
-#' This function takes a ggplot (for single page) or list of ggplots (for multi page) and writes them to a pdf file.
+#' This function takes a ggplot (for single page) or list of ggplots (for multi page) and writes them to file.
 #' In case the input has absolute dimensions (e.g. as a result of egg:set_panel_size or
-#' patchwork::plot_layout), width and height of the pdf are overridden to fit the content.
+#' patchwork::plot_layout), width and height of the outpu are adjusted to fit the content.
 #'
 #' @param gg ggplot or list of ggplots
 #'
-#' @param filename filename for export
-#' @param width width of the pdf (default 7 inch). When the plot has absolute dimensions this parameter gets overridden to fit the content.
-#' @param height height of the pdf (default 7 inch). When the plot has absolute dimensions this parameter gets overridden to fit the content.
-#' @param ... gets passed to pdf()
+#' @param filename Filename for export
+#' @param device Device to use. Can either be a device function (e.g. png()), or one of "eps", "ps", "tex" (pictex), "pdf", "jpeg", "tiff", "png", "bmp", "svg" or "wmf" (windows only).
+#' @param path Path to save plot to (combined with filename).
+#' @param scale Multiplicative scaling factor.
+#' @param dpi Plot resolution. Also accepts a string input: "retina" (320), "print" (300), or "screen" (72). Applies only to raster output types.
+#' @param limitsize When TRUE (the default), ggsave will not save images larger than 50x50 inches, to prevent the common error of specifying dimensions in pixels.
+#' @param ... Other arguments passed on to the graphics device function, as specified by device.
 #'
 #' @export
 bro_ggsave <- function(gg = last_plot(), filename, device = NULL, path = NULL, scale = 1,
@@ -84,6 +86,15 @@ bro_ggsave <- function(gg = last_plot(), filename, device = NULL, path = NULL, s
   if (!is.na(width) & !is.na(height)) message("Saving ", round(width, 2), " x ", round(height, 2), " in image (adjusted to absolute plot dimensions)")
 }
 
+#' Wrap mutiple plots in a (multipage) layout
+#'
+#' @param plotlist A list of ggplots
+#' @param ncol Number of columns in the layout. If more plots are provided than fit on one page, a list of patchworks is returned.
+#' @param nrow Number of rows in the layout. If more plots are provided than fit on one page, a list of patchworks is returned.
+#' @param width Widths of individual plots. For absolute dimensions use somehting like `unit(40, "mm")`.
+#' @param height Heights of individual plots. For absolute dimensions use somehting like `unit(40, "mm")`.
+#' @param ... Other arguments passed on to `patchwork::wrap_plots()`
+#'
 #' @export
 bro_wrap_plots_paged <- function(plotlist, ncol = 1, nrow = 1, width = NULL, height = NULL, ...) {
   if (!is.numeric(nrow) | !is.numeric(ncol))
@@ -95,6 +106,16 @@ bro_wrap_plots_paged <- function(plotlist, ncol = 1, nrow = 1, width = NULL, hei
   unname(pages)
 }
 
+#' Facet_wrap a ggplot to create a (multipage) layout
+#'
+#' @param gg A ggplot or list of ggplots
+#' @param facet_var Descr.
+#' @param ncol Descr.
+#' @param nrow Descr.
+#' @param width Descr.
+#' @param height Descr.
+#' @param ... Descr.
+#'
 #' @export
 bro_facet_wrap_paged <- function(gg, facet_var, ncol = 1, nrow = 1, width = NULL, height = NULL, ...) {
   if (!is.numeric(nrow) | !is.numeric(ncol))
@@ -111,8 +132,13 @@ bro_facet_wrap_paged <- function(gg, facet_var, ncol = 1, nrow = 1, width = NULL
   bro_wrap_plots_paged(plots, ncol = ncol, nrow = nrow, width = width, height = height, ...)
 }
 
-# This function can be used with genuine ggplot facet wraps
-# However, better use 'bro_facet_wrap_paged()' as this works with 'bro_ggsave()'
+
+#' Set absolute panel size for ggplots
+#'
+#' @param gg A ggplot or list of ggplots
+#' @param width Descr.
+#' @param height Descr.
+#'
 #' @export
 bro_set_panel_size <- function (gg, width = unit(40, "mm"), height = unit(40, "mm")) {
   if (class(gg)[1] %in% c("patchwork", "gg", "ggplot")) gg <- list(gg)
