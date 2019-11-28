@@ -1,129 +1,136 @@
-bro_get_ggsize <- function(plot) {
-  gtab <- patchwork:::plot_table(plot, 'auto')
 
-  has_fixed_dimensions <-
-    !gtab$widths %>% map(~is.null(attr(.x, "unit"))) %>% unlist() %>% any() |
-    !gtab$heights %>% map(~is.null(attr(.x, "unit"))) %>% unlist() %>% any()
-
-  if (has_fixed_dimensions) {
-    width <- grid::convertWidth(sum(gtab$widths) + unit(1, "mm"), unitTo = "mm", valueOnly = TRUE)
-    height <- grid::convertHeight(sum(gtab$heights) + unit(1, "mm"), unitTo = "mm", valueOnly = TRUE)
-    c(width = width, height = height)
-  } else {
-    c(width = NA, height = NA)
-  }
-}
-
+#' Determine maximum plot dimensions
+#'
+#' @param gg ggplot or list of ggplots
+#'
+#' @return returns a named vector with the maximum overall width and height found in the input.
 #' @export
-bro_ggsave <- function(plot = last_plot(), filename, width = NA, height = NA, units = c("in", "cm", "mm"), ...) {
-  width <- bro_get_ggsize(plot)[["width"]]
-  height <- bro_get_ggsize(plot)[["height"]]
-  if(!is.na(width)) message("Saving plot with fixed dimensions: ", round(width, 1), " x ", round(height, 1), " mm")
-  ggsave(filename = filename, plot = plot, width = width, height = height, units = "mm", ...)
-}
+bro_get_ggsize <- function(gg) {
+  # BUG!
+  # Facet wraps with fixed dimensions are not recognized as has_fixed_dimensions
 
-#' @export
-bro_gg_export <- function(gg, file = "test.pdf", facet_var = NULL, nrow = NULL, ncol = NULL, width = 30, height = 30, style = NULL, scales = "free", ...) {
-  # check input
-  if(is.ggplot(gg)) {
-    input_type <- "ggplot"
-  } else if (is.list(gg) & is.ggplot(gg[[1]])) {
-    input_type <- "plotlist"
-  } else {
-    stop("gg needs to be a ggplot object or list of ggplot objects!")
-  }
+  if (class(gg)[1] %in% c("patchwork", "gg", "ggplot")) gg <- list(gg)
 
-  if(input_type == "ggplot") {
-    if (!missing(facet_var)) {
-      if (is.numeric(ncol) & is.numeric(nrow)) {
-        # fixed grid facet wrap
-        # returns list of multiple pages if plots do not fit on one page
-        plots_per_page <- ncol*nrow
-        n_plots <- gg$data %>%
-          distinct({{facet_var}}) %>%
-          nrow(.)
-        pages <- ceiling(n_plots / plots_per_page)
+  dimensions <-
+    map(gg, function(x) {
+    if (!is.ggplot(x)) stop("Please provide a ggplot or list of ggplots as input to 'gg'")
+    gtab <- patchwork:::plot_table(x, 'auto')
 
-        gtabs <- map(
-          1:pages,
-          ~{gg +
-              style +
-              ggforce::facet_wrap_paginate(
-                vars({{facet_var}}),
-                ncol = ncol,
-                nrow = nrow,
-                scales = scales,
-                page = .x)} %>%
-            egg::set_panel_size(p = ., width = unit(width, "mm"), height = unit(height, "mm"))
-        )
-      } else {
-        # classical facet wrap
-        gtabs <- list(
-          {gg + style + facet_wrap(vars({{facet_var}}), nrow, ncol, scales = scales, ...)} %>%
-            egg::set_panel_size(p = ., width = unit(width, "mm"), height = unit(height, "mm"))
-        )
-      }
+    has_fixed_dimensions <-
+      all(as.character(gtab$widths) != "1null") &
+      all(as.character(gtab$heights) != "1null")
+
+    if (has_fixed_dimensions) {
+      width <- grid::convertWidth(sum(gtab$widths) + unit(1, "mm"), unitTo = "in", valueOnly = TRUE)
+      height <- grid::convertHeight(sum(gtab$heights) + unit(1, "mm"), unitTo = "in", valueOnly = TRUE)
+      tibble(width = width, height = height)
     } else {
-      # no facet wrap
-      gtabs <- list(
-        egg::set_panel_size(p = gg + style, width = unit(width, "mm"), height = unit(height, "mm"))
-      )
+      tibble(width = NA, height = NA)
     }
+  }) %>%
+    bind_rows()
 
-    # export plot
-    page_dimensions <-
-      map(gtabs,
-          ~tibble(
-            page_width = grid::convertWidth(sum(.x$widths) + unit(1, "mm"), unitTo = "in", valueOnly = TRUE),
-            page_height = grid::convertHeight(sum(.x$heights) + unit(1, "mm"), unitTo = "in", valueOnly = TRUE)
-          )) %>%
-      bind_rows()
-
-    ggpubr::ggexport(map(gtabs, ~ggpubr::as_ggplot(.)),
-                     filename = file,
-                     width = max(page_dimensions$page_width),
-                     height = max(page_dimensions$page_height))
-  }
-
-  if(input_type == "plotlist") {
-    gtabs <- map(gg, ~egg::set_panel_size(p = .x + style, width = unit(width, "mm"), height = unit(height, "mm")))
-
-    # export plot
-    page_dimensions <-
-      map(gtabs,
-          ~tibble(
-            page_width = grid::convertWidth(sum(.x$widths) + unit(1, "mm"), unitTo = "in", valueOnly = TRUE),
-            page_height = grid::convertHeight(sum(.x$heights) + unit(1, "mm"), unitTo = "in", valueOnly = TRUE)
-          )) %>%
-      bind_rows()
-
-    n_plots <- length(gtabs)
-    ncol <- ceiling(sqrt(n_plots))
-    nrow <- ceiling(n_plots/ncol)
-
-    ggpubr::ggexport(plotlist = map(gtabs, ~ggpubr::as_ggplot(.)),
-                     filename = file,
-                     nrow = nrow,
-                     ncol = ncol,
-                     width = max(page_dimensions$page_width)*ncol,
-                     height = max(page_dimensions$page_height)*nrow)
+  if (all(is.na(dimensions$width)) | all(is.na(dimensions$height))) {
+    c(width = NA,
+      height = NA)
+  } else {
+    c(width = max(dimensions$width, na.rm = TRUE),
+      height = max(dimensions$height, na.rm = TRUE))
   }
 }
 
-# library(ggplot2)
-# library(tidyverse)
-# gg <- ggplot(mtcars, aes(cyl, mpg)) +
-#   geom_point()
-# gg2 <- ggplot(mtcars, aes(cyl, mpg)) +
-#   geom_col()
-# ll <- list(gg, gg2)
-# bro_gg_export(gg)
-# bro_gg_export(gg2)
-# bro_gg_export(ll)
-# bro_gg_export(gg, facet_var = gear)
-#
-# bro_gg_export(gg, style = bro::bro_theme_nature())
-# bro_gg_export(gg2, style = bro::bro_theme_nature())
-# bro_gg_export(ll, style = bro::bro_theme_nature())
-# bro_gg_export(gg, facet_var = gear, style = bro::bro_theme_nature())
+
+#' Universal ggplot export function
+#'
+#' This function takes a ggplot (for single page) or list of ggplots (for multi page) and writes them to a pdf file.
+#' In case the input has absolute dimensions (e.g. as a result of egg:set_panel_size or
+#' patchwork::plot_layout), width and height of the pdf are overridden to fit the content.
+#'
+#' @param gg ggplot or list of ggplots
+#'
+#' @param filename filename for export
+#' @param width width of the pdf (default 7 inch). When the plot has absolute dimensions this parameter gets overridden to fit the content.
+#' @param height height of the pdf (default 7 inch). When the plot has absolute dimensions this parameter gets overridden to fit the content.
+#' @param ... gets passed to pdf()
+#'
+#' @export
+bro_ggsave <- function(gg = last_plot(), filename, device = NULL, path = NULL, scale = 1,
+                       width = NA, height = NA, units = c("in", "cm", "mm"), dpi = 300, limitsize = TRUE, ...) {
+  # this function is adapted from ggplot2::ggsave()
+  if (class(gg)[1] %in% c("patchwork", "gg", "ggplot")) gg <- list(gg)
+
+  dimensions <- bro_get_ggsize(gg)
+  if(all(!is.na(dimensions))) {
+    width <- dimensions[["width"]]
+    height <- dimensions[["height"]]
+  }
+
+  dpi <- ggplot2:::parse_dpi(dpi)
+  dev <- ggplot2:::plot_dev(device, filename, dpi = dpi)
+  dim <- ggplot2:::plot_dim(c(width, height), scale = scale, units = units,
+                            limitsize = limitsize)
+  if (!is.null(path)) {
+    filename <- file.path(path, filename)
+  }
+  old_dev <- grDevices::dev.cur()
+  dev(filename = filename, width = dim[1], height = dim[2],
+      ...)
+  on.exit(utils::capture.output({
+    grDevices::dev.off()
+    if (old_dev > 1) grDevices::dev.set(old_dev)
+  }))
+  map(gg, ~grid::grid.draw(.x))
+  invisible()
+  if (!is.na(width) & !is.na(height)) message("Saving ", round(width, 2), " x ", round(height, 2), " in image (adjusted to absolute plot dimensions)")
+}
+
+#' @export
+bro_wrap_plots_paged <- function(plotlist, ncol = 1, nrow = 1, width = NULL, height = NULL, ...) {
+  if (!is.numeric(nrow) | !is.numeric(ncol))
+    stop("Values for 'nrow' and 'ncol' need to be integer")
+  plots_per_page <- nrow * ncol
+  pages <-
+    split(plotlist, ceiling(seq_along(plotlist)/plots_per_page)) %>%
+    map(., ~patchwork::wrap_plots(.x, ncol = ncol, nrow = nrow, widths = width, heights = height, guides = "collect", ...))
+  unname(pages)
+}
+
+#' @export
+bro_facet_wrap_paged <- function(gg, facet_var, ncol = 1, nrow = 1, width = NULL, height = NULL, ...) {
+  if (!is.numeric(nrow) | !is.numeric(ncol))
+    stop("Values for 'nrow' and 'ncol' need to be integer")
+  df <-
+    gg$data %>%
+    nest(data = -{{facet_var}}) %>%
+    arrange({{facet_var}})
+  plots <-
+    map2(df$data, df %>% pull({{facet_var}}),
+         function(data, facet_title) {
+           gg %+% data + ggtitle(facet_title)
+         })
+  bro_wrap_plots_paged(plots, ncol = ncol, nrow = nrow, width = width, height = height, ...)
+}
+
+# This function can be used with genuine ggplot facet wraps
+# However, better use 'bro_facet_wrap_paged()' as this works with 'bro_ggsave()'
+#' @export
+bro_set_panel_size <- function (gg, width = unit(40, "mm"), height = unit(40, "mm")) {
+  if (class(gg)[1] %in% c("patchwork", "gg", "ggplot")) gg <- list(gg)
+
+  gg <-
+    map(gg, function(x){
+      g <- ggplot2::ggplotGrob(x)
+      panels <- grep("panel", g$layout$name)
+      panel_index_w <- unique(g$layout$l[panels])
+      panel_index_h <- unique(g$layout$t[panels])
+      nw <- length(panel_index_w)
+      nh <- length(panel_index_h)
+      g$widths[panel_index_w] <- rep(width, nw)
+      g$heights[panel_index_h] <- rep(height, nh)
+      ggpubr::as_ggplot(g)
+    })
+
+  if(length(gg) == 1) gg <- gg[[1]]
+  gg
+}
 

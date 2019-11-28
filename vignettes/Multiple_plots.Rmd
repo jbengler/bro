@@ -1,0 +1,150 @@
+---
+title: "Multiple plots"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Multiple_plots}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(bro)
+
+devtools::install_github("thomasp85/patchwork")
+library(patchwork)
+library(tidyverse)
+
+p1 <- ggplot(mtcars) +
+  geom_point(aes(mpg, disp)) +
+  ggtitle('Plot 1')
+
+p2 <- ggplot(mtcars) +
+  geom_boxplot(aes(gear, disp, group = gear)) +
+  ggtitle('Plot 2')
+
+p3 <- ggplot(mtcars) +
+  geom_point(aes(hp, wt, colour = mpg)) +
+  ggtitle('Plot 3')
+
+p4 <- ggplot(mtcars) +
+  geom_bar(aes(gear)) +
+  ggtitle('Plot 4')
+
+patchwork1 <-
+  p1 + p2 + p3 + p4 +
+  plot_layout(
+    ncol = 4,
+    widths = unit(c(50, 25, 50, 25), "mm"),
+    heights = unit(50, "mm"),
+    guides = "collect"
+    )
+
+patchwork2 <-
+  p1 + p2 + p3 + p4 +
+  plot_layout(
+    ncol = 4,
+    widths = unit(c(50, 25, 50, 205), "mm"),
+    heights = unit(25, "mm"),
+    guides = "collect"
+  )
+
+patchwork3 <-
+  p1 + p2 + p3 + p4 +
+  plot_layout(
+    ncol = 4
+  )
+
+
+# test bro_get_ggsize -----------------------------------------------------
+
+bro_get_ggsize(p1)
+bro_get_ggsize(list(p1, p2, p3))
+bro_get_ggsize(list(patchwork1, patchwork2, patchwork3))
+bro_get_ggsize(patchwork1)
+bro_get_ggsize(patchwork2)
+bro_get_ggsize(patchwork3)
+
+# test bro_ggsave ---------------------------------------------------------
+
+# bro_ggsave(p1, "test.pdf")
+# bro_ggsave(list(p1, p2, p3), "test.pdf")
+# bro_ggsave(list(patchwork1, patchwork2, patchwork3), "test.pdf")
+# bro_ggsave(patchwork1, "test.pdf")
+# bro_ggsave(patchwork2, "test.pdf")
+# bro_ggsave(patchwork3, "test.pdf")
+
+# test bro_wrap_plots_paged -----------------------------------------------
+
+plots <-
+  list(p1, p2, p3, p4, p4, p3, p2, p1)
+
+plots %>% bro_wrap_plots_paged()
+plots %>% bro_wrap_plots_paged(ncol = 2, nrow = 2)
+plots %>% bro_wrap_plots_paged(ncol = 3, nrow = 3)
+plots %>% bro_wrap_plots_paged(ncol = 3, nrow = 3, width = unit(20, "mm"), height = unit(20, "mm"))
+
+# plots %>% bro_wrap_plots_paged(ncol = 2, nrow = 2, width = unit(20, "mm"), height = unit(20, "mm")) %>%
+#   bro_ggsave("test.pdf")
+# 
+# plots %>% bro_wrap_plots_paged(ncol = 6, nrow = 6, width = unit(40, "mm"), height = unit(40, "mm")) %>%
+#   bro_ggsave("test.pdf")
+# 
+# plots %>% bro_wrap_plots_paged(ncol = 3, nrow = 3) %>%
+#   bro_ggsave("test.pdf")
+# 
+# plots %>% bro_wrap_plots_paged(ncol = 6, nrow = 6) %>%
+#   bro_ggsave("test.pdf")
+
+# test bro_facet_wrap_paged -----------------------------------------------
+
+p1 %>% bro_facet_wrap_paged(facet_var = cyl)
+p1 %>% bro_facet_wrap_paged(facet_var = cyl, ncol = 2, nrow = 2)
+p1 %>% bro_facet_wrap_paged(facet_var = cyl, width = unit(20, "mm"), height = unit(20, "mm"))
+p1 %>% bro_facet_wrap_paged(facet_var = cyl, ncol = 2, nrow = 2, width = unit(20, "mm"), height = unit(20, "mm"))
+
+# p1 %>% bro_facet_wrap_paged(facet_var = cyl, ncol = 1, nrow = 1, width = unit(20, "mm"), height = unit(20, "mm")) %>%
+#   bro_ggsave("test.pdf")
+# 
+# p1 %>% bro_facet_wrap_paged(facet_var = cyl, ncol = 2, nrow = 2, width = unit(20, "mm"), height = unit(20, "mm")) %>%
+#   bro_ggsave("test.pdf")
+# 
+# p1 %>% bro_facet_wrap_paged(facet_var = cyl, ncol = 2, nrow = 2, width = unit(20, "mm"), height = unit(20, "mm")) %>%
+#   bro_ggsave("test.png")
+# 
+# p1 %>% bro_facet_wrap_paged(facet_var = cyl, ncol = 2, nrow = 2) %>%
+#   bro_ggsave("test.png")
+
+
+# test bro_set_panel_size -------------------------------------------------
+
+p1 + plot_layout(widths = unit(40, "mm"), heights = unit(40, "mm"))
+p1 + facet_wrap(vars(cyl)) + plot_layout(widths = unit(40, "mm"), heights = unit(40, "mm"))
+{p1 + facet_wrap(vars(cyl)) + plot_layout(widths = unit(40, "mm"), heights = unit(40, "mm"))} %>%
+  bro_ggsave("test.pdf")
+
+bro_set_panel_size(p1, unit(40, "mm"), unit(40, "mm"))
+bro_set_panel_size(p1 + facet_wrap(vars(cyl)), unit(40, "mm"), unit(40, "mm"))
+
+# problem with facet wrap
+{bro_set_panel_size(p1 + facet_wrap(vars(cyl)), unit(40, "mm"), unit(40, "mm"))} %>%
+  class()
+{bro_set_panel_size(p1 + facet_wrap(vars(cyl)), unit(40, "mm"), unit(40, "mm"))} %>%
+  bro_get_ggsize()
+# {bro_set_panel_size(p1 + facet_wrap(vars(cyl)), unit(40, "mm"), unit(40, "mm"))} %>%
+#   bro_ggsave("test.pdf")
+
+bro_set_panel_size(list(p1, p2, p3), unit(40, "mm"), unit(40, "mm"))
+bro_set_panel_size(list(
+  p1 + facet_wrap(vars(cyl)),
+  p2 + facet_wrap(vars(cyl)),
+  p3 + facet_wrap(vars(cyl))
+), unit(40, "mm"), unit(40, "mm"))
+
+```

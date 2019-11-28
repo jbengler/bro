@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Articles • bro</title>
+<title>Universal ggplot export function — bro_ggsave • bro</title>
 
 
 <!-- jquery -->
@@ -35,7 +35,11 @@
 
 
 
-<meta property="og:title" content="Articles" />
+<meta property="og:title" content="Universal ggplot export function — bro_ggsave" />
+<meta property="og:description" content="This function takes a ggplot (for single page) or list of ggplots (for multi page) and writes them to a pdf file.
+In case the input has absolute dimensions (e.g. as a result of egg:set_panel_size or
+patchwork::plot_layout), width and height of the pdf are overridden to fit the content." />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -54,7 +58,7 @@
   </head>
 
   <body>
-    <div class="container template-article-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -124,20 +128,54 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Articles</h1>
+    <h1>Universal ggplot export function</h1>
+    <small class="dont-index">Source: <a href='https://github.com/jbengler/bro/blob/master/R/export_plots.R'><code>R/export_plots.R</code></a></small>
+    <div class="hidden name"><code>bro_ggsave.Rd</code></div>
     </div>
 
-    <div class="section ">
-      <h3>All vignettes</h3>
-      <p class="section-desc"></p>
-
-      <ul>
-        <li><a href="Heatmaps.html">Heatmaps</a></li>
-        <li><a href="Helpers.html">Helpers</a></li>
-        <li><a href="Multiple_plots.html">Multiple plots</a></li>
-        <li><a href="bro.html">Introduction to bro</a></li>
-      </ul>
+    <div class="ref-description">
+    <p>This function takes a ggplot (for single page) or list of ggplots (for multi page) and writes them to a pdf file.
+In case the input has absolute dimensions (e.g. as a result of egg:set_panel_size or
+patchwork::plot_layout), width and height of the pdf are overridden to fit the content.</p>
     </div>
+
+    <pre class="usage"><span class='fu'>bro_ggsave</span>(<span class='kw'>gg</span> <span class='kw'>=</span> <span class='fu'>last_plot</span>(), <span class='no'>filename</span>, <span class='kw'>device</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>height</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>units</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"in"</span>, <span class='st'>"cm"</span>, <span class='st'>"mm"</span>),
+  <span class='kw'>dpi</span> <span class='kw'>=</span> <span class='fl'>300</span>, <span class='kw'>limitsize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>gg</th>
+      <td><p>ggplot or list of ggplots</p></td>
+    </tr>
+    <tr>
+      <th>filename</th>
+      <td><p>filename for export</p></td>
+    </tr>
+    <tr>
+      <th>width</th>
+      <td><p>width of the pdf (default 7 inch). When the plot has absolute dimensions this parameter gets overridden to fit the content.</p></td>
+    </tr>
+    <tr>
+      <th>height</th>
+      <td><p>height of the pdf (default 7 inch). When the plot has absolute dimensions this parameter gets overridden to fit the content.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>gets passed to pdf()</p></td>
+    </tr>
+    </table>
+
+
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+    </ul>
+
   </div>
 </div>
 
