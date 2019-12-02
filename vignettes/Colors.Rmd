@@ -1,0 +1,23 @@
+---
+title: "Colors"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Colors}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r fig.asp=1}
+library(tidyverse)
+library(bro)
+
+bro_pals_show()
+bro_pals_show(show_labels = TRUE)
+```

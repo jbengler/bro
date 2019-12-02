@@ -2,10 +2,10 @@
 % Please edit documentation in R/multiple_plots.R
 \name{bro_wrap_plots_paged}
 \alias{bro_wrap_plots_paged}
-\title{Wrap mutiple plots in a (multipage) layout}
+\title{Wrap plots in a single or multi-page layout}
 \usage{
-bro_wrap_plots_paged(plotlist, ncol = 1, nrow = 1, width = NULL,
-  height = NULL, ...)
+bro_wrap_plots_paged(plotlist, ncol = NULL, nrow = NULL,
+  width = NULL, height = NULL, ...)
 }
 \arguments{
 \item{plotlist}{A list of ggplots}
@@ -21,5 +21,5 @@ bro_wrap_plots_paged(plotlist, ncol = 1, nrow = 1, width = NULL,
 \item{...}{Other arguments passed on to \code{patchwork::wrap_plots()}}
 }
 \description{
-Wrap mutiple plots in a (multipage) layout
+Wrap plots in a single or multi-page layout
 }

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Universal ggplot export function — bro_ggsave • bro</title>
+<title>Plot pretty heatmaps from tidy data — bro_plot_heatmap • bro</title>
 
 
 <!-- jquery -->
@@ -35,10 +35,9 @@
 
 
 
-<meta property="og:title" content="Universal ggplot export function — bro_ggsave" />
-<meta property="og:description" content="This function takes a ggplot (for single page) or list of ggplots (for multi page) and writes them to file.
-In case the input has absolute dimensions (e.g. as a result of egg:set_panel_size or
-patchwork::plot_layout), width and height of the outpu are adjusted to fit the content." />
+<meta property="og:title" content="Plot pretty heatmaps from tidy data — bro_plot_heatmap" />
+<meta property="og:description" content="This function is a wrapper around pheatmap::pheatmap() that allows long tidy
+data as input." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -97,6 +96,9 @@ patchwork::plot_layout), width and height of the outpu are adjusted to fit the c
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/Colors.html">Colors</a>
+    </li>
+    <li>
       <a href="../articles/Heatmaps.html">Heatmaps</a>
     </li>
     <li>
@@ -128,55 +130,94 @@ patchwork::plot_layout), width and height of the outpu are adjusted to fit the c
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Universal ggplot export function</h1>
-    <small class="dont-index">Source: <a href='https://github.com/jbengler/bro/blob/master/R/multiple_plots.R'><code>R/multiple_plots.R</code></a></small>
-    <div class="hidden name"><code>bro_ggsave.Rd</code></div>
+    <h1>Plot pretty heatmaps from tidy data</h1>
+    <small class="dont-index">Source: <a href='https://github.com/jbengler/bro/blob/master/R/heatmaps.R'><code>R/heatmaps.R</code></a></small>
+    <div class="hidden name"><code>bro_plot_heatmap.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function takes a ggplot (for single page) or list of ggplots (for multi page) and writes them to file.
-In case the input has absolute dimensions (e.g. as a result of egg:set_panel_size or
-patchwork::plot_layout), width and height of the outpu are adjusted to fit the content.</p>
+    <p>This function is a wrapper around <code><a href='https://rdrr.io/pkg/pheatmap/man/pheatmap.html'>pheatmap::pheatmap()</a></code> that allows long tidy
+data as input.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bro_ggsave</span>(<span class='kw'>gg</span> <span class='kw'>=</span> <span class='fu'>last_plot</span>(), <span class='no'>filename</span>, <span class='kw'>device</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>height</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>units</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"in"</span>, <span class='st'>"cm"</span>, <span class='st'>"mm"</span>),
-  <span class='kw'>dpi</span> <span class='kw'>=</span> <span class='fl'>300</span>, <span class='kw'>limitsize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>bro_plot_heatmap</span>(<span class='no'>df</span>, <span class='no'>rows</span>, <span class='no'>columns</span>, <span class='no'>values</span>, <span class='kw'>ann_row</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>ann_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>gaps_row</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>gaps_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>ann_colors</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='st'>"row"</span>, <span class='kw'>fontsize</span> <span class='kw'>=</span> <span class='fl'>7</span>,
+  <span class='kw'>cellwidth</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>cellheight</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>color_scale_min</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>color_scale_max</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>color_scale_n</span> <span class='kw'>=</span> <span class='fl'>16</span>,
+  <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/colorRamp.html'>colorRampPalette</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rev.html'>rev</a></span>(<span class='kw pkg'>RColorBrewer</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html'>brewer.pal</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>7</span>, <span class='kw'>name</span> <span class='kw'>=</span>
+  <span class='st'>"RdYlBu"</span>)))(<span class='no'>color_scale_n</span>), <span class='kw'>return_data</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>gg</th>
-      <td><p>ggplot or list of ggplots</p></td>
+      <th>df</th>
+      <td><p>Input dataframe in long format.</p></td>
     </tr>
     <tr>
-      <th>filename</th>
-      <td><p>Filename for export</p></td>
+      <th>rows</th>
+      <td><p>Column of the dataframe to use for heatmap rows.</p></td>
     </tr>
     <tr>
-      <th>device</th>
-      <td><p>Device to use. Can either be a device function (e.g. png()), or one of "eps", "ps", "tex" (pictex), "pdf", "jpeg", "tiff", "png", "bmp", "svg" or "wmf" (windows only).</p></td>
+      <th>columns</th>
+      <td><p>Column of the dataframe to use for heatmap columns.</p></td>
     </tr>
     <tr>
-      <th>path</th>
-      <td><p>Path to save plot to (combined with filename).</p></td>
+      <th>values</th>
+      <td><p>Column of the dataframe containing the values to plot.</p></td>
+    </tr>
+    <tr>
+      <th>ann_row, ann_col</th>
+      <td><p>Column(s) of the dataframe to use for row and column annotation.
+Multiple columns can be provided as vector, e.g. <code><a href='https://rdrr.io/r/base/c.html'>c(column1, column2, column3)</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>gaps_row, gaps_col</th>
+      <td><p>Column of the dataframe to use for row and column gaps.</p></td>
+    </tr>
+    <tr>
+      <th>ann_colors</th>
+      <td><p>List of colors used to color code row and column annotations.
+See <code><a href='https://rdrr.io/pkg/pheatmap/man/pheatmap.html'>pheatmap::pheatmap()</a></code> for details.</p></td>
+    </tr>
+    <tr>
+      <th>breaks</th>
+      <td><p>Sequence used for mapping values to colors. Is one element longer than <code>color_scale_n</code>.
+See <code><a href='https://rdrr.io/pkg/pheatmap/man/pheatmap.html'>pheatmap::pheatmap()</a></code> for details.</p></td>
     </tr>
     <tr>
       <th>scale</th>
-      <td><p>Multiplicative scaling factor.</p></td>
+      <td><p>Character indicating if the values should be centered and scaled by "row", "column" or "none".
+Default is "row".</p></td>
     </tr>
     <tr>
-      <th>dpi</th>
-      <td><p>Plot resolution. Also accepts a string input: "retina" (320), "print" (300), or "screen" (72). Applies only to raster output types.</p></td>
+      <th>fontsize</th>
+      <td><p>Base fontsize for the plot.</p></td>
     </tr>
     <tr>
-      <th>limitsize</th>
-      <td><p>When TRUE (the default), ggsave will not save images larger than 50x50 inches, to prevent the common error of specifying dimensions in pixels.</p></td>
+      <th>cellwidth, cellheight</th>
+      <td><p>Cell width and hieght in points. If left <code>NA</code>, cells will scale to fill the available space.</p></td>
+    </tr>
+    <tr>
+      <th>color_scale_min, color_scale_max</th>
+      <td><p>Minimal and maximal value on color scale.</p></td>
+    </tr>
+    <tr>
+      <th>color_scale_n</th>
+      <td><p>Number of color on color scale.</p></td>
+    </tr>
+    <tr>
+      <th>color</th>
+      <td><p>Vector of colors used in heatmap.</p></td>
+    </tr>
+    <tr>
+      <th>return_data</th>
+      <td><p>If <code>TRUE</code> processed data is returned instead of plot.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Other arguments passed on to the graphics device function, as specified by device.</p></td>
+      <td><p>Other parameters passed to <code><a href='https://rdrr.io/pkg/pheatmap/man/pheatmap.html'>pheatmap::pheatmap()</a></code>.</p></td>
     </tr>
     </table>
 

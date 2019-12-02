@@ -14,12 +14,13 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
-library(bro)
+## Generate demo plots
 
+```{r message=FALSE, warning=FALSE}
 # devtools::install_github("thomasp85/patchwork")
-library(patchwork)
 library(tidyverse)
+library(patchwork)
+library(bro)
 
 p1 <- ggplot(mtcars) +
   geom_point(aes(mpg, disp)) +
@@ -60,8 +61,9 @@ patchwork3 <-
   plot_layout(
     ncol = 4
   )
+```
 
-
+```{r}
 # test bro_get_ggsize -----------------------------------------------------
 
 bro_get_ggsize(p1)
@@ -70,81 +72,121 @@ bro_get_ggsize(list(patchwork1, patchwork2, patchwork3))
 bro_get_ggsize(patchwork1)
 bro_get_ggsize(patchwork2)
 bro_get_ggsize(patchwork3)
+```
 
-# test bro_ggsave ---------------------------------------------------------
+```{r}
+# test bro_ggsave_paged --------------------------------------------------
 
-# bro_ggsave(p1, "test.pdf")
-# bro_ggsave(list(p1, p2, p3), "test.pdf")
-# bro_ggsave(list(patchwork1, patchwork2, patchwork3), "test.pdf")
-# bro_ggsave(patchwork1, "test.pdf")
-# bro_ggsave(patchwork2, "test.pdf")
-# bro_ggsave(patchwork3, "test.pdf")
+# bro_ggsave_paged(p1, "test.pdf")
+# bro_ggsave_paged(list(p1, p2, p3), "test.pdf")
+# bro_ggsave_paged(list(patchwork1, patchwork2, patchwork3), "test.pdf")
+# bro_ggsave_paged(patchwork1, "test.pdf")
+# bro_ggsave_paged(patchwork2, "test.pdf")
+# bro_ggsave_paged(patchwork3, "test.pdf")
 
+```
+
+```{r}
 # test bro_wrap_plots_paged -----------------------------------------------
 
 plots <-
   list(p1, p2, p3, p4, p4, p3, p2, p1)
 
 plots %>% bro_wrap_plots_paged()
+plots %>% bro_wrap_plots_paged(width = unit(20, "mm"), height = unit(20, "mm"))
+
 plots %>% bro_wrap_plots_paged(ncol = 2, nrow = 2)
-plots %>% bro_wrap_plots_paged(ncol = 3, nrow = 3)
-plots %>% bro_wrap_plots_paged(ncol = 3, nrow = 3, width = unit(20, "mm"), height = unit(20, "mm"))
+plots %>% bro_wrap_plots_paged(ncol = 2, nrow = 2,
+                               width = unit(20, "mm"), height = unit(20, "mm"))
 
 # plots %>% bro_wrap_plots_paged(ncol = 2, nrow = 2, width = unit(20, "mm"), height = unit(20, "mm")) %>%
-#   bro_ggsave("test.pdf")
+#   bro_ggsave_paged("test.pdf")
 # 
 # plots %>% bro_wrap_plots_paged(ncol = 6, nrow = 6, width = unit(40, "mm"), height = unit(40, "mm")) %>%
-#   bro_ggsave("test.pdf")
+#   bro_ggsave_paged("test.pdf")
 # 
 # plots %>% bro_wrap_plots_paged(ncol = 3, nrow = 3) %>%
-#   bro_ggsave("test.pdf")
+#   bro_ggsave_paged("test.pdf")
 # 
 # plots %>% bro_wrap_plots_paged(ncol = 6, nrow = 6) %>%
-#   bro_ggsave("test.pdf")
+#   bro_ggsave_paged("test.pdf")
 
+
+```
+
+```{r}
 # test bro_facet_wrap_paged -----------------------------------------------
 
-p1 %>% bro_facet_wrap_paged(facet_var = cyl)
-p1 %>% bro_facet_wrap_paged(facet_var = cyl, ncol = 2, nrow = 2)
-p1 %>% bro_facet_wrap_paged(facet_var = cyl, width = unit(20, "mm"), height = unit(20, "mm"))
-p1 %>% bro_facet_wrap_paged(facet_var = cyl, ncol = 2, nrow = 2, width = unit(20, "mm"), height = unit(20, "mm"))
+bro_dataset_expression
+
+p5 <- 
+  bro_dataset_expression %>% 
+  ggplot(aes(genotype, expression, color = sample_type)) +
+  geom_boxplot(width = 0.6, position = position_dodge(width = 0.8))
+
+p5 %>% bro_facet_wrap_paged(facet_var = external_gene_name)
+p5 %>% bro_facet_wrap_paged(facet_var = external_gene_name,
+                            width = unit(35, "mm"), height = unit(35, "mm"))
+
+p5 %>% bro_facet_wrap_paged(facet_var = external_gene_name, ncol = 2, nrow = 2)
+p5 %>% bro_facet_wrap_paged(facet_var = external_gene_name, ncol = 2, nrow = 2,
+                            width = unit(35, "mm"), height = unit(35, "mm"))
 
 # p1 %>% bro_facet_wrap_paged(facet_var = cyl, ncol = 1, nrow = 1, width = unit(20, "mm"), height = unit(20, "mm")) %>%
-#   bro_ggsave("test.pdf")
+#   bro_ggsave_paged("test.pdf")
 # 
 # p1 %>% bro_facet_wrap_paged(facet_var = cyl, ncol = 2, nrow = 2, width = unit(20, "mm"), height = unit(20, "mm")) %>%
-#   bro_ggsave("test.pdf")
+#   bro_ggsave_paged("test.pdf")
 # 
 # p1 %>% bro_facet_wrap_paged(facet_var = cyl, ncol = 2, nrow = 2, width = unit(20, "mm"), height = unit(20, "mm")) %>%
-#   bro_ggsave("test.png")
+#   bro_ggsave_paged("test.png")
 # 
 # p1 %>% bro_facet_wrap_paged(facet_var = cyl, ncol = 2, nrow = 2) %>%
-#   bro_ggsave("test.png")
+#   bro_ggsave_paged("test.png")
 
+```
 
+```{r}
 # test bro_set_panel_size -------------------------------------------------
 
 p1 + plot_layout(widths = unit(40, "mm"), heights = unit(40, "mm"))
 p1 + facet_wrap(vars(cyl)) + plot_layout(widths = unit(40, "mm"), heights = unit(40, "mm"))
 {p1 + facet_wrap(vars(cyl)) + plot_layout(widths = unit(40, "mm"), heights = unit(40, "mm"))} %>%
-  bro_ggsave("test.pdf")
+  bro_ggsave_paged("test.pdf")
 
 bro_set_panel_size(p1, unit(40, "mm"), unit(40, "mm"))
 bro_set_panel_size(p1 + facet_wrap(vars(cyl)), unit(40, "mm"), unit(40, "mm"))
 
-# problem with facet wrap
-{bro_set_panel_size(p1 + facet_wrap(vars(cyl)), unit(40, "mm"), unit(40, "mm"))} %>%
-  class()
-{bro_set_panel_size(p1 + facet_wrap(vars(cyl)), unit(40, "mm"), unit(40, "mm"))} %>%
-  bro_get_ggsize()
-# {bro_set_panel_size(p1 + facet_wrap(vars(cyl)), unit(40, "mm"), unit(40, "mm"))} %>%
-#   bro_ggsave("test.pdf")
+```
 
-bro_set_panel_size(list(p1, p2, p3), unit(40, "mm"), unit(40, "mm"))
-bro_set_panel_size(list(
-  p1 + facet_wrap(vars(cyl)),
-  p2 + facet_wrap(vars(cyl)),
-  p3 + facet_wrap(vars(cyl))
-), unit(40, "mm"), unit(40, "mm"))
+## Problems with bro_set_panel_size()
+
+Most of the times the gtables widths are not korrekt.
+
+```{r}
+p <- ggplot(mtcars) + geom_point(aes(mpg, disp))
+p_sized <- p + plot_layout(widths = unit(40, "mm"), heights = unit(40, "mm"))
+fw <- p + facet_wrap(vars(cyl))
+fw_sized <- fw  + plot_layout(widths = unit(40, "mm"), heights = unit(40, "mm"))
+pw <- wrap_plots(list(p1, p2, p3))
+pw_sized <- wrap_plots(list(p1, p2, p3), widths = unit(40, "mm"), heights = unit(40, "mm"))
+
+patchwork:::plot_table(p, 'auto')$widths
+patchwork:::plot_table(p_sized, 'auto')$widths
+patchwork:::plot_table(fw, 'auto')$widths
+patchwork:::plot_table(fw_sized, 'auto')$widths
+patchwork:::plot_table(pw, 'auto')$widths
+patchwork:::plot_table(pw_sized, 'auto')$widths
+
+#######################
+
+fw <- 
+  ggplot(mtcars) +
+  geom_point(aes(mpg, disp)) +
+  facet_wrap(vars(cyl))
+
+fw
+fw + plot_layout(widths = unit(40, "mm"), heights = unit(40, "mm"))
+fw %>% egg::set_panel_size() %>% ggpubr::as_ggplot()
 
 ```

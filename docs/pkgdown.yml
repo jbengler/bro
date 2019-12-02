@@ -2,6 +2,7 @@ pandoc: 2.3.1
 pkgdown: 1.4.1
 pkgdown_sha: ~
 articles:
+  Colors: Colors.html
   Heatmaps: Heatmaps.html
   Helpers: Helpers.html
   Multiple_plots: Multiple_plots.html

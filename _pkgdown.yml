@@ -1,14 +1,20 @@
 destination: docs
 
 reference:
-  - title: "Multiple plots"
-    contents:
-      - bro_get_ggsize
-      - bro_ggsave
-      - bro_wrap_plots_paged
-      - bro_facet_wrap_paged
-      - bro_set_panel_size
-  - title: "Helpers"
-    contents:
-      - bro_top_n
-      - bro_duplicated
+- title: "Multiple plots"
+  desc: Arrange plots in layouts over multiple pages, fix their absolute dimensions an write them to file.
+  contents:
+    - bro_wrap_plots_paged
+    - bro_facet_wrap_paged
+    - bro_ggsave_paged
+    - bro_set_panel_size
+    - bro_get_ggsize
+- title: "Tidy heatmaps"
+  desc: Plot pretty heatmaps using pheatmap starting from tidy data.
+  contents:
+    - bro_plot_heatmap
+- title: "Helpers"
+  desc: A collection of useful helper functions.
+  contents:
+    - bro_top_n
+    - bro_duplicated

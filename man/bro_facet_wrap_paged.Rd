@@ -2,10 +2,10 @@
 % Please edit documentation in R/multiple_plots.R
 \name{bro_facet_wrap_paged}
 \alias{bro_facet_wrap_paged}
-\title{Facet_wrap a ggplot to create a (multipage) layout}
+\title{Facet_wrap a ggplot to create a single or multi-page layout}
 \usage{
-bro_facet_wrap_paged(gg, facet_var, ncol = 1, nrow = 1, width = NULL,
-  height = NULL, ...)
+bro_facet_wrap_paged(gg, facet_var, ncol = NULL, nrow = NULL,
+  width = NULL, height = NULL, ...)
 }
 \arguments{
 \item{gg}{A ggplot or list of ggplots}
@@ -23,5 +23,5 @@ bro_facet_wrap_paged(gg, facet_var, ncol = 1, nrow = 1, width = NULL,
 \item{...}{Descr.}
 }
 \description{
-Facet_wrap a ggplot to create a (multipage) layout
+Facet_wrap a ggplot to create a single or multi-page layout
 }

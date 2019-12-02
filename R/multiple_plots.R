@@ -42,23 +42,28 @@ bro_get_ggsize <- function(gg) {
 #' Universal ggplot export function
 #'
 #' This function takes a ggplot (for single page) or list of ggplots (for multi page) and writes them to file.
-#' In case the input has absolute dimensions (e.g. as a result of egg:set_panel_size or
-#' patchwork::plot_layout), width and height of the outpu are adjusted to fit the content.
+#' In case the input has absolute dimensions (e.g. as a result of `egg::set_panel_size()` or
+#' `patchwork::plot_layout()`), width and height of the output are adjusted to fit the content.
 #'
 #' @param gg ggplot or list of ggplots
 #'
 #' @param filename Filename for export
-#' @param device Device to use. Can either be a device function (e.g. png()), or one of "eps", "ps", "tex" (pictex), "pdf", "jpeg", "tiff", "png", "bmp", "svg" or "wmf" (windows only).
+#' @param device Device to use. Can either be a device function (e.g. `png()`), or one of "eps", "ps", "tex" (pictex), "pdf", "jpeg", "tiff", "png", "bmp", "svg" or "wmf" (windows only).
 #' @param path Path to save plot to (combined with filename).
 #' @param scale Multiplicative scaling factor.
+#' @param width,height,units Plot size in `units` ("in", "cm", or "mm").
+#'   If not supplied, uses the size of current graphics device.
+#'   In case the input has absolute dimensions (e.g. as a result of `egg::set_panel_size()` or
+#'   `patchwork::plot_layout()`), width and height of the output are adjusted to fit the content.
 #' @param dpi Plot resolution. Also accepts a string input: "retina" (320), "print" (300), or "screen" (72). Applies only to raster output types.
 #' @param limitsize When TRUE (the default), ggsave will not save images larger than 50x50 inches, to prevent the common error of specifying dimensions in pixels.
 #' @param ... Other arguments passed on to the graphics device function, as specified by device.
-#'
+#' @param return_input If `TRUE` the input ggplot or plotlist is returned after saving.
+#' This enables the use of `bro_ggsave_paged()` within `dplyr` pipes.
 #' @export
-bro_ggsave <- function(gg = last_plot(), filename, device = NULL, path = NULL, scale = 1,
-                       width = NA, height = NA, units = c("in", "cm", "mm"), dpi = 300, limitsize = TRUE, ...) {
-  # this function is adapted from ggplot2::ggsave()
+bro_ggsave_paged <- function(gg = last_plot(), filename, device = NULL, path = NULL, scale = 1,
+                       width = NA, height = NA, units = c("in", "cm", "mm"), dpi = 300, limitsize = TRUE,
+                       return_input = FALSE, ...) {
   if (class(gg)[1] %in% c("patchwork", "gg", "ggplot")) gg <- list(gg)
 
   dimensions <- bro_get_ggsize(gg)
@@ -67,6 +72,7 @@ bro_ggsave <- function(gg = last_plot(), filename, device = NULL, path = NULL, s
     height <- dimensions[["height"]]
   }
 
+  # the rest of the code is adapted from ggplot2::ggsave()
   dpi <- ggplot2:::parse_dpi(dpi)
   dev <- ggplot2:::plot_dev(device, filename, dpi = dpi)
   dim <- ggplot2:::plot_dim(c(width, height), scale = scale, units = units,
@@ -84,9 +90,10 @@ bro_ggsave <- function(gg = last_plot(), filename, device = NULL, path = NULL, s
   map(gg, ~grid::grid.draw(.x))
   invisible()
   if (!is.na(width) & !is.na(height)) message("Saving ", round(width, 2), " x ", round(height, 2), " in image (adjusted to absolute plot dimensions)")
+  if(return_input) return(gg)
 }
 
-#' Wrap mutiple plots in a (multipage) layout
+#' Wrap plots in a single or multi-page layout
 #'
 #' @param plotlist A list of ggplots
 #' @param ncol Number of columns in the layout. If more plots are provided than fit on one page, a list of patchworks is returned.
@@ -96,17 +103,19 @@ bro_ggsave <- function(gg = last_plot(), filename, device = NULL, path = NULL, s
 #' @param ... Other arguments passed on to `patchwork::wrap_plots()`
 #'
 #' @export
-bro_wrap_plots_paged <- function(plotlist, ncol = 1, nrow = 1, width = NULL, height = NULL, ...) {
-  if (!is.numeric(nrow) | !is.numeric(ncol))
-    stop("Values for 'nrow' and 'ncol' need to be integer")
-  plots_per_page <- nrow * ncol
+bro_wrap_plots_paged <- function(plotlist, ncol = NULL, nrow = NULL, width = NULL, height = NULL, ...) {
+  if (is.numeric(ncol) & is.numeric(nrow)) {
+    plots_per_page <- nrow * ncol
+  } else {
+    plots_per_page <- length(plotlist)
+  }
   pages <-
     split(plotlist, ceiling(seq_along(plotlist)/plots_per_page)) %>%
     map(., ~patchwork::wrap_plots(.x, ncol = ncol, nrow = nrow, widths = width, heights = height, guides = "collect", ...))
   unname(pages)
 }
 
-#' Facet_wrap a ggplot to create a (multipage) layout
+#' Facet_wrap a ggplot to create a single or multi-page layout
 #'
 #' @param gg A ggplot or list of ggplots
 #' @param facet_var Descr.
@@ -117,9 +126,7 @@ bro_wrap_plots_paged <- function(plotlist, ncol = 1, nrow = 1, width = NULL, hei
 #' @param ... Descr.
 #'
 #' @export
-bro_facet_wrap_paged <- function(gg, facet_var, ncol = 1, nrow = 1, width = NULL, height = NULL, ...) {
-  if (!is.numeric(nrow) | !is.numeric(ncol))
-    stop("Values for 'nrow' and 'ncol' need to be integer")
+bro_facet_wrap_paged <- function(gg, facet_var, ncol = NULL, nrow = NULL, width = NULL, height = NULL, ...) {
   df <-
     gg$data %>%
     nest(data = -{{facet_var}}) %>%

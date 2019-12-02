@@ -57,6 +57,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/Colors.html">Colors</a>
+    </li>
+    <li>
       <a href="../articles/Heatmaps.html">Heatmaps</a>
     </li>
     <li>
@@ -98,23 +101,327 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(bro)</a></code></pre></div>
-<div id="motivation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#motivation" class="anchor"></a>Motivation</h2>
-<p>This is the heatmaps vignette.</p>
-</div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co">########### bro heatmap function</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tidyverse)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">#&gt; ── Attaching packages ──────────────────────────────────────────────────── tidyverse 1.2.1 ──</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">#&gt; ✔ ggplot2 3.2.1     ✔ purrr   0.3.3</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co">#&gt; ✔ tibble  2.1.3     ✔ dplyr   0.8.3</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co">#&gt; ✔ tidyr   1.0.0     ✔ stringr 1.4.0</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co">#&gt; ✔ readr   1.3.1     ✔ forcats 0.4.0</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co">#&gt; Warning: Paket 'ggplot2' wurde unter R Version 3.5.2 erstellt</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co">#&gt; Warning: Paket 'tibble' wurde unter R Version 3.5.2 erstellt</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co">#&gt; Warning: Paket 'tidyr' wurde unter R Version 3.5.2 erstellt</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co">#&gt; Warning: Paket 'purrr' wurde unter R Version 3.5.2 erstellt</span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="co">#&gt; Warning: Paket 'dplyr' wurde unter R Version 3.5.2 erstellt</span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co">#&gt; Warning: Paket 'stringr' wurde unter R Version 3.5.2 erstellt</span></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="co">#&gt; Warning: Paket 'forcats' wurde unter R Version 3.5.2 erstellt</span></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co">#&gt; ── Conflicts ─────────────────────────────────────────────────────── tidyverse_conflicts() ──</span></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="co">#&gt; ✖ dplyr::filter() masks stats::filter()</span></a>
+<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="co">#&gt; ✖ dplyr::lag()    masks stats::lag()</span></a>
+<a class="sourceLine" id="cb1-19" data-line-number="19"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(bro)</a>
+<a class="sourceLine" id="cb1-20" data-line-number="20"></a>
+<a class="sourceLine" id="cb1-21" data-line-number="21">my_genes &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Tex26"</span>, <span class="st">"Syngr4"</span>, <span class="st">"Plekhb1"</span>, <span class="st">"Tia1"</span>, <span class="st">"Nhlh1"</span>, <span class="st">"Mxd3"</span>)</a>
+<a class="sourceLine" id="cb1-22" data-line-number="22"></a>
+<a class="sourceLine" id="cb1-23" data-line-number="23">my_df &lt;-</a>
+<a class="sourceLine" id="cb1-24" data-line-number="24"><span class="st">  </span>bro_dataset_expression <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-25" data-line-number="25"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(external_gene_name <span class="op">%in%</span><span class="st"> </span>my_genes) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-26" data-line-number="26"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">external_gene_name =</span> <span class="kw">fct_relevel</span>(external_gene_name, my_genes)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-27" data-line-number="27"><span class="st">  </span><span class="kw">arrange</span>(external_gene_name, sample_type, <span class="kw">desc</span>(timepoint), <span class="kw">desc</span>(genotype)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-28" data-line-number="28"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">candidate =</span> <span class="kw">if_else</span>(external_gene_name <span class="op">%in%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Tex26"</span>, <span class="st">"Syngr4"</span>, <span class="st">"Mxd3"</span>), <span class="st">"up"</span>, <span class="st">"down"</span>))</a>
+<a class="sourceLine" id="cb1-29" data-line-number="29"></a>
+<a class="sourceLine" id="cb1-30" data-line-number="30"><span class="kw"><a href="../reference/bro_plot_heatmap.html">bro_plot_heatmap</a></span>(my_df,</a>
+<a class="sourceLine" id="cb1-31" data-line-number="31">                 <span class="dt">rows =</span> external_gene_name,</a>
+<a class="sourceLine" id="cb1-32" data-line-number="32">                 <span class="dt">columns =</span> sample,</a>
+<a class="sourceLine" id="cb1-33" data-line-number="33">                 <span class="dt">values =</span> expression</a>
+<a class="sourceLine" id="cb1-34" data-line-number="34">)</a></code></pre></div>
+<p><img src="Heatmaps_files/figure-html/setup-1.png" width="700"></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="../reference/bro_plot_heatmap.html">bro_plot_heatmap</a></span>(my_df,</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">                 <span class="dt">rows =</span> external_gene_name,</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">                 <span class="dt">columns =</span> sample,</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">                 <span class="dt">values =</span> expression,</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">                 <span class="dt">color_scale_min =</span> <span class="dv">-2</span>,</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">                 <span class="dt">color_scale_max =</span> <span class="dv">2</span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">)</a></code></pre></div>
+<p><img src="Heatmaps_files/figure-html/setup-2.png" width="700"></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw"><a href="../reference/bro_plot_heatmap.html">bro_plot_heatmap</a></span>(my_df,</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">                 <span class="dt">rows =</span> external_gene_name,</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">                 <span class="dt">columns =</span> sample,</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">                 <span class="dt">values =</span> expression,</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">                 <span class="dt">ann_col =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(genotype, timepoint, sample_type),</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">                 <span class="dt">ann_row =</span> candidate,</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">                 <span class="dt">color_scale_min =</span> <span class="dv">-2</span>,</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">                 <span class="dt">color_scale_max =</span> <span class="dv">2</span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">)</a></code></pre></div>
+<p><img src="Heatmaps_files/figure-html/setup-3.png" width="700"></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">ann_colors &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">  <span class="dt">timepoint =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"9w"</span> =<span class="st"> "#1B9E77"</span>, <span class="st">"14w"</span> =<span class="st"> "#D95F02"</span>),</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">  <span class="dt">genotype =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dt">WT =</span> <span class="st">"#7570B3"</span>, <span class="dt">TDP43.WT =</span> <span class="st">"#E7298A"</span>, <span class="dt">TDP43.MUT =</span> <span class="st">"#66A61E"</span>),</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">  <span class="dt">sample_type =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dt">SC =</span> <span class="st">"#C0C0C0"</span>, <span class="dt">TRAP =</span> <span class="st">"#000000"</span>),</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">  <span class="dt">candidate =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dt">up =</span> <span class="st">"#00CCFC"</span>, <span class="dt">down =</span> <span class="st">"#CF0CF0"</span>)</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">)</a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="kw"><a href="../reference/bro_plot_heatmap.html">bro_plot_heatmap</a></span>(my_df,</a>
+<a class="sourceLine" id="cb4-10" data-line-number="10">                 <span class="dt">rows =</span> external_gene_name,</a>
+<a class="sourceLine" id="cb4-11" data-line-number="11">                 <span class="dt">columns =</span> sample,</a>
+<a class="sourceLine" id="cb4-12" data-line-number="12">                 <span class="dt">values =</span> expression,</a>
+<a class="sourceLine" id="cb4-13" data-line-number="13">                 <span class="dt">ann_col =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(genotype, timepoint, sample_type),</a>
+<a class="sourceLine" id="cb4-14" data-line-number="14">                 <span class="dt">ann_row =</span> candidate,</a>
+<a class="sourceLine" id="cb4-15" data-line-number="15">                 <span class="dt">ann_colors =</span> ann_colors,</a>
+<a class="sourceLine" id="cb4-16" data-line-number="16">                 <span class="dt">color_scale_min =</span> <span class="dv">-2</span>,</a>
+<a class="sourceLine" id="cb4-17" data-line-number="17">                 <span class="dt">color_scale_max =</span> <span class="dv">2</span></a>
+<a class="sourceLine" id="cb4-18" data-line-number="18">)</a></code></pre></div>
+<p><img src="Heatmaps_files/figure-html/setup-4.png" width="700"></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw"><a href="../reference/bro_plot_heatmap.html">bro_plot_heatmap</a></span>(my_df,</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">                 <span class="dt">rows =</span> external_gene_name,</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">                 <span class="dt">columns =</span> sample,</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">                 <span class="dt">values =</span> expression,</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">                 <span class="dt">ann_col =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(genotype, timepoint, sample_type),</a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">                 <span class="dt">ann_row =</span> candidate,</a>
+<a class="sourceLine" id="cb5-8" data-line-number="8">                 <span class="dt">gaps_row =</span> candidate,</a>
+<a class="sourceLine" id="cb5-9" data-line-number="9">                 <span class="dt">gaps_col =</span> timepoint,</a>
+<a class="sourceLine" id="cb5-10" data-line-number="10">                 <span class="dt">ann_colors =</span> ann_colors,</a>
+<a class="sourceLine" id="cb5-11" data-line-number="11">                 <span class="dt">color_scale_min =</span> <span class="dv">-2</span>,</a>
+<a class="sourceLine" id="cb5-12" data-line-number="12">                 <span class="dt">color_scale_max =</span> <span class="dv">2</span></a>
+<a class="sourceLine" id="cb5-13" data-line-number="13">)</a></code></pre></div>
+<p><img src="Heatmaps_files/figure-html/setup-5.png" width="700"></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw"><a href="../reference/bro_plot_heatmap.html">bro_plot_heatmap</a></span>(my_df,</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">                 <span class="dt">rows =</span> external_gene_name,</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">                 <span class="dt">columns =</span> sample,</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">                 <span class="dt">values =</span> expression,</a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">                 <span class="dt">ann_col =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(genotype, timepoint, sample_type),</a>
+<a class="sourceLine" id="cb6-7" data-line-number="7">                 <span class="dt">ann_row =</span> candidate,</a>
+<a class="sourceLine" id="cb6-8" data-line-number="8">                 <span class="dt">gaps_row =</span> candidate,</a>
+<a class="sourceLine" id="cb6-9" data-line-number="9">                 <span class="dt">gaps_col =</span> genotype,</a>
+<a class="sourceLine" id="cb6-10" data-line-number="10">                 <span class="dt">ann_colors =</span> ann_colors,</a>
+<a class="sourceLine" id="cb6-11" data-line-number="11">                 <span class="dt">color_scale_min =</span> <span class="dv">-2</span>,</a>
+<a class="sourceLine" id="cb6-12" data-line-number="12">                 <span class="dt">color_scale_max =</span> <span class="dv">2</span></a>
+<a class="sourceLine" id="cb6-13" data-line-number="13">)</a></code></pre></div>
+<p><img src="Heatmaps_files/figure-html/setup-6.png" width="700"></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw"><a href="../reference/bro_plot_heatmap.html">bro_plot_heatmap</a></span>(my_df,</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">                 <span class="dt">rows =</span> <span class="st">"external_gene_name"</span>,</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">                 <span class="dt">columns =</span> <span class="st">"sample"</span>,</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">                 <span class="dt">values =</span> <span class="st">"expression"</span>,</a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">                 <span class="dt">ann_col =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"genotype"</span>, <span class="st">"timepoint"</span>, <span class="st">"sample_type"</span>),</a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">                 <span class="dt">ann_row =</span> <span class="st">"candidate"</span>,</a>
+<a class="sourceLine" id="cb7-8" data-line-number="8">                 <span class="dt">gaps_row =</span> <span class="st">"candidate"</span>,</a>
+<a class="sourceLine" id="cb7-9" data-line-number="9">                 <span class="dt">gaps_col =</span> <span class="st">"genotype"</span>,</a>
+<a class="sourceLine" id="cb7-10" data-line-number="10">                 <span class="dt">ann_colors =</span> ann_colors,</a>
+<a class="sourceLine" id="cb7-11" data-line-number="11">                 <span class="dt">color_scale_min =</span> <span class="dv">-2</span>,</a>
+<a class="sourceLine" id="cb7-12" data-line-number="12">                 <span class="dt">color_scale_max =</span> <span class="dv">2</span></a>
+<a class="sourceLine" id="cb7-13" data-line-number="13">)</a></code></pre></div>
+<p><img src="Heatmaps_files/figure-html/setup-7.png" width="700"></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw"><a href="../reference/bro_plot_heatmap.html">bro_plot_heatmap</a></span>(my_df,</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">                 <span class="dt">rows =</span> <span class="st">"external_gene_name"</span>,</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">                 <span class="dt">columns =</span> <span class="st">"sample"</span>,</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5">                 <span class="dt">values =</span> <span class="st">"expression"</span>,</a>
+<a class="sourceLine" id="cb8-6" data-line-number="6">                 <span class="dt">ann_col =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"genotype"</span>, <span class="st">"timepoint"</span>, <span class="st">"sample_type"</span>),</a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">                 <span class="dt">ann_row =</span> <span class="st">"candidate"</span>,</a>
+<a class="sourceLine" id="cb8-8" data-line-number="8">                 <span class="dt">gaps_row =</span> <span class="st">"candidate"</span>,</a>
+<a class="sourceLine" id="cb8-9" data-line-number="9">                 <span class="dt">gaps_col =</span> <span class="st">"genotype"</span>,</a>
+<a class="sourceLine" id="cb8-10" data-line-number="10">                 <span class="dt">ann_colors =</span> ann_colors,</a>
+<a class="sourceLine" id="cb8-11" data-line-number="11">                 <span class="dt">color_scale_min =</span> <span class="dv">-2</span>,</a>
+<a class="sourceLine" id="cb8-12" data-line-number="12">                 <span class="dt">color_scale_max =</span> <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb8-13" data-line-number="13">                 <span class="dt">return_data =</span> <span class="ot">TRUE</span></a>
+<a class="sourceLine" id="cb8-14" data-line-number="14">)</a>
+<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">#&gt; $m</span></a>
+<a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co">#&gt;         WT_9w_SC_605 WT_9w_SC_620 WT_9w_SC_842 WT_9w_SC_843 WT_9w_SC_883</span></a>
+<a class="sourceLine" id="cb8-17" data-line-number="17"><span class="co">#&gt; Tex26   1.192633e+01     5.737900     1.481470     4.476460     7.321744</span></a>
+<a class="sourceLine" id="cb8-18" data-line-number="18"><span class="co">#&gt; Syngr4  7.950889e-01     7.172375     0.000000     1.492153     5.694690</span></a>
+<a class="sourceLine" id="cb8-19" data-line-number="19"><span class="co">#&gt; Plekhb1 1.944549e+04 19547.590309 25688.693020 26273.089157 23684.214752</span></a>
+<a class="sourceLine" id="cb8-20" data-line-number="20"><span class="co">#&gt; Tia1    9.167375e+02   740.189080  1005.918256   772.935407  1081.991056</span></a>
+<a class="sourceLine" id="cb8-21" data-line-number="21"><span class="co">#&gt; Nhlh1   2.703302e+01    18.648175    56.295867    34.319526    30.100503</span></a>
+<a class="sourceLine" id="cb8-22" data-line-number="22"><span class="co">#&gt; Mxd3    1.351651e+01    10.041325     4.444411    11.937226    10.575852</span></a>
+<a class="sourceLine" id="cb8-23" data-line-number="23"><span class="co">#&gt;         WT_9w_SC_884 TDP43.WT_9w_SC_813 TDP43.WT_9w_SC_824 TDP43.WT_9w_SC_841</span></a>
+<a class="sourceLine" id="cb8-24" data-line-number="24"><span class="co">#&gt; Tex26       7.172414          10.198349           9.101420           8.891436</span></a>
+<a class="sourceLine" id="cb8-25" data-line-number="25"><span class="co">#&gt; Syngr4      7.172414           2.622432           6.424531           2.222859</span></a>
+<a class="sourceLine" id="cb8-26" data-line-number="26"><span class="co">#&gt; Plekhb1 23060.206152       22276.689934       20438.576021       25591.775602</span></a>
+<a class="sourceLine" id="cb8-27" data-line-number="27"><span class="co">#&gt; Tia1     1505.310296         857.244046         598.016802        1378.172577</span></a>
+<a class="sourceLine" id="cb8-28" data-line-number="28"><span class="co">#&gt; Nhlh1      36.758620          35.548529          36.405678          22.228590</span></a>
+<a class="sourceLine" id="cb8-29" data-line-number="29"><span class="co">#&gt; Mxd3       16.137931          17.774265          11.778308          12.225724</span></a>
+<a class="sourceLine" id="cb8-30" data-line-number="30"><span class="co">#&gt;         TDP43.WT_9w_SC_844 TDP43.WT_9w_SC_878 TDP43.WT_9w_SC_828</span></a>
+<a class="sourceLine" id="cb8-31" data-line-number="31"><span class="co">#&gt; Tex26             5.509651           9.060298           8.873147</span></a>
+<a class="sourceLine" id="cb8-32" data-line-number="32"><span class="co">#&gt; Syngr4            2.203861           3.020099           6.285146</span></a>
+<a class="sourceLine" id="cb8-33" data-line-number="33"><span class="co">#&gt; Plekhb1       24562.026139       25100.046170       21443.807567</span></a>
+<a class="sourceLine" id="cb8-34" data-line-number="34"><span class="co">#&gt; Tia1           2286.505349        1231.445533         697.651159</span></a>
+<a class="sourceLine" id="cb8-35" data-line-number="35"><span class="co">#&gt; Nhlh1            26.446327          33.221093          36.232016</span></a>
+<a class="sourceLine" id="cb8-36" data-line-number="36"><span class="co">#&gt; Mxd3             18.732815          18.120596          18.855437</span></a>
+<a class="sourceLine" id="cb8-37" data-line-number="37"><span class="co">#&gt;         TDP43.MUT_9w_SC_610 TDP43.MUT_9w_SC_612 TDP43.MUT_9w_SC_613</span></a>
+<a class="sourceLine" id="cb8-38" data-line-number="38"><span class="co">#&gt; Tex26              7.568888           12.630422           12.621757</span></a>
+<a class="sourceLine" id="cb8-39" data-line-number="39"><span class="co">#&gt; Syngr4             5.045926            4.942339            5.487721</span></a>
+<a class="sourceLine" id="cb8-40" data-line-number="40"><span class="co">#&gt; Plekhb1        22004.440203        19862.711951        18712.578242</span></a>
+<a class="sourceLine" id="cb8-41" data-line-number="41"><span class="co">#&gt; Tia1             756.047840          968.149327          795.719477</span></a>
+<a class="sourceLine" id="cb8-42" data-line-number="42"><span class="co">#&gt; Nhlh1             31.957528           35.145523           22.499654</span></a>
+<a class="sourceLine" id="cb8-43" data-line-number="43"><span class="co">#&gt; Mxd3              18.501727           23.064249           12.072985</span></a>
+<a class="sourceLine" id="cb8-44" data-line-number="44"><span class="co">#&gt;         TDP43.MUT_9w_SC_617 TDP43.MUT_9w_SC_619 WT_14w_SC_556 WT_14w_SC_794</span></a>
+<a class="sourceLine" id="cb8-45" data-line-number="45"><span class="co">#&gt; Tex26             10.961648           13.529608      9.643840      9.180506</span></a>
+<a class="sourceLine" id="cb8-46" data-line-number="46"><span class="co">#&gt; Syngr4             3.197147            4.509869      2.410960      6.355735</span></a>
+<a class="sourceLine" id="cb8-47" data-line-number="47"><span class="co">#&gt; Plekhb1        17653.277097        20003.524766  21039.645145  31321.062361</span></a>
+<a class="sourceLine" id="cb8-48" data-line-number="48"><span class="co">#&gt; Tia1             794.719468          777.952434    642.119040   1612.238126</span></a>
+<a class="sourceLine" id="cb8-49" data-line-number="49"><span class="co">#&gt; Nhlh1             22.380031           32.320729     30.137001     33.191061</span></a>
+<a class="sourceLine" id="cb8-50" data-line-number="50"><span class="co">#&gt; Mxd3              18.269413           18.791122      9.242014     37.428218</span></a>
+<a class="sourceLine" id="cb8-51" data-line-number="51"><span class="co">#&gt;         WT_14w_SC_796 WT_14w_SC_812 WT_14w_SC_826 TDP43.WT_14w_SC_779</span></a>
+<a class="sourceLine" id="cb8-52" data-line-number="52"><span class="co">#&gt; Tex26        5.974940      2.473903      19.43338           10.919932</span></a>
+<a class="sourceLine" id="cb8-53" data-line-number="53"><span class="co">#&gt; Syngr4       2.172705      4.123172       1.14314            4.367973</span></a>
+<a class="sourceLine" id="cb8-54" data-line-number="54"><span class="co">#&gt; Plekhb1  23529.856947  21667.271191   23426.36392        20009.138293</span></a>
+<a class="sourceLine" id="cb8-55" data-line-number="55"><span class="co">#&gt; Tia1      1435.071956   1591.544563    2447.46231          998.081829</span></a>
+<a class="sourceLine" id="cb8-56" data-line-number="56"><span class="co">#&gt; Nhlh1       28.245171     27.212938      28.57850           22.385862</span></a>
+<a class="sourceLine" id="cb8-57" data-line-number="57"><span class="co">#&gt; Mxd3         8.147645      5.772441      12.57454            8.735946</span></a>
+<a class="sourceLine" id="cb8-58" data-line-number="58"><span class="co">#&gt;         TDP43.WT_14w_SC_783 TDP43.WT_14w_SC_793 TDP43.WT_14w_SC_876</span></a>
+<a class="sourceLine" id="cb8-59" data-line-number="59"><span class="co">#&gt; Tex26          9.564381e+00           11.841250            8.775289</span></a>
+<a class="sourceLine" id="cb8-60" data-line-number="60"><span class="co">#&gt; Syngr4         6.831701e-01            6.512688            6.194322</span></a>
+<a class="sourceLine" id="cb8-61" data-line-number="61"><span class="co">#&gt; Plekhb1        2.203565e+04        28411.304312        21938.223385</span></a>
+<a class="sourceLine" id="cb8-62" data-line-number="62"><span class="co">#&gt; Tia1           1.097171e+03         1077.553793          803.197073</span></a>
+<a class="sourceLine" id="cb8-63" data-line-number="63"><span class="co">#&gt; Nhlh1          4.030704e+01           39.076127           26.842062</span></a>
+<a class="sourceLine" id="cb8-64" data-line-number="64"><span class="co">#&gt; Mxd3           8.881211e+00            5.328563            8.775289</span></a>
+<a class="sourceLine" id="cb8-65" data-line-number="65"><span class="co">#&gt;         TDP43.WT_14w_SC_886 TDP43.MUT_14w_SC_557 TDP43.MUT_14w_SC_566</span></a>
+<a class="sourceLine" id="cb8-66" data-line-number="66"><span class="co">#&gt; Tex26              13.80982             16.91256            16.671852</span></a>
+<a class="sourceLine" id="cb8-67" data-line-number="67"><span class="co">#&gt; Syngr4              0.00000              2.55284             3.646968</span></a>
+<a class="sourceLine" id="cb8-68" data-line-number="68"><span class="co">#&gt; Plekhb1         18701.78289          18664.12950         18609.433903</span></a>
+<a class="sourceLine" id="cb8-69" data-line-number="69"><span class="co">#&gt; Tia1             1327.71545            853.60574           735.645474</span></a>
+<a class="sourceLine" id="cb8-70" data-line-number="70"><span class="co">#&gt; Nhlh1              30.25008             34.78244            29.696737</span></a>
+<a class="sourceLine" id="cb8-71" data-line-number="71"><span class="co">#&gt; Mxd3               11.17938             12.12599             7.814931</span></a>
+<a class="sourceLine" id="cb8-72" data-line-number="72"><span class="co">#&gt;         TDP43.MUT_14w_SC_578 TDP43.MUT_14w_SC_579 WT_9w_TRAP_620 WT_9w_TRAP_843</span></a>
+<a class="sourceLine" id="cb8-73" data-line-number="73"><span class="co">#&gt; Tex26              15.453195            12.221033       4.193711       9.391628</span></a>
+<a class="sourceLine" id="cb8-74" data-line-number="74"><span class="co">#&gt; Syngr4              4.754829             4.230358       2.096855      15.171091</span></a>
+<a class="sourceLine" id="cb8-75" data-line-number="75"><span class="co">#&gt; Plekhb1         20020.803196         19935.324837    2608.488096   15028.771827</span></a>
+<a class="sourceLine" id="cb8-76" data-line-number="76"><span class="co">#&gt; Tia1              713.224398           712.110184     157.264154     892.927077</span></a>
+<a class="sourceLine" id="cb8-77" data-line-number="77"><span class="co">#&gt; Nhlh1              25.557208            32.902781      12.581132       4.334597</span></a>
+<a class="sourceLine" id="cb8-78" data-line-number="78"><span class="co">#&gt; Mxd3               12.481427            23.972026       6.290566      16.615957</span></a>
+<a class="sourceLine" id="cb8-79" data-line-number="79"><span class="co">#&gt;         WT_9w_TRAP_883 WT_9w_TRAP_605 TDP43.WT_9w_TRAP_824 TDP43.WT_9w_TRAP_844</span></a>
+<a class="sourceLine" id="cb8-80" data-line-number="80"><span class="co">#&gt; Tex26           0.0000       6.271833                0.000              0.00000</span></a>
+<a class="sourceLine" id="cb8-81" data-line-number="81"><span class="co">#&gt; Syngr4          0.0000       3.062988                0.000              0.00000</span></a>
+<a class="sourceLine" id="cb8-82" data-line-number="82"><span class="co">#&gt; Plekhb1      3046.4520    1718.628095             2643.658           7927.21002</span></a>
+<a class="sourceLine" id="cb8-83" data-line-number="83"><span class="co">#&gt; Tia1          132.4544     174.590328                0.000            307.75902</span></a>
+<a class="sourceLine" id="cb8-84" data-line-number="84"><span class="co">#&gt; Nhlh1           0.0000      13.710519                0.000             11.04068</span></a>
+<a class="sourceLine" id="cb8-85" data-line-number="85"><span class="co">#&gt; Mxd3            0.0000      15.898367                0.000              0.00000</span></a>
+<a class="sourceLine" id="cb8-86" data-line-number="86"><span class="co">#&gt;         TDP43.WT_9w_TRAP_878 TDP43.MUT_9w_TRAP_610 TDP43.MUT_9w_TRAP_612</span></a>
+<a class="sourceLine" id="cb8-87" data-line-number="87"><span class="co">#&gt; Tex26               5.341492               1.14438              6.090764</span></a>
+<a class="sourceLine" id="cb8-88" data-line-number="88"><span class="co">#&gt; Syngr4              5.341492              21.74322              9.897492</span></a>
+<a class="sourceLine" id="cb8-89" data-line-number="89"><span class="co">#&gt; Plekhb1          2973.430427            1706.27035           2245.207938</span></a>
+<a class="sourceLine" id="cb8-90" data-line-number="90"><span class="co">#&gt; Tia1              240.367130             298.68314            149.985067</span></a>
+<a class="sourceLine" id="cb8-91" data-line-number="91"><span class="co">#&gt; Nhlh1              14.243978               0.00000             22.079020</span></a>
+<a class="sourceLine" id="cb8-92" data-line-number="92"><span class="co">#&gt; Mxd3               30.268453               1.14438             19.033638</span></a>
+<a class="sourceLine" id="cb8-93" data-line-number="93"><span class="co">#&gt;         TDP43.MUT_9w_TRAP_613 TDP43.MUT_9w_TRAP_617 TDP43.MUT_9w_TRAP_619</span></a>
+<a class="sourceLine" id="cb8-94" data-line-number="94"><span class="co">#&gt; Tex26                5.224259              18.45552              5.791168</span></a>
+<a class="sourceLine" id="cb8-95" data-line-number="95"><span class="co">#&gt; Syngr4               8.209550               3.35555              0.000000</span></a>
+<a class="sourceLine" id="cb8-96" data-line-number="96"><span class="co">#&gt; Plekhb1           2497.942061            1952.92986           1822.287501</span></a>
+<a class="sourceLine" id="cb8-97" data-line-number="97"><span class="co">#&gt; Tia1                80.602851             233.21070            181.456594</span></a>
+<a class="sourceLine" id="cb8-98" data-line-number="98"><span class="co">#&gt; Nhlh1               13.433809              16.77775             15.443114</span></a>
+<a class="sourceLine" id="cb8-99" data-line-number="99"><span class="co">#&gt; Mxd3                24.628649              11.74442             17.373504</span></a>
+<a class="sourceLine" id="cb8-100" data-line-number="100"><span class="co">#&gt;         WT_14w_TRAP_794 WT_14w_TRAP_812 WT_14w_TRAP_826 WT_14w_TRAP_796</span></a>
+<a class="sourceLine" id="cb8-101" data-line-number="101"><span class="co">#&gt; Tex26          0.000000           0.000          0.0000       11.639435</span></a>
+<a class="sourceLine" id="cb8-102" data-line-number="102"><span class="co">#&gt; Syngr4         0.000000           0.000          0.0000        5.819718</span></a>
+<a class="sourceLine" id="cb8-103" data-line-number="103"><span class="co">#&gt; Plekhb1    17305.371487        7118.347       5065.7010     3817.734813</span></a>
+<a class="sourceLine" id="cb8-104" data-line-number="104"><span class="co">#&gt; Tia1        1284.889240         728.841        246.2285      232.788708</span></a>
+<a class="sourceLine" id="cb8-105" data-line-number="105"><span class="co">#&gt; Nhlh1          0.000000           0.000          0.0000        0.000000</span></a>
+<a class="sourceLine" id="cb8-106" data-line-number="106"><span class="co">#&gt; Mxd3           3.294588           0.000          0.0000       29.098589</span></a>
+<a class="sourceLine" id="cb8-107" data-line-number="107"><span class="co">#&gt;         TDP43.WT_14w_TRAP_779 TDP43.WT_14w_TRAP_793 TDP43.WT_14w_TRAP_876</span></a>
+<a class="sourceLine" id="cb8-108" data-line-number="108"><span class="co">#&gt; Tex26                2.535988             17.416652              0.000000</span></a>
+<a class="sourceLine" id="cb8-109" data-line-number="109"><span class="co">#&gt; Syngr4               0.000000              0.000000             11.045721</span></a>
+<a class="sourceLine" id="cb8-110" data-line-number="110"><span class="co">#&gt; Plekhb1           5761.764331          14238.905027          13097.464081</span></a>
+<a class="sourceLine" id="cb8-111" data-line-number="111"><span class="co">#&gt; Tia1               530.021455           1052.915806            226.437288</span></a>
+<a class="sourceLine" id="cb8-112" data-line-number="112"><span class="co">#&gt; Nhlh1                5.071976              0.000000              5.522861</span></a>
+<a class="sourceLine" id="cb8-113" data-line-number="113"><span class="co">#&gt; Mxd3                12.679939              3.166664              2.761430</span></a>
+<a class="sourceLine" id="cb8-114" data-line-number="114"><span class="co">#&gt;         TDP43.WT_14w_TRAP_886 TDP43.WT_14w_TRAP_783 TDP43.MUT_14w_TRAP_508</span></a>
+<a class="sourceLine" id="cb8-115" data-line-number="115"><span class="co">#&gt; Tex26                7.056008             13.296490               19.92147</span></a>
+<a class="sourceLine" id="cb8-116" data-line-number="116"><span class="co">#&gt; Syngr4               2.822403              4.359505               13.28098</span></a>
+<a class="sourceLine" id="cb8-117" data-line-number="117"><span class="co">#&gt; Plekhb1           7559.807419           2391.079441             2215.71017</span></a>
+<a class="sourceLine" id="cb8-118" data-line-number="118"><span class="co">#&gt; Tia1               520.733421            227.239192              207.33086</span></a>
+<a class="sourceLine" id="cb8-119" data-line-number="119"><span class="co">#&gt; Nhlh1                2.822403             20.380685               16.23231</span></a>
+<a class="sourceLine" id="cb8-120" data-line-number="120"><span class="co">#&gt; Mxd3                 7.056008             13.950416               24.34846</span></a>
+<a class="sourceLine" id="cb8-121" data-line-number="121"><span class="co">#&gt;         TDP43.MUT_14w_TRAP_566 TDP43.MUT_14w_TRAP_578 TDP43.MUT_14w_TRAP_579</span></a>
+<a class="sourceLine" id="cb8-122" data-line-number="122"><span class="co">#&gt; Tex26                 48.28099              13.744334               28.26510</span></a>
+<a class="sourceLine" id="cb8-123" data-line-number="123"><span class="co">#&gt; Syngr4                22.28353               6.872167               24.22723</span></a>
+<a class="sourceLine" id="cb8-124" data-line-number="124"><span class="co">#&gt; Plekhb1             2786.67979            2416.712125             2049.89256</span></a>
+<a class="sourceLine" id="cb8-125" data-line-number="125"><span class="co">#&gt; Tia1                 190.64802             213.037183              157.47697</span></a>
+<a class="sourceLine" id="cb8-126" data-line-number="126"><span class="co">#&gt; Nhlh1                 49.51897              18.325779               28.26510</span></a>
+<a class="sourceLine" id="cb8-127" data-line-number="127"><span class="co">#&gt; Mxd3                  69.32655              27.488669               29.61105</span></a>
+<a class="sourceLine" id="cb8-128" data-line-number="128"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-129" data-line-number="129"><span class="co">#&gt; $ann_row</span></a>
+<a class="sourceLine" id="cb8-130" data-line-number="130"><span class="co">#&gt;         candidate</span></a>
+<a class="sourceLine" id="cb8-131" data-line-number="131"><span class="co">#&gt; Tex26          up</span></a>
+<a class="sourceLine" id="cb8-132" data-line-number="132"><span class="co">#&gt; Syngr4         up</span></a>
+<a class="sourceLine" id="cb8-133" data-line-number="133"><span class="co">#&gt; Plekhb1      down</span></a>
+<a class="sourceLine" id="cb8-134" data-line-number="134"><span class="co">#&gt; Tia1         down</span></a>
+<a class="sourceLine" id="cb8-135" data-line-number="135"><span class="co">#&gt; Nhlh1        down</span></a>
+<a class="sourceLine" id="cb8-136" data-line-number="136"><span class="co">#&gt; Mxd3           up</span></a>
+<a class="sourceLine" id="cb8-137" data-line-number="137"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-138" data-line-number="138"><span class="co">#&gt; $ann_col</span></a>
+<a class="sourceLine" id="cb8-139" data-line-number="139"><span class="co">#&gt;                         genotype timepoint sample_type</span></a>
+<a class="sourceLine" id="cb8-140" data-line-number="140"><span class="co">#&gt; WT_9w_SC_605                  WT        9w          SC</span></a>
+<a class="sourceLine" id="cb8-141" data-line-number="141"><span class="co">#&gt; WT_9w_SC_620                  WT        9w          SC</span></a>
+<a class="sourceLine" id="cb8-142" data-line-number="142"><span class="co">#&gt; WT_9w_SC_842                  WT        9w          SC</span></a>
+<a class="sourceLine" id="cb8-143" data-line-number="143"><span class="co">#&gt; WT_9w_SC_843                  WT        9w          SC</span></a>
+<a class="sourceLine" id="cb8-144" data-line-number="144"><span class="co">#&gt; WT_9w_SC_883                  WT        9w          SC</span></a>
+<a class="sourceLine" id="cb8-145" data-line-number="145"><span class="co">#&gt; WT_9w_SC_884                  WT        9w          SC</span></a>
+<a class="sourceLine" id="cb8-146" data-line-number="146"><span class="co">#&gt; TDP43.WT_9w_SC_813      TDP43.WT        9w          SC</span></a>
+<a class="sourceLine" id="cb8-147" data-line-number="147"><span class="co">#&gt; TDP43.WT_9w_SC_824      TDP43.WT        9w          SC</span></a>
+<a class="sourceLine" id="cb8-148" data-line-number="148"><span class="co">#&gt; TDP43.WT_9w_SC_841      TDP43.WT        9w          SC</span></a>
+<a class="sourceLine" id="cb8-149" data-line-number="149"><span class="co">#&gt; TDP43.WT_9w_SC_844      TDP43.WT        9w          SC</span></a>
+<a class="sourceLine" id="cb8-150" data-line-number="150"><span class="co">#&gt; TDP43.WT_9w_SC_878      TDP43.WT        9w          SC</span></a>
+<a class="sourceLine" id="cb8-151" data-line-number="151"><span class="co">#&gt; TDP43.WT_9w_SC_828      TDP43.WT        9w          SC</span></a>
+<a class="sourceLine" id="cb8-152" data-line-number="152"><span class="co">#&gt; TDP43.MUT_9w_SC_610    TDP43.MUT        9w          SC</span></a>
+<a class="sourceLine" id="cb8-153" data-line-number="153"><span class="co">#&gt; TDP43.MUT_9w_SC_612    TDP43.MUT        9w          SC</span></a>
+<a class="sourceLine" id="cb8-154" data-line-number="154"><span class="co">#&gt; TDP43.MUT_9w_SC_613    TDP43.MUT        9w          SC</span></a>
+<a class="sourceLine" id="cb8-155" data-line-number="155"><span class="co">#&gt; TDP43.MUT_9w_SC_617    TDP43.MUT        9w          SC</span></a>
+<a class="sourceLine" id="cb8-156" data-line-number="156"><span class="co">#&gt; TDP43.MUT_9w_SC_619    TDP43.MUT        9w          SC</span></a>
+<a class="sourceLine" id="cb8-157" data-line-number="157"><span class="co">#&gt; WT_14w_SC_556                 WT       14w          SC</span></a>
+<a class="sourceLine" id="cb8-158" data-line-number="158"><span class="co">#&gt; WT_14w_SC_794                 WT       14w          SC</span></a>
+<a class="sourceLine" id="cb8-159" data-line-number="159"><span class="co">#&gt; WT_14w_SC_796                 WT       14w          SC</span></a>
+<a class="sourceLine" id="cb8-160" data-line-number="160"><span class="co">#&gt; WT_14w_SC_812                 WT       14w          SC</span></a>
+<a class="sourceLine" id="cb8-161" data-line-number="161"><span class="co">#&gt; WT_14w_SC_826                 WT       14w          SC</span></a>
+<a class="sourceLine" id="cb8-162" data-line-number="162"><span class="co">#&gt; TDP43.WT_14w_SC_779     TDP43.WT       14w          SC</span></a>
+<a class="sourceLine" id="cb8-163" data-line-number="163"><span class="co">#&gt; TDP43.WT_14w_SC_783     TDP43.WT       14w          SC</span></a>
+<a class="sourceLine" id="cb8-164" data-line-number="164"><span class="co">#&gt; TDP43.WT_14w_SC_793     TDP43.WT       14w          SC</span></a>
+<a class="sourceLine" id="cb8-165" data-line-number="165"><span class="co">#&gt; TDP43.WT_14w_SC_876     TDP43.WT       14w          SC</span></a>
+<a class="sourceLine" id="cb8-166" data-line-number="166"><span class="co">#&gt; TDP43.WT_14w_SC_886     TDP43.WT       14w          SC</span></a>
+<a class="sourceLine" id="cb8-167" data-line-number="167"><span class="co">#&gt; TDP43.MUT_14w_SC_557   TDP43.MUT       14w          SC</span></a>
+<a class="sourceLine" id="cb8-168" data-line-number="168"><span class="co">#&gt; TDP43.MUT_14w_SC_566   TDP43.MUT       14w          SC</span></a>
+<a class="sourceLine" id="cb8-169" data-line-number="169"><span class="co">#&gt; TDP43.MUT_14w_SC_578   TDP43.MUT       14w          SC</span></a>
+<a class="sourceLine" id="cb8-170" data-line-number="170"><span class="co">#&gt; TDP43.MUT_14w_SC_579   TDP43.MUT       14w          SC</span></a>
+<a class="sourceLine" id="cb8-171" data-line-number="171"><span class="co">#&gt; WT_9w_TRAP_620                WT        9w        TRAP</span></a>
+<a class="sourceLine" id="cb8-172" data-line-number="172"><span class="co">#&gt; WT_9w_TRAP_843                WT        9w        TRAP</span></a>
+<a class="sourceLine" id="cb8-173" data-line-number="173"><span class="co">#&gt; WT_9w_TRAP_883                WT        9w        TRAP</span></a>
+<a class="sourceLine" id="cb8-174" data-line-number="174"><span class="co">#&gt; WT_9w_TRAP_605                WT        9w        TRAP</span></a>
+<a class="sourceLine" id="cb8-175" data-line-number="175"><span class="co">#&gt; TDP43.WT_9w_TRAP_824    TDP43.WT        9w        TRAP</span></a>
+<a class="sourceLine" id="cb8-176" data-line-number="176"><span class="co">#&gt; TDP43.WT_9w_TRAP_844    TDP43.WT        9w        TRAP</span></a>
+<a class="sourceLine" id="cb8-177" data-line-number="177"><span class="co">#&gt; TDP43.WT_9w_TRAP_878    TDP43.WT        9w        TRAP</span></a>
+<a class="sourceLine" id="cb8-178" data-line-number="178"><span class="co">#&gt; TDP43.MUT_9w_TRAP_610  TDP43.MUT        9w        TRAP</span></a>
+<a class="sourceLine" id="cb8-179" data-line-number="179"><span class="co">#&gt; TDP43.MUT_9w_TRAP_612  TDP43.MUT        9w        TRAP</span></a>
+<a class="sourceLine" id="cb8-180" data-line-number="180"><span class="co">#&gt; TDP43.MUT_9w_TRAP_613  TDP43.MUT        9w        TRAP</span></a>
+<a class="sourceLine" id="cb8-181" data-line-number="181"><span class="co">#&gt; TDP43.MUT_9w_TRAP_617  TDP43.MUT        9w        TRAP</span></a>
+<a class="sourceLine" id="cb8-182" data-line-number="182"><span class="co">#&gt; TDP43.MUT_9w_TRAP_619  TDP43.MUT        9w        TRAP</span></a>
+<a class="sourceLine" id="cb8-183" data-line-number="183"><span class="co">#&gt; WT_14w_TRAP_794               WT       14w        TRAP</span></a>
+<a class="sourceLine" id="cb8-184" data-line-number="184"><span class="co">#&gt; WT_14w_TRAP_812               WT       14w        TRAP</span></a>
+<a class="sourceLine" id="cb8-185" data-line-number="185"><span class="co">#&gt; WT_14w_TRAP_826               WT       14w        TRAP</span></a>
+<a class="sourceLine" id="cb8-186" data-line-number="186"><span class="co">#&gt; WT_14w_TRAP_796               WT       14w        TRAP</span></a>
+<a class="sourceLine" id="cb8-187" data-line-number="187"><span class="co">#&gt; TDP43.WT_14w_TRAP_779   TDP43.WT       14w        TRAP</span></a>
+<a class="sourceLine" id="cb8-188" data-line-number="188"><span class="co">#&gt; TDP43.WT_14w_TRAP_793   TDP43.WT       14w        TRAP</span></a>
+<a class="sourceLine" id="cb8-189" data-line-number="189"><span class="co">#&gt; TDP43.WT_14w_TRAP_876   TDP43.WT       14w        TRAP</span></a>
+<a class="sourceLine" id="cb8-190" data-line-number="190"><span class="co">#&gt; TDP43.WT_14w_TRAP_886   TDP43.WT       14w        TRAP</span></a>
+<a class="sourceLine" id="cb8-191" data-line-number="191"><span class="co">#&gt; TDP43.WT_14w_TRAP_783   TDP43.WT       14w        TRAP</span></a>
+<a class="sourceLine" id="cb8-192" data-line-number="192"><span class="co">#&gt; TDP43.MUT_14w_TRAP_508 TDP43.MUT       14w        TRAP</span></a>
+<a class="sourceLine" id="cb8-193" data-line-number="193"><span class="co">#&gt; TDP43.MUT_14w_TRAP_566 TDP43.MUT       14w        TRAP</span></a>
+<a class="sourceLine" id="cb8-194" data-line-number="194"><span class="co">#&gt; TDP43.MUT_14w_TRAP_578 TDP43.MUT       14w        TRAP</span></a>
+<a class="sourceLine" id="cb8-195" data-line-number="195"><span class="co">#&gt; TDP43.MUT_14w_TRAP_579 TDP43.MUT       14w        TRAP</span></a>
+<a class="sourceLine" id="cb8-196" data-line-number="196"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-197" data-line-number="197"><span class="co">#&gt; $gaps_row</span></a>
+<a class="sourceLine" id="cb8-198" data-line-number="198"><span class="co">#&gt; [1] 2 5</span></a>
+<a class="sourceLine" id="cb8-199" data-line-number="199"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-200" data-line-number="200"><span class="co">#&gt; $gaps_col</span></a>
+<a class="sourceLine" id="cb8-201" data-line-number="201"><span class="co">#&gt;  [1]  6 12 17 22 27 31 35 38 43 47 52</span></a></code></pre></div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
 
-        <div id="tocnav">
-      <h2 class="hasAnchor">
-<a href="#tocnav" class="anchor"></a>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-<li><a href="#motivation">Motivation</a></li>
-      </ul>
-</div>
       </div>
 
 </div>

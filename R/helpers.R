@@ -29,6 +29,10 @@ bro_top_n <- function(df, n, ...) {
     filter(row_number() %in% 1:n)
 }
 
+bro_check_var <- function(df, var) {
+  count(df, {{var}}) %>% count(n)
+}
+
 #' @export
 bro_str_capture <- function(string, pattern) {
   m <- stringr::str_match(string, pattern)

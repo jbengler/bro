@@ -59,25 +59,24 @@ bro_scale_fill_d <- function(palette = "metro_ui", reverse = FALSE, ...) {
 }
 
 #' @export
-bro_pals_show <- function(pals = bro_pals) {
-  pals <-
+bro_pals_show <- function(pals = bro_pals, show_labels = FALSE) {
+  tidy_pals <-
     tibble::enframe(pals, name = "pal") %>%
-    tidyr::unnest() %>%
+    tidyr::unnest(cols = c(value)) %>%
     tibble::rownames_to_column("nr") %>%
-    dplyr::mutate(nr = as.double(nr),
-                  nr_value = paste0(nr,value)
-    )
+    mutate(
+      nr = factor(nr, levels = row_number()),
+      label_color = if_else(as(colorspace::hex2RGB(value), "HLS")@coords[,2] > 0.6, "#000000", "#FFFFFF"))
 
-  gg <-
-    ggplot(pals, aes(x = nr, y = 1, fill = haven::as_factor(nr_value))) +
-    geom_tile() +
-    #geom_text(data = . %>% filter((nr %% 2) == 0), aes(label = value), angle = 90) +
-    scale_fill_manual(values = pals$value, guide = "none") +
+  ggplot(tidy_pals, aes(x = nr, y = 1)) +
+    geom_tile(fill = tidy_pals$value) +
+    { if (show_labels) geom_text(aes(label = value), angle = 90, size = 2.5, color = tidy_pals$label_color) else NULL
+    } +
+    scale_x_discrete(expand = c(0, 0)) +
+    facet_wrap(vars(pal), scales = "free", ncol = 2) +
+    bro_style_font_size() +
     theme_void() +
-    theme(aspect.ratio = 0.2) +
-    facet_wrap(~pal, scales = "free_x", ncol = 2)
-
-  return(gg)
+    theme(axis.ticks = element_line(colour = "#FFFFFF"))
 }
 
 #' @export
