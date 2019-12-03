@@ -20,108 +20,102 @@ knitr::opts_chunk$set(
 library(tidyverse)
 library(bro)
 
-my_genes <- c("Tex26", "Syngr4", "Plekhb1", "Tia1", "Nhlh1", "Mxd3")
-
-my_df <-
-  bro_dataset_expression %>%
-  filter(external_gene_name %in% my_genes) %>%
-  mutate(external_gene_name = fct_relevel(external_gene_name, my_genes)) %>%
-  arrange(external_gene_name, sample_type, desc(timepoint), desc(genotype)) %>%
-  mutate(candidate = if_else(external_gene_name %in% c("Tex26", "Syngr4", "Mxd3"), "up", "down"))
-
-bro_plot_heatmap(my_df,
+bro_plot_heatmap(bro_data_exprs,
                  rows = external_gene_name,
                  columns = sample,
                  values = expression
 )
 
-bro_plot_heatmap(my_df,
+bro_plot_heatmap(bro_data_exprs,
                  rows = external_gene_name,
                  columns = sample,
                  values = expression,
+                 scale = "row"
+)
+
+bro_plot_heatmap(bro_data_exprs,
+                 rows = external_gene_name,
+                 columns = sample,
+                 values = expression,
+                 scale = "row",
+                 color_scale_n = 16,
                  color_scale_min = -2,
                  color_scale_max = 2
 )
 
-bro_plot_heatmap(my_df,
+bro_plot_heatmap(bro_data_exprs,
                  rows = external_gene_name,
                  columns = sample,
                  values = expression,
-                 ann_col = c(genotype, timepoint, sample_type),
-                 ann_row = candidate,
+                 ann_col = c(sample_type, condition, group),
+                 ann_row = c(is_immune_gene, direction),
+                 scale = "row",
+                 color_scale_n = 16,
                  color_scale_min = -2,
                  color_scale_max = 2
 )
 
 ann_colors <- list(
-  timepoint = c("9w" = "#1B9E77", "14w" = "#D95F02"),
-  genotype = c(WT = "#7570B3", TDP43.WT = "#E7298A", TDP43.MUT = "#66A61E"),
-  sample_type = c(SC = "#C0C0C0", TRAP = "#000000"),
-  candidate = c(up = "#00CCFC", down = "#CF0CF0")
+  condition = c(EAE = "#BD79B4", healthy = "#F5CEF2"),
+  group = c(Ein = "#C14236", Eip = "#E28946", Hin = "#4978AB", Hip = "#98BB85"),
+  sample_type = c(input = "#BDBDBD", IP = "#7D7D7D"),
+  direction = c(down = "#5071DC", up = "#C34B6B"),
+  is_immune_gene = c(yes = "#B69340", no = "#FFFFFF")
 )
 
-bro_plot_heatmap(my_df,
+bro_plot_heatmap(bro_data_exprs,
                  rows = external_gene_name,
                  columns = sample,
                  values = expression,
-                 ann_col = c(genotype, timepoint, sample_type),
-                 ann_row = candidate,
-                 ann_colors = ann_colors,
-                 color_scale_min = -2,
-                 color_scale_max = 2
-)
-
-bro_plot_heatmap(my_df,
-                 rows = external_gene_name,
-                 columns = sample,
-                 values = expression,
-                 ann_col = c(genotype, timepoint, sample_type),
-                 ann_row = candidate,
-                 gaps_row = candidate,
-                 gaps_col = timepoint,
-                 ann_colors = ann_colors,
-                 color_scale_min = -2,
-                 color_scale_max = 2
-)
-
-bro_plot_heatmap(my_df,
-                 rows = external_gene_name,
-                 columns = sample,
-                 values = expression,
-                 ann_col = c(genotype, timepoint, sample_type),
-                 ann_row = candidate,
-                 gaps_row = candidate,
-                 gaps_col = genotype,
-                 ann_colors = ann_colors,
-                 color_scale_min = -2,
-                 color_scale_max = 2
-)
-
-bro_plot_heatmap(my_df,
-                 rows = "external_gene_name",
-                 columns = "sample",
-                 values = "expression",
-                 ann_col = c("genotype", "timepoint", "sample_type"),
-                 ann_row = "candidate",
-                 gaps_row = "candidate",
-                 gaps_col = "genotype",
-                 ann_colors = ann_colors,
-                 color_scale_min = -2,
-                 color_scale_max = 2
-)
-
-bro_plot_heatmap(my_df,
-                 rows = "external_gene_name",
-                 columns = "sample",
-                 values = "expression",
-                 ann_col = c("genotype", "timepoint", "sample_type"),
-                 ann_row = "candidate",
-                 gaps_row = "candidate",
-                 gaps_col = "genotype",
-                 ann_colors = ann_colors,
+                 ann_col = c(sample_type, condition, group),
+                 ann_row = c(direction, is_immune_gene),
+                 scale = "row",
+                 color_scale_n = 16,
                  color_scale_min = -2,
                  color_scale_max = 2,
+                 ann_colors = ann_colors
+)
+
+bro_plot_heatmap(bro_data_exprs,
+                 rows = external_gene_name,
+                 columns = sample,
+                 values = expression,
+                 ann_col = c(sample_type, condition, group),
+                 ann_row = c(direction, is_immune_gene),
+                 scale = "row",
+                 color_scale_n = 16,
+                 color_scale_min = -2,
+                 color_scale_max = 2,
+                 ann_colors = ann_colors,
+                 gaps_row = direction,
+                 gaps_col = sample_type
+)
+
+bro_plot_heatmap(bro_data_exprs,
+                 rows = external_gene_name,
+                 columns = sample,
+                 values = expression,
+                 ann_col = c(sample_type, condition, group),
+                 ann_row = c(direction, is_immune_gene),
+                 scale = "row",
+                 color_scale_n = 16,
+                 color_scale_min = -2,
+                 color_scale_max = 2,
+                 ann_colors = ann_colors,
+                 gaps_row = direction,
+                 gaps_col = group
+)
+
+bro_plot_heatmap(bro_data_exprs,
+                 rows = external_gene_name,
+                 columns = sample,
+                 values = expression,
+                 ann_col = c(sample_type, condition, group),
+                 ann_row = c(direction, is_immune_gene),
+                 gaps_row = direction,
+                 gaps_col = group,
                  return_data = TRUE
 )
+
 ```
 

@@ -14,10 +14,10 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r fig.asp=1}
+```{r fig.asp=0.7}
 library(tidyverse)
 library(bro)
 
-bro_pals_show()
-bro_pals_show(show_labels = TRUE)
+bro_pals_show(ncol = 3)
+bro_pals_show(ncol = 3, show_labels = TRUE)
 ```
