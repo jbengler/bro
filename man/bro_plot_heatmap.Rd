@@ -6,9 +6,9 @@
 \usage{
 bro_plot_heatmap(df, rows, columns, values, ann_row = NULL,
   ann_col = NULL, gaps_row = NULL, gaps_col = NULL,
-  ann_colors = NA, breaks = NA, scale = "row", fontsize = 7,
+  ann_colors = NA, breaks = NA, scale = "none", fontsize = 7,
   cellwidth = NA, cellheight = NA, color_scale_min = NA,
-  color_scale_max = NA, color_scale_n = 16,
+  color_scale_max = NA, color_scale_n = 100,
   color = colorRampPalette(rev(RColorBrewer::brewer.pal(n = 7, name =
   "RdYlBu")))(color_scale_n), return_data = FALSE, ...)
 }

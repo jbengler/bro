@@ -117,16 +117,22 @@ plots %>% bro_wrap_plots_paged(ncol = 2, nrow = 2,
 ```{r}
 # test bro_facet_wrap_paged -----------------------------------------------
 
-bro_dataset_expression
+bro_data_exprs_sel <- 
+  bro_data_exprs %>% 
+  nest(data = -external_gene_name) %>% 
+  filter(row_number() %in% c(1:4,20:23)) %>% 
+  unnest(cols = c(data))
 
 p5 <- 
-  bro_dataset_expression %>% 
-  ggplot(aes(genotype, expression, color = sample_type)) +
+  bro_data_exprs_sel %>% 
+  ggplot(aes(group, expression, color = sample_type)) +
   geom_boxplot(width = 0.6, position = position_dodge(width = 0.8))
+
+p5
 
 p5 %>% bro_facet_wrap_paged(facet_var = external_gene_name)
 p5 %>% bro_facet_wrap_paged(facet_var = external_gene_name,
-                            width = unit(35, "mm"), height = unit(35, "mm"))
+                            width = unit(20, "mm"), height = unit(20, "mm"))
 
 p5 %>% bro_facet_wrap_paged(facet_var = external_gene_name, ncol = 2, nrow = 2)
 p5 %>% bro_facet_wrap_paged(facet_var = external_gene_name, ncol = 2, nrow = 2,
