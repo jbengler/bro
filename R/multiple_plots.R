@@ -81,8 +81,7 @@ bro_ggsave_paged <- function(gg = last_plot(), filename, device = NULL, path = N
     filename <- file.path(path, filename)
   }
   old_dev <- grDevices::dev.cur()
-  dev(filename = filename, width = dim[1], height = dim[2],
-      ...)
+  dev(filename = filename, width = dim[1], height = dim[2], useDingbats = FALSE,...)
   on.exit(utils::capture.output({
     grDevices::dev.off()
     if (old_dev > 1) grDevices::dev.set(old_dev)

@@ -76,12 +76,12 @@ bro_heatmap_data <- function(df, rows, columns, values, ann_row = NULL, ann_col 
 #' @param ... Other parameters passed to `pheatmap::pheatmap()`.
 #'
 #' @export
-bro_plot_heatmap <- function(df, rows, columns, values, ann_row = NULL, ann_col = NULL,
+bro_plot_heatmap <- function(df, rows, columns, values, filename = NA, ann_row = NULL, ann_col = NULL,
                              gaps_row = NULL, gaps_col = NULL, ann_colors = NA, breaks = NA,
                              scale = "none", fontsize = 7, cellwidth = NA, cellheight = NA,
                              color_scale_min = NA, color_scale_max = NA, color_scale_n = 100,
                              color = colorRampPalette(rev(RColorBrewer::brewer.pal(n = 7, name ="RdYlBu")))(color_scale_n),
-                             return_data = FALSE, ...) {
+                             return_data = FALSE, cluster_rows = FALSE, cluster_cols = FALSE, border_color = NA, ...) {
 
   heatmap_data <-
     bro_heatmap_data(df, {{rows}}, {{columns}}, {{values}}, ann_row = {{ann_row}}, ann_col = {{ann_col}}, gaps_row = {{gaps_row}}, gaps_col = {{gaps_col}})
@@ -94,9 +94,9 @@ bro_plot_heatmap <- function(df, rows, columns, values, ann_row = NULL, ann_col 
     heatmap_data
   } else {
     pheatmap::pheatmap(heatmap_data$m,
-                       cluster_rows = FALSE,
-                       cluster_cols = FALSE,
-                       border_color = NA,
+                       cluster_rows = cluster_rows,
+                       cluster_cols = cluster_cols,
+                       border_color = border_color,
                        annotation_row = heatmap_data$ann_row,
                        annotation_col = heatmap_data$ann_col,
                        gaps_row = heatmap_data$gaps_row,
@@ -108,6 +108,7 @@ bro_plot_heatmap <- function(df, rows, columns, values, ann_row = NULL, ann_col 
                        cellheight = cellheight,
                        color = color,
                        breaks = breaks,
+                       filename = filename,
                        ...)
   }
 }
