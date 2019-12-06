@@ -2,7 +2,7 @@
 % Please edit documentation in R/multiple_plots.R
 \name{bro_facet_wrap_paged}
 \alias{bro_facet_wrap_paged}
-\title{Facet_wrap a ggplot to create a single or multi-page layout}
+\title{Dive a ggplot into facets to create a single or multi-page layout}
 \usage{
 bro_facet_wrap_paged(gg, facet_var, ncol = NULL, nrow = NULL,
   width = NULL, height = NULL, ...)
@@ -23,5 +23,5 @@ bro_facet_wrap_paged(gg, facet_var, ncol = NULL, nrow = NULL,
 \item{...}{Descr.}
 }
 \description{
-Facet_wrap a ggplot to create a single or multi-page layout
+Dive a ggplot into facets to create a single or multi-page layout
 }

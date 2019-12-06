@@ -145,7 +145,7 @@ In case the input has absolute dimensions (e.g. as a result of <code><a href='ht
     <pre class="usage"><span class='fu'>bro_ggsave_paged</span>(<span class='kw'>gg</span> <span class='kw'>=</span> <span class='fu'>last_plot</span>(), <span class='no'>filename</span>, <span class='kw'>device</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>height</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
   <span class='kw'>units</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"in"</span>, <span class='st'>"cm"</span>, <span class='st'>"mm"</span>), <span class='kw'>dpi</span> <span class='kw'>=</span> <span class='fl'>300</span>, <span class='kw'>limitsize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>return_input</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>return_input</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>burst_to_multiple_files</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -174,8 +174,8 @@ In case the input has absolute dimensions (e.g. as a result of <code><a href='ht
       <th>width, height, units</th>
       <td><p>Plot size in <code>units</code> ("in", "cm", or "mm").
 If not supplied, uses the size of current graphics device.
-In case the input has absolute dimensions (e.g. as a result of <code><a href='https://rdrr.io/pkg/egg/man/set_panel_size.html'>egg::set_panel_size()</a></code> or
-<code><a href='https://patchwork.data-imaginist.com/reference/plot_layout.html'>patchwork::plot_layout()</a></code>), width and height of the output are adjusted to fit the content.</p></td>
+In case the input has absolute dimensions after applying
+<code><a href='https://patchwork.data-imaginist.com/reference/plot_layout.html'>patchwork::plot_layout()</a></code>, width and height of the output are adjusted to fit the content.</p></td>
     </tr>
     <tr>
       <th>dpi</th>

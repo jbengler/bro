@@ -175,7 +175,15 @@
 <a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co"># bro_ggsave_paged(list(patchwork1, patchwork2, patchwork3), "test.pdf")</span></a>
 <a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co"># bro_ggsave_paged(patchwork1, "test.pdf")</span></a>
 <a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co"># bro_ggsave_paged(patchwork2, "test.pdf")</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co"># bro_ggsave_paged(patchwork3, "test.pdf")</span></a></code></pre></div>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co"># bro_ggsave_paged(patchwork3, "test.pdf")</span></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co"># </span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co"># bro_ggsave_paged(list(p1, p2, p3), "test.pdf")</span></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co"># bro_ggsave_paged(list(p1, p2, p3), "test.png")</span></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co"># bro_ggsave_paged(list(p1, p2, p3), "test.png", burst_to_multiple_files = TRUE)</span></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co"># </span></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co"># bro_ggsave_paged(list(patchwork1, patchwork2, patchwork3), "test.pdf")</span></a>
+<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co"># bro_ggsave_paged(list(patchwork1, patchwork2, patchwork3), "test.png")</span></a>
+<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co"># bro_ggsave_paged(list(patchwork1, patchwork2, patchwork3), "test.png", burst_to_multiple_files = TRUE)</span></a></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># test bro_wrap_plots_paged -----------------------------------------------</span></a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb4-3" data-line-number="3">plots &lt;-</a>
@@ -262,97 +270,6 @@
 <a class="sourceLine" id="cb18-10" data-line-number="10"><span class="co"># </span></a>
 <a class="sourceLine" id="cb18-11" data-line-number="11"><span class="co"># p1 %&gt;% bro_facet_wrap_paged(facet_var = cyl, ncol = 2, nrow = 2) %&gt;%</span></a>
 <a class="sourceLine" id="cb18-12" data-line-number="12"><span class="co">#   bro_ggsave_paged("test.png")</span></a></code></pre></div>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="co"># test bro_set_panel_size -------------------------------------------------</span></a>
-<a class="sourceLine" id="cb19-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb19-3" data-line-number="3">p1 <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span>(<span class="dt">widths =</span> <span class="kw">unit</span>(<span class="dv">40</span>, <span class="st">"mm"</span>), <span class="dt">heights =</span> <span class="kw">unit</span>(<span class="dv">40</span>, <span class="st">"mm"</span>))</a></code></pre></div>
-<p><img src="Multiple_plots_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">p1 <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="kw">vars</span>(cyl)) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span>(<span class="dt">widths =</span> <span class="kw">unit</span>(<span class="dv">40</span>, <span class="st">"mm"</span>), <span class="dt">heights =</span> <span class="kw">unit</span>(<span class="dv">40</span>, <span class="st">"mm"</span>))</a></code></pre></div>
-<p><img src="Multiple_plots_files/figure-html/unnamed-chunk-7-2.png" width="700"></p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">{p1 <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="kw">vars</span>(cyl)) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span>(<span class="dt">widths =</span> <span class="kw">unit</span>(<span class="dv">40</span>, <span class="st">"mm"</span>), <span class="dt">heights =</span> <span class="kw">unit</span>(<span class="dv">40</span>, <span class="st">"mm"</span>))} <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/bro_ggsave_paged.html">bro_ggsave_paged</a></span>(<span class="st">"test.pdf"</span>)</a>
-<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="co">#&gt; Saving 2.22 x 2.61 in image (adjusted to absolute plot dimensions)</span></a>
-<a class="sourceLine" id="cb21-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb21-5" data-line-number="5"><span class="kw"><a href="../reference/bro_set_panel_size.html">bro_set_panel_size</a></span>(p1, <span class="kw">unit</span>(<span class="dv">40</span>, <span class="st">"mm"</span>), <span class="kw">unit</span>(<span class="dv">40</span>, <span class="st">"mm"</span>))</a></code></pre></div>
-<p><img src="Multiple_plots_files/figure-html/unnamed-chunk-7-3.png" width="700"></p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw"><a href="../reference/bro_set_panel_size.html">bro_set_panel_size</a></span>(p1 <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="kw">vars</span>(cyl)), <span class="kw">unit</span>(<span class="dv">40</span>, <span class="st">"mm"</span>), <span class="kw">unit</span>(<span class="dv">40</span>, <span class="st">"mm"</span>))</a></code></pre></div>
-<p><img src="Multiple_plots_files/figure-html/unnamed-chunk-7-4.png" width="700"></p>
-</div>
-<div id="problems-with-bro_set_panel_size" class="section level2">
-<h2 class="hasAnchor">
-<a href="#problems-with-bro_set_panel_size" class="anchor"></a>Problems with bro_set_panel_size()</h2>
-<p>Most of the times the gtables widths are not korrekt.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(mtcars) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(mpg, disp))</a>
-<a class="sourceLine" id="cb23-2" data-line-number="2">p_sized &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span>(<span class="dt">widths =</span> <span class="kw">unit</span>(<span class="dv">40</span>, <span class="st">"mm"</span>), <span class="dt">heights =</span> <span class="kw">unit</span>(<span class="dv">40</span>, <span class="st">"mm"</span>))</a>
-<a class="sourceLine" id="cb23-3" data-line-number="3">fw &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="kw">vars</span>(cyl))</a>
-<a class="sourceLine" id="cb23-4" data-line-number="4">fw_sized &lt;-<span class="st"> </span>fw  <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span>(<span class="dt">widths =</span> <span class="kw">unit</span>(<span class="dv">40</span>, <span class="st">"mm"</span>), <span class="dt">heights =</span> <span class="kw">unit</span>(<span class="dv">40</span>, <span class="st">"mm"</span>))</a>
-<a class="sourceLine" id="cb23-5" data-line-number="5">pw &lt;-<span class="st"> </span><span class="kw"><a href="https://patchwork.data-imaginist.com/reference/wrap_plots.html">wrap_plots</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(p1, p2, p3))</a>
-<a class="sourceLine" id="cb23-6" data-line-number="6">pw_sized &lt;-<span class="st"> </span><span class="kw"><a href="https://patchwork.data-imaginist.com/reference/wrap_plots.html">wrap_plots</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(p1, p2, p3), <span class="dt">widths =</span> <span class="kw">unit</span>(<span class="dv">40</span>, <span class="st">"mm"</span>), <span class="dt">heights =</span> <span class="kw">unit</span>(<span class="dv">40</span>, <span class="st">"mm"</span>))</a>
-<a class="sourceLine" id="cb23-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb23-8" data-line-number="8">patchwork<span class="op">:::</span><span class="kw">plot_table</span>(p, <span class="st">'auto'</span>)<span class="op">$</span>widths</a>
-<a class="sourceLine" id="cb23-9" data-line-number="9"><span class="co">#&gt;  [1] 5.5pt                   0cm                     0mm                    </span></a>
-<a class="sourceLine" id="cb23-10" data-line-number="10"><span class="co">#&gt;  [4] 0mm                     1grobwidth              sum(1grobwidth, 2.75pt)</span></a>
-<a class="sourceLine" id="cb23-11" data-line-number="11"><span class="co">#&gt;  [7] 0mm                     1null                   0mm                    </span></a>
-<a class="sourceLine" id="cb23-12" data-line-number="12"><span class="co">#&gt; [10] 0cm                     0cm                     0mm                    </span></a>
-<a class="sourceLine" id="cb23-13" data-line-number="13"><span class="co">#&gt; [13] 0mm                     0pt                     5.5pt</span></a>
-<a class="sourceLine" id="cb23-14" data-line-number="14">patchwork<span class="op">:::</span><span class="kw">plot_table</span>(p_sized, <span class="st">'auto'</span>)<span class="op">$</span>widths</a>
-<a class="sourceLine" id="cb23-15" data-line-number="15"><span class="co">#&gt;  [1] 1.93302891933029mm 0mm                0mm                0mm               </span></a>
-<a class="sourceLine" id="cb23-16" data-line-number="16"><span class="co">#&gt;  [5] 4.56095483509917mm 6.91935845800368mm 0mm                40mm              </span></a>
-<a class="sourceLine" id="cb23-17" data-line-number="17"><span class="co">#&gt;  [9] 0mm                0mm                0mm                0mm               </span></a>
-<a class="sourceLine" id="cb23-18" data-line-number="18"><span class="co">#&gt; [13] 0mm                0mm                1.93302891933029mm</span></a>
-<a class="sourceLine" id="cb23-19" data-line-number="19">patchwork<span class="op">:::</span><span class="kw">plot_table</span>(fw, <span class="st">'auto'</span>)<span class="op">$</span>widths</a>
-<a class="sourceLine" id="cb23-20" data-line-number="20"><span class="co">#&gt;  [1] 5.5pt               0cm                 0mm                </span></a>
-<a class="sourceLine" id="cb23-21" data-line-number="21"><span class="co">#&gt;  [4] 0mm                 1grobwidth          0.691935845800368cm</span></a>
-<a class="sourceLine" id="cb23-22" data-line-number="22"><span class="co">#&gt;  [7] 0mm                 1null               0cm                </span></a>
-<a class="sourceLine" id="cb23-23" data-line-number="23"><span class="co">#&gt; [10] 5.5pt               0cm                 1null              </span></a>
-<a class="sourceLine" id="cb23-24" data-line-number="24"><span class="co">#&gt; [13] 0cm                 5.5pt               0cm                </span></a>
-<a class="sourceLine" id="cb23-25" data-line-number="25"><span class="co">#&gt; [16] 1null               0mm                 0cm                </span></a>
-<a class="sourceLine" id="cb23-26" data-line-number="26"><span class="co">#&gt; [19] 0cm                 0mm                 0mm                </span></a>
-<a class="sourceLine" id="cb23-27" data-line-number="27"><span class="co">#&gt; [22] 0pt                 5.5pt</span></a>
-<a class="sourceLine" id="cb23-28" data-line-number="28">patchwork<span class="op">:::</span><span class="kw">plot_table</span>(fw_sized, <span class="st">'auto'</span>)<span class="op">$</span>widths</a>
-<a class="sourceLine" id="cb23-29" data-line-number="29"><span class="co">#&gt;  [1] 1.93302891933029mm 0mm                0mm                0mm               </span></a>
-<a class="sourceLine" id="cb23-30" data-line-number="30"><span class="co">#&gt;  [5] 4.56095483509917mm 6.91935845800368mm 0mm                40mm              </span></a>
-<a class="sourceLine" id="cb23-31" data-line-number="31"><span class="co">#&gt;  [9] 0mm                0mm                0mm                0mm               </span></a>
-<a class="sourceLine" id="cb23-32" data-line-number="32"><span class="co">#&gt; [13] 0mm                0mm                1.93302891933029mm</span></a>
-<a class="sourceLine" id="cb23-33" data-line-number="33">patchwork<span class="op">:::</span><span class="kw">plot_table</span>(pw, <span class="st">'auto'</span>)<span class="op">$</span>widths</a>
-<a class="sourceLine" id="cb23-34" data-line-number="34"><span class="co">#&gt;  [1] 1.93302891933029mm 0mm                0mm                0mm               </span></a>
-<a class="sourceLine" id="cb23-35" data-line-number="35"><span class="co">#&gt;  [5] 4.56095483509917mm 6.91935845800368mm 0mm                1null             </span></a>
-<a class="sourceLine" id="cb23-36" data-line-number="36"><span class="co">#&gt;  [9] 0mm                0mm                0mm                0mm               </span></a>
-<a class="sourceLine" id="cb23-37" data-line-number="37"><span class="co">#&gt; [13] 0mm                0mm                1.93302891933029mm 1.93302891933029mm</span></a>
-<a class="sourceLine" id="cb23-38" data-line-number="38"><span class="co">#&gt; [17] 0mm                0mm                0mm                4.56095483509917mm</span></a>
-<a class="sourceLine" id="cb23-39" data-line-number="39"><span class="co">#&gt; [21] 6.91935845800368mm 0mm                1null              0mm               </span></a>
-<a class="sourceLine" id="cb23-40" data-line-number="40"><span class="co">#&gt; [25] 0mm                0mm                0mm                0mm               </span></a>
-<a class="sourceLine" id="cb23-41" data-line-number="41"><span class="co">#&gt; [29] 0mm                1.93302891933029mm 1.93302891933029mm 0mm               </span></a>
-<a class="sourceLine" id="cb23-42" data-line-number="42"><span class="co">#&gt; [33] 0mm                0mm                4.56095483509917mm 3.46627011486022mm</span></a>
-<a class="sourceLine" id="cb23-43" data-line-number="43"><span class="co">#&gt; [37] 0mm                1null              0mm                0mm               </span></a>
-<a class="sourceLine" id="cb23-44" data-line-number="44"><span class="co">#&gt; [41] 0mm                3.86605783866058mm 15.3481749329168mm 0mm               </span></a>
-<a class="sourceLine" id="cb23-45" data-line-number="45"><span class="co">#&gt; [45] 1.93302891933029mm</span></a>
-<a class="sourceLine" id="cb23-46" data-line-number="46">patchwork<span class="op">:::</span><span class="kw">plot_table</span>(pw_sized, <span class="st">'auto'</span>)<span class="op">$</span>widths</a>
-<a class="sourceLine" id="cb23-47" data-line-number="47"><span class="co">#&gt;  [1] 1.93302891933029mm 0mm                0mm                0mm               </span></a>
-<a class="sourceLine" id="cb23-48" data-line-number="48"><span class="co">#&gt;  [5] 4.56095483509917mm 6.91935845800368mm 0mm                40mm              </span></a>
-<a class="sourceLine" id="cb23-49" data-line-number="49"><span class="co">#&gt;  [9] 0mm                0mm                0mm                0mm               </span></a>
-<a class="sourceLine" id="cb23-50" data-line-number="50"><span class="co">#&gt; [13] 0mm                0mm                1.93302891933029mm 1.93302891933029mm</span></a>
-<a class="sourceLine" id="cb23-51" data-line-number="51"><span class="co">#&gt; [17] 0mm                0mm                0mm                4.56095483509917mm</span></a>
-<a class="sourceLine" id="cb23-52" data-line-number="52"><span class="co">#&gt; [21] 6.91935845800368mm 0mm                40mm               0mm               </span></a>
-<a class="sourceLine" id="cb23-53" data-line-number="53"><span class="co">#&gt; [25] 0mm                0mm                0mm                0mm               </span></a>
-<a class="sourceLine" id="cb23-54" data-line-number="54"><span class="co">#&gt; [29] 0mm                1.93302891933029mm 1.93302891933029mm 0mm               </span></a>
-<a class="sourceLine" id="cb23-55" data-line-number="55"><span class="co">#&gt; [33] 0mm                0mm                4.56095483509917mm 3.46627011486022mm</span></a>
-<a class="sourceLine" id="cb23-56" data-line-number="56"><span class="co">#&gt; [37] 0mm                40mm               0mm                0mm               </span></a>
-<a class="sourceLine" id="cb23-57" data-line-number="57"><span class="co">#&gt; [41] 0mm                3.86605783866058mm 15.3481749329168mm 0mm               </span></a>
-<a class="sourceLine" id="cb23-58" data-line-number="58"><span class="co">#&gt; [45] 1.93302891933029mm</span></a>
-<a class="sourceLine" id="cb23-59" data-line-number="59"></a>
-<a class="sourceLine" id="cb23-60" data-line-number="60"><span class="co">#######################</span></a>
-<a class="sourceLine" id="cb23-61" data-line-number="61"></a>
-<a class="sourceLine" id="cb23-62" data-line-number="62">fw &lt;-<span class="st"> </span></a>
-<a class="sourceLine" id="cb23-63" data-line-number="63"><span class="st">  </span><span class="kw">ggplot</span>(mtcars) <span class="op">+</span></a>
-<a class="sourceLine" id="cb23-64" data-line-number="64"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(mpg, disp)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb23-65" data-line-number="65"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="kw">vars</span>(cyl))</a>
-<a class="sourceLine" id="cb23-66" data-line-number="66"></a>
-<a class="sourceLine" id="cb23-67" data-line-number="67">fw</a></code></pre></div>
-<p><img src="Multiple_plots_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">fw <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span>(<span class="dt">widths =</span> <span class="kw">unit</span>(<span class="dv">40</span>, <span class="st">"mm"</span>), <span class="dt">heights =</span> <span class="kw">unit</span>(<span class="dv">40</span>, <span class="st">"mm"</span>))</a></code></pre></div>
-<p><img src="Multiple_plots_files/figure-html/unnamed-chunk-8-2.png" width="700"></p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">fw <span class="op">%&gt;%</span><span class="st"> </span>egg<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/egg/man/set_panel_size.html">set_panel_size</a></span>() <span class="op">%&gt;%</span><span class="st"> </span>ggpubr<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/ggpubr/man/as_ggplot.html">as_ggplot</a></span>()</a></code></pre></div>
-<p><img src="Multiple_plots_files/figure-html/unnamed-chunk-8-3.png" width="700"></p>
 </div>
   </div>
 
@@ -363,7 +280,6 @@
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#generate-demo-plots">Generate demo plots</a></li>
-      <li><a href="#problems-with-bro_set_panel_size">Problems with bro_set_panel_size()</a></li>
       </ul>
 </div>
       </div>

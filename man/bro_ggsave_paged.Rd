@@ -7,7 +7,7 @@
 bro_ggsave_paged(gg = last_plot(), filename, device = NULL,
   path = NULL, scale = 1, width = NA, height = NA,
   units = c("in", "cm", "mm"), dpi = 300, limitsize = TRUE,
-  return_input = FALSE, ...)
+  return_input = FALSE, burst_to_multiple_files = FALSE, ...)
 }
 \arguments{
 \item{gg}{ggplot or list of ggplots}
@@ -22,8 +22,8 @@ bro_ggsave_paged(gg = last_plot(), filename, device = NULL,
 
 \item{width, height, units}{Plot size in \code{units} ("in", "cm", or "mm").
 If not supplied, uses the size of current graphics device.
-In case the input has absolute dimensions (e.g. as a result of \code{egg::set_panel_size()} or
-\code{patchwork::plot_layout()}), width and height of the output are adjusted to fit the content.}
+In case the input has absolute dimensions after applying
+\code{patchwork::plot_layout()}, width and height of the output are adjusted to fit the content.}
 
 \item{dpi}{Plot resolution. Also accepts a string input: "retina" (320), "print" (300), or "screen" (72). Applies only to raster output types.}
 

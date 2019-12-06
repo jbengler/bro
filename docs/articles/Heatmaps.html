@@ -146,7 +146,7 @@
 <div id="basic-usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#basic-usage" class="anchor"></a>Basic usage</h2>
-<p>The basic layout of the heatmap relies on the parameters <code>rows</code>, <code>columns</code> and <code>values</code>. You can think of them like aesthetics in <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot2::ggplot()</a></code>, similar to somthing like <code>aes(x = columns, y = rows, fill = values)</code>.</p>
+<p>The basic layout of the heatmap relies on the parameters <code>rows</code>, <code>columns</code> and <code>values</code>. You can think of them like aesthetics in <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot2::ggplot()</a></code>, similar to something like <code>aes(x = columns, y = rows, fill = values)</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="../reference/bro_plot_heatmap.html">bro_plot_heatmap</a></span>(bro_data_exprs,</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">                 <span class="dt">rows =</span> external_gene_name,</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3">                 <span class="dt">columns =</span> sample,</a>
@@ -172,7 +172,7 @@
 <div id="ordering" class="section level3">
 <h3 class="hasAnchor">
 <a href="#ordering" class="anchor"></a>Ordering</h3>
-<p>Rows and columns in the heatmap will appear in the same order as in the tidy data frame useed as input. For example, to order rows and columns alphabetically, just use the <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">dplyr::arrange()</a></code>.</p>
+<p>Rows and columns in the heatmap will appear in the same order as in the tidy data frame used as input. For example, to order rows and columns alphabetically, just use the <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">dplyr::arrange()</a></code>.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">bro_data_exprs <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span><span class="kw">arrange</span>(external_gene_name, sample) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/bro_plot_heatmap.html">bro_plot_heatmap</a></span>(<span class="dt">rows =</span> external_gene_name,</a>
@@ -254,7 +254,7 @@
 <div id="gaps" class="section level3">
 <h3 class="hasAnchor">
 <a href="#gaps" class="anchor"></a>Gaps</h3>
-<p>Gaps can be added by specifying data frame variables that should be used to generate the gaps. Only one variable can be choosen for <code>gaps_row</code> and one for <code>gaps_col</code>.</p>
+<p>Gaps can be added by specifying data frame variables that should be used to generate the gaps. Only one variable can be chosen for <code>gaps_row</code> and one for <code>gaps_col</code>.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="../reference/bro_plot_heatmap.html">bro_plot_heatmap</a></span>(bro_data_exprs,</a>
 <a class="sourceLine" id="cb10-2" data-line-number="2">                 <span class="dt">rows =</span> external_gene_name,</a>
 <a class="sourceLine" id="cb10-3" data-line-number="3">                 <span class="dt">columns =</span> sample,</a>

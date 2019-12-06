@@ -7,7 +7,6 @@ reference:
     - bro_wrap_plots_paged
     - bro_facet_wrap_paged
     - bro_ggsave_paged
-    - bro_set_panel_size
     - bro_get_ggsize
 - title: "Tidy heatmaps"
   desc: Plot pretty heatmaps using pheatmap starting from tidy data.
