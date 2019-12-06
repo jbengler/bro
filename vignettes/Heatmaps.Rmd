@@ -35,7 +35,7 @@ glimpse(bro_data_exprs)
 
 ## Basic usage
 
-The basic layout of the heatmap relies on the parameters `rows`, `columns` and `values`. You can think of them like aesthetics in `ggplot2::ggplot()`, similar to somthing like `aes(x = columns, y = rows, fill = values)`.
+The basic layout of the heatmap relies on the parameters `rows`, `columns` and `values`. You can think of them like aesthetics in `ggplot2::ggplot()`, similar to something like `aes(x = columns, y = rows, fill = values)`.
 
 
 ```{r}
@@ -63,7 +63,7 @@ bro_plot_heatmap(bro_data_exprs,
 
 ### Ordering
 
-Rows and columns in the heatmap will appear in the same order as in the tidy data frame useed as input. For example, to order rows and columns alphabetically, just use the `dplyr::arrange()`.
+Rows and columns in the heatmap will appear in the same order as in the tidy data frame used as input. For example, to order rows and columns alphabetically, just use the `dplyr::arrange()`.
 
 ```{r}
 bro_data_exprs %>% 
@@ -152,7 +152,7 @@ bro_plot_heatmap(bro_data_exprs,
 
 ### Gaps
 
-Gaps can be added by specifying data frame variables that should be used to generate the gaps. Only one variable can be choosen for `gaps_row` and one for `gaps_col`.
+Gaps can be added by specifying data frame variables that should be used to generate the gaps. Only one variable can be chosen for `gaps_row` and one for `gaps_col`.
 
 ```{r}
 bro_plot_heatmap(bro_data_exprs,
