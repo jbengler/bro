@@ -10,37 +10,35 @@ burst_filename <- function(filename, n) {
 #'
 #' @return Returns a named vector with the maximum overall width and height found in the input.
 #' @export
-bro_get_ggsize <- function(gg, units) {
+bro_get_ggsize <- function(gg, units = c("mm", "cm", "in")) {
   # Known limitation:
   # Plots that have been sized by egg::setpanel_size() loose their gtable information
   # and NOT recognized as has_fixed_dimensions
 
   if (class(gg)[1] %in% c("patchwork", "gg", "ggplot")) gg <- list(gg)
 
-  dimensions <-
+  pages <-
     map(gg, function(x) {
       if (!is.ggplot(x)) stop("Please provide a ggplot or list of ggplots as input to 'gg'")
       gtab <- patchwork:::plot_table(x, 'auto')
 
-      width = NA
-      height = NA
-        if (all(as.character(gtab$widths) != "1null"))
-      width <- grid::convertWidth(sum(gtab$widths) + unit(1, "mm"), unitTo = units, valueOnly = TRUE)
-        if (all(as.character(gtab$heights) != "1null"))
-      height <- grid::convertHeight(sum(gtab$heights) + unit(1, "mm"), unitTo = units, valueOnly = TRUE)
+      width <- NA
+      height <- NA
+      if (all(as.character(gtab$widths) != "1null"))
+        width <- grid::convertWidth(sum(gtab$widths) + unit(1, "mm"), unitTo = units, valueOnly = TRUE)
+      if (all(as.character(gtab$heights) != "1null"))
+        height <- grid::convertHeight(sum(gtab$heights) + unit(1, "mm"), unitTo = units, valueOnly = TRUE)
 
       tibble(width = width, height = height)
     }) %>%
     bind_rows()
 
-    overall_width = NA
-    overall_height = NA
-
-    if (all(!is.na(dimensions$width)))
-      overall_width <- max(dimensions$width, na.rm = TRUE)
-
-    if (all(!is.na(dimensions$height)))
-      overall_height <- max(dimensions$height, na.rm = TRUE)
+    overall_width<- NA
+    overall_height <- NA
+    if (all(!is.na(pages$width)))
+      overall_width <- max(pages$width, na.rm = TRUE)
+    if (all(!is.na(pages$height)))
+      overall_height <- max(pages$height, na.rm = TRUE)
 
     c(width = overall_width,
       height = overall_height)
@@ -104,7 +102,7 @@ bro_facet_wrap_paged <- function(gg, facet_var, ncol = NULL, nrow = NULL, width 
 #' @param device Device to use. Can either be a device function (e.g. `png()`), or one of "eps", "ps", "tex" (pictex), "pdf", "jpeg", "tiff", "png", "bmp", "svg" or "wmf" (windows only).
 #' @param path Path to save plot to (combined with filename).
 #' @param scale Multiplicative scaling factor.
-#' @param width,height,units Plot size in `units` ("in", "cm", or "mm").
+#' @param width,height,units Plot size in `units` ("mm", "cm", or "in").
 #'   If not supplied, uses the size of current graphics device.
 #'   In case the input has absolute dimensions after applying
 #'   `patchwork::plot_layout()`, width and height of the output are adjusted to fit the content.
