@@ -10,7 +10,7 @@ burst_filename <- function(filename, n) {
 #'
 #' @return Returns a named vector with the maximum overall width and height found in the input.
 #' @export
-bro_get_ggsize <- function(gg) {
+bro_get_ggsize <- function(gg, units) {
   # Known limitation:
   # Plots that have been sized by egg::setpanel_size() loose their gtable information
   # and NOT recognized as has_fixed_dimensions
@@ -22,26 +22,28 @@ bro_get_ggsize <- function(gg) {
       if (!is.ggplot(x)) stop("Please provide a ggplot or list of ggplots as input to 'gg'")
       gtab <- patchwork:::plot_table(x, 'auto')
 
-      has_fixed_dimensions <-
-        all(as.character(gtab$widths) != "1null") &&
-        all(as.character(gtab$heights) != "1null")
+      width = NA
+      height = NA
+        if (all(as.character(gtab$widths) != "1null"))
+      width <- grid::convertWidth(sum(gtab$widths) + unit(1, "mm"), unitTo = units, valueOnly = TRUE)
+        if (all(as.character(gtab$heights) != "1null"))
+      height <- grid::convertHeight(sum(gtab$heights) + unit(1, "mm"), unitTo = units, valueOnly = TRUE)
 
-      if (has_fixed_dimensions) {
-        width <- grid::convertWidth(sum(gtab$widths) + unit(1, "mm"), unitTo = "in", valueOnly = TRUE)
-        height <- grid::convertHeight(sum(gtab$heights) + unit(1, "mm"), unitTo = "in", valueOnly = TRUE)
-        tibble(width = width, height = height)
-      } else {
-        tibble(width = NA, height = NA)
-      }
+      tibble(width = width, height = height)
     }) %>%
     bind_rows()
 
-  if (all(is.na(dimensions$width)) || all(is.na(dimensions$height))) {
-    c(width = NA, height = NA)
-  } else {
-    c(width = max(dimensions$width, na.rm = TRUE),
-      height = max(dimensions$height, na.rm = TRUE))
-  }
+    overall_width = NA
+    overall_height = NA
+
+    if (all(!is.na(dimensions$width)))
+      overall_width <- max(dimensions$width, na.rm = TRUE)
+
+    if (all(!is.na(dimensions$height)))
+      overall_height <- max(dimensions$height, na.rm = TRUE)
+
+    c(width = overall_width,
+      height = overall_height)
 }
 
 #' Wrap plots in a single or multi-page layout
@@ -113,17 +115,13 @@ bro_facet_wrap_paged <- function(gg, facet_var, ncol = NULL, nrow = NULL, width 
 #' This enables the use of `bro_ggsave_paged()` within `dplyr` pipes.
 #' @export
 bro_ggsave_paged <- function(gg = last_plot(), filename, device = NULL, path = NULL, scale = 1,
-                             width = NA, height = NA, units = c("in", "cm", "mm"), dpi = 300, limitsize = TRUE,
+                             width = NA, height = NA, units = "mm", dpi = 300, limitsize = TRUE,
                              return_input = FALSE, burst_to_multiple_files = FALSE, ...) {
   if (class(gg)[1] %in% c("patchwork", "gg", "ggplot")) gg <- list(gg)
 
-  has_fixed_dimensions <- FALSE
-  dimensions <- bro_get_ggsize(gg)
-  if(all(!is.na(dimensions))) {
-    has_fixed_dimensions <- TRUE
-    width <- dimensions[["width"]]
-    height <- dimensions[["height"]]
-  }
+  dimensions <- bro_get_ggsize(gg, units)
+  if (is.na(width)) width <- dimensions[["width"]]
+  if (is.na(height)) height <- dimensions[["height"]]
 
   if (burst_to_multiple_files) {
     filenames <- burst_filename(filename, length(gg))
@@ -133,15 +131,13 @@ bro_ggsave_paged <- function(gg = last_plot(), filename, device = NULL, path = N
              ggplot2::ggsave(plot = x, filename = y, device = device, path = path, scale = scale,
                              width = width, height = height, units = units, dpi = dpi, limitsize = limitsize,
                              useDingbats = FALSE)
-             if (has_fixed_dimensions) message("Saving ", round(width, 2), " x ", round(height, 2), " in image (adjusted to plot dimensions)")
-           })
+            })
     } else {
       map2(gg, filenames,
            function(x, y) {
              ggplot2::ggsave(plot = x, filename = y, device = device, path = path, scale = scale,
                              width = width, height = height, units = units, dpi = dpi, limitsize = limitsize
                              )
-             if (has_fixed_dimensions) message("Saving ", round(width, 2), " x ", round(height, 2), " in image (adjusted to plot dimensions)")
            })
     }
     if(return_input) return(gg)
@@ -168,7 +164,6 @@ bro_ggsave_paged <- function(gg = last_plot(), filename, device = NULL, path = N
     }))
     map(gg, ~grid::grid.draw(.x))
     invisible()
-    if (has_fixed_dimensions) message("Saving ", round(width, 2), " x ", round(height, 2), " in image (adjusted to plot dimensions)")
     if (return_input) return(gg)
   }
 }

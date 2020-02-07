@@ -150,8 +150,11 @@ p5 %>% bro_facet_wrap_paged(facet_var = external_gene_name, ncol = 2, nrow = 2,
 # p1 %>% bro_facet_wrap_paged(facet_var = cyl, ncol = 1, nrow = 1, width = unit(20, "mm"), height = unit(20, "mm")) %>%
 #   bro_ggsave_paged("test.pdf")
 # 
-# p1 %>% bro_facet_wrap_paged(facet_var = cyl, ncol = 2, nrow = 2, width = unit(20, "mm"), height = unit(20, "mm")) %>%
-#   bro_ggsave_paged("test.pdf")
+# p1 %>% bro_facet_wrap_paged(facet_var = cyl, ncol = 2, nrow = 2, height = unit(20, "mm")) %>%
+#   bro_get_ggsize()
+# 
+# p1 %>% bro_facet_wrap_paged(facet_var = cyl, ncol = 2, nrow = 2, width = unit(40, "mm")) %>%
+#   bro_ggsave_paged("test.pdf", height = 2, units = "in")
 # 
 # p1 %>% bro_facet_wrap_paged(facet_var = cyl, ncol = 2, nrow = 2, width = unit(20, "mm"), height = unit(20, "mm")) %>%
 #   bro_ggsave_paged("test.png")
