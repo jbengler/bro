@@ -13,7 +13,7 @@ burst_filename <- function(filename, n) {
 bro_get_ggsize <- function(gg, units = c("mm", "cm", "in")) {
   # Known limitation:
   # Plots that have been sized by egg::setpanel_size() loose their gtable information
-  # and NOT recognized as has_fixed_dimensions
+  # patchwork::plot_annotation() titles are not counting towards the dimensions
 
   if (class(gg)[1] %in% c("patchwork", "gg", "ggplot")) gg <- list(gg)
 
@@ -116,10 +116,21 @@ bro_ggsave_paged <- function(gg = last_plot(), filename, device = NULL, path = N
                              width = NA, height = NA, units = "mm", dpi = 300, limitsize = TRUE,
                              return_input = FALSE, burst_to_multiple_files = FALSE, ...) {
   if (class(gg)[1] %in% c("patchwork", "gg", "ggplot")) gg <- list(gg)
-
   dimensions <- bro_get_ggsize(gg, units)
+
+  width_defined_by <- case_when(is.na(width) && is.na(dimensions[["width"]]) ~ "was not defined - default device used",
+                                !is.na(width) ~ "was provided as parameter 'width' to bro_ggsave_paged()",
+                                TRUE ~ "was inferred from plot width")
+  height_defined_by <- case_when(is.na(height) && is.na(dimensions[["height"]]) ~ "was not defined - default device used",
+                                !is.na(height) ~ "was provided as parameter 'height' to bro_ggsave_paged()",
+                                TRUE ~ "was inferred from plot height")
+
   if (is.na(width)) width <- dimensions[["width"]]
   if (is.na(height)) height <- dimensions[["height"]]
+
+  message("Device width ", width_defined_by)
+  message("Device height ", height_defined_by)
+  if (!is.na(width) && !is.na(height)) message("Saving ", round(width), " x ", round(height), " mm image")
 
   if (burst_to_multiple_files) {
     filenames <- burst_filename(filename, length(gg))
@@ -134,8 +145,7 @@ bro_ggsave_paged <- function(gg = last_plot(), filename, device = NULL, path = N
       map2(gg, filenames,
            function(x, y) {
              ggplot2::ggsave(plot = x, filename = y, device = device, path = path, scale = scale,
-                             width = width, height = height, units = units, dpi = dpi, limitsize = limitsize
-                             )
+                             width = width, height = height, units = units, dpi = dpi, limitsize = limitsize)
            })
     }
     if(return_input) return(gg)
@@ -145,16 +155,15 @@ bro_ggsave_paged <- function(gg = last_plot(), filename, device = NULL, path = N
     # the rest of the code is adapted from ggplot2::ggsave()
     dpi <- ggplot2:::parse_dpi(dpi)
     dev <- ggplot2:::plot_dev(device, filename, dpi = dpi)
-    dim <- ggplot2:::plot_dim(c(width, height), scale = scale, units = units,
-                              limitsize = limitsize)
+    dim <- ggplot2:::plot_dim(c(width, height), scale = scale, units = units, limitsize = limitsize)
     if (!is.null(path)) {
       filename <- file.path(path, filename)
     }
     old_dev <- grDevices::dev.cur()
     if (toupper(tools::file_ext(filename)) == "PDF") {
-      dev(filename = filename, width = dim[1], height = dim[2], useDingbats = FALSE,...)
+      dev(filename = filename, width = dim[1], height = dim[2], useDingbats = FALSE, ...)
     } else {
-      dev(filename = filename, width = dim[1], height = dim[2],...)
+      dev(filename = filename, width = dim[1], height = dim[2], ...)
     }
     on.exit(utils::capture.output({
       grDevices::dev.off()
