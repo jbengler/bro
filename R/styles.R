@@ -68,6 +68,16 @@ bro_style_rotate_labels <- function(angle = 45) {
 }
 
 #' @export
+bro_style_no_x_expand <- function() {
+  scale_x_continuous(expand = expand_scale(mult = c(0, .05)))
+}
+
+#' @export
+bro_style_no_y_expand <- function() {
+  scale_y_continuous(expand = expand_scale(mult = c(0, .05)))
+}
+
+#' @export
 bro_style_minimal <- function() {
   theme(
     plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "mm"),
