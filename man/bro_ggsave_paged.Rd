@@ -5,9 +5,9 @@
 \title{Universal ggplot export function}
 \usage{
 bro_ggsave_paged(gg = last_plot(), filename, device = NULL,
-  path = NULL, scale = 1, width = NA, height = NA,
-  units = c("in", "cm", "mm"), dpi = 300, limitsize = TRUE,
-  return_input = FALSE, burst_to_multiple_files = FALSE, ...)
+  path = NULL, scale = 1, width = NA, height = NA, units = "mm",
+  dpi = 300, limitsize = TRUE, return_input = FALSE,
+  burst_to_multiple_files = FALSE, ...)
 }
 \arguments{
 \item{gg}{ggplot or list of ggplots}
@@ -20,7 +20,7 @@ bro_ggsave_paged(gg = last_plot(), filename, device = NULL,
 
 \item{scale}{Multiplicative scaling factor.}
 
-\item{width, height, units}{Plot size in \code{units} ("in", "cm", or "mm").
+\item{width, height, units}{Plot size in \code{units} ("mm", "cm", or "in").
 If not supplied, uses the size of current graphics device.
 In case the input has absolute dimensions after applying
 \code{patchwork::plot_layout()}, width and height of the output are adjusted to fit the content.}

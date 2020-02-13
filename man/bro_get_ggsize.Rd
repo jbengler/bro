@@ -4,7 +4,7 @@
 \alias{bro_get_ggsize}
 \title{Determine maximum plot dimensions}
 \usage{
-bro_get_ggsize(gg)
+bro_get_ggsize(gg, units = c("mm", "cm", "in"))
 }
 \arguments{
 \item{gg}{A ggplot or list of ggplots}
