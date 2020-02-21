@@ -4,8 +4,15 @@
 \alias{bro_facet_wrap_paged}
 \title{Dive a ggplot into facets to create a single or multi-page layout}
 \usage{
-bro_facet_wrap_paged(gg, facet_var, ncol = NULL, nrow = NULL,
-  width = NULL, height = NULL, ...)
+bro_facet_wrap_paged(
+  gg,
+  facet_var,
+  ncol = NULL,
+  nrow = NULL,
+  width = NULL,
+  height = NULL,
+  ...
+)
 }
 \arguments{
 \item{gg}{A ggplot or list of ggplots}

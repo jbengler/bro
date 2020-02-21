@@ -140,14 +140,33 @@ data as input." />
 data as input.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bro_plot_heatmap</span>(<span class='no'>df</span>, <span class='no'>rows</span>, <span class='no'>columns</span>, <span class='no'>values</span>, <span class='kw'>filename</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>ann_row</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ann_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>gaps_row</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>gaps_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>ann_colors</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='st'>"none"</span>, <span class='kw'>fontsize</span> <span class='kw'>=</span> <span class='fl'>7</span>,
-  <span class='kw'>cellwidth</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>cellheight</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>color_scale_min</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>color_scale_max</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>color_scale_n</span> <span class='kw'>=</span> <span class='fl'>100</span>,
+    <pre class="usage"><span class='fu'>bro_plot_heatmap</span>(
+  <span class='no'>df</span>,
+  <span class='no'>rows</span>,
+  <span class='no'>columns</span>,
+  <span class='no'>values</span>,
+  <span class='kw'>filename</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>ann_row</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>ann_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>gaps_row</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>gaps_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>ann_colors</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>scale</span> <span class='kw'>=</span> <span class='st'>"none"</span>,
+  <span class='kw'>fontsize</span> <span class='kw'>=</span> <span class='fl'>7</span>,
+  <span class='kw'>cellwidth</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>cellheight</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>color_scale_min</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>color_scale_max</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>color_scale_n</span> <span class='kw'>=</span> <span class='fl'>100</span>,
   <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/colorRamp.html'>colorRampPalette</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rev.html'>rev</a></span>(<span class='kw pkg'>RColorBrewer</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html'>brewer.pal</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>7</span>, <span class='kw'>name</span> <span class='kw'>=</span>
-  <span class='st'>"RdYlBu"</span>)))(<span class='no'>color_scale_n</span>), <span class='kw'>return_data</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>cluster_rows</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>cluster_cols</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>border_color</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='no'>...</span>)</pre>
+    <span class='st'>"RdYlBu"</span>)))(<span class='no'>color_scale_n</span>),
+  <span class='kw'>return_data</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>cluster_rows</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>cluster_cols</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>border_color</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

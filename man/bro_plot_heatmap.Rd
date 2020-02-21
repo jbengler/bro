@@ -4,14 +4,33 @@
 \alias{bro_plot_heatmap}
 \title{Plot pretty heatmaps from tidy data}
 \usage{
-bro_plot_heatmap(df, rows, columns, values, filename = NA,
-  ann_row = NULL, ann_col = NULL, gaps_row = NULL, gaps_col = NULL,
-  ann_colors = NA, breaks = NA, scale = "none", fontsize = 7,
-  cellwidth = NA, cellheight = NA, color_scale_min = NA,
-  color_scale_max = NA, color_scale_n = 100,
+bro_plot_heatmap(
+  df,
+  rows,
+  columns,
+  values,
+  filename = NA,
+  ann_row = NULL,
+  ann_col = NULL,
+  gaps_row = NULL,
+  gaps_col = NULL,
+  ann_colors = NA,
+  breaks = NA,
+  scale = "none",
+  fontsize = 7,
+  cellwidth = NA,
+  cellheight = NA,
+  color_scale_min = NA,
+  color_scale_max = NA,
+  color_scale_n = 100,
   color = colorRampPalette(rev(RColorBrewer::brewer.pal(n = 7, name =
-  "RdYlBu")))(color_scale_n), return_data = FALSE,
-  cluster_rows = FALSE, cluster_cols = FALSE, border_color = NA, ...)
+    "RdYlBu")))(color_scale_n),
+  return_data = FALSE,
+  cluster_rows = FALSE,
+  cluster_cols = FALSE,
+  border_color = NA,
+  ...
+)
 }
 \arguments{
 \item{df}{Input dataframe in long format.}
