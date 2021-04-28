@@ -65,5 +65,3 @@ bro_geom_barscatter <- function(dodge = FALSE, colors = NA, fill_alpha = 0.5, ji
 #   bro_geom_barscatter(dodge = TRUE, colors = bro_pals$color_circle_vivid %>% unname()) +
 #   bro_theme_nature() +
 #   plot_layout(widths = unit(30, "mm"), heights = unit(30, "mm"))
-#
-#
