@@ -3,6 +3,7 @@
 export(bro_breaks)
 export(bro_duplicated)
 export(bro_facet_wrap_paged)
+export(bro_geom_barscatter)
 export(bro_get_ggsize)
 export(bro_gg_barscatter)
 export(bro_gg_lollipop)

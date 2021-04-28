@@ -1,5 +1,5 @@
-pandoc: 2.3.1
-pkgdown: 1.4.1
+pandoc: 2.11.2
+pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   Colors: Colors.html
@@ -7,4 +7,5 @@ articles:
   Helpers: Helpers.html
   Multiple_plots: Multiple_plots.html
   bro: bro.html
+last_built: 2021-04-28T20:59Z
 
