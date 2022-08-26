@@ -122,8 +122,8 @@ bro_ggsave_paged <- function(gg = last_plot(), filename, device = NULL, path = N
                                 !is.na(width) ~ "was provided as parameter 'width' to bro_ggsave_paged()",
                                 TRUE ~ "was inferred from plot width")
   height_defined_by <- case_when(is.na(height) && is.na(dimensions[["height"]]) ~ "was not defined - default device used",
-                                !is.na(height) ~ "was provided as parameter 'height' to bro_ggsave_paged()",
-                                TRUE ~ "was inferred from plot height")
+                                 !is.na(height) ~ "was provided as parameter 'height' to bro_ggsave_paged()",
+                                 TRUE ~ "was inferred from plot height")
 
   if (is.na(width)) width <- dimensions[["width"]]
   if (is.na(height)) height <- dimensions[["height"]]
@@ -134,20 +134,11 @@ bro_ggsave_paged <- function(gg = last_plot(), filename, device = NULL, path = N
 
   if (burst_to_multiple_files) {
     filenames <- burst_filename(filename, length(gg))
-    if (toupper(tools::file_ext(filename)) == "PDF") {
-      map2(gg, filenames,
-           function(x, y) {
-             ggplot2::ggsave(plot = x, filename = y, device = device, path = path, scale = scale,
-                             width = width, height = height, units = units, dpi = dpi, limitsize = limitsize,
-                             useDingbats = FALSE)
-            })
-    } else {
-      map2(gg, filenames,
-           function(x, y) {
-             ggplot2::ggsave(plot = x, filename = y, device = device, path = path, scale = scale,
-                             width = width, height = height, units = units, dpi = dpi, limitsize = limitsize)
-           })
-    }
+    map2(gg, filenames,
+         function(x, y) {
+           ggplot2::ggsave(plot = x, filename = y, device = device, path = path, scale = scale,
+                           width = width, height = height, units = units, dpi = dpi, limitsize = limitsize, ...)
+         })
     if(return_input) return(gg)
 
   } else {
@@ -160,11 +151,7 @@ bro_ggsave_paged <- function(gg = last_plot(), filename, device = NULL, path = N
       filename <- file.path(path, filename)
     }
     old_dev <- grDevices::dev.cur()
-    if (toupper(tools::file_ext(filename)) == "PDF") {
-      dev(filename = filename, width = dim[1], height = dim[2], useDingbats = FALSE, ...)
-    } else {
-      dev(filename = filename, width = dim[1], height = dim[2], ...)
-    }
+    dev(filename = filename, width = dim[1], height = dim[2], ...)
     on.exit(utils::capture.output({
       grDevices::dev.off()
       if (old_dev > 1) grDevices::dev.set(old_dev)
