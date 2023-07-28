@@ -2,13 +2,13 @@
 # do not @export
 get_colors <- function(x) {
 
-  files <- list.files(path = "~/GoogleDrive/lab/R/color_schemes/", pattern = ".txt")
+  files <- list.files(path = "~/GoogleDrive/R/color_schemes/", pattern = ".txt")
   file.names <- gsub(".txt", "", files)
 
   bro_pals <- list()
   for (i in 1:length(files)) {
 
-    lines <- readLines(paste0("~/GoogleDrive/lab/R/color_schemes/",files[i]))
+    lines <- readLines(paste0("~/GoogleDrive/R/color_schemes/",files[i]))
 
     library(stringr)
     cols <- str_match(lines, "#\\w{6}")[, 1]
@@ -77,8 +77,8 @@ bro_pals_show <- function(pals = bro_pals, show_labels = FALSE, ncol = NULL, nro
     { if (show_labels) geom_text(aes(label = value, color = label_color), angle = 90, size = 2.5) else NULL
     } +
     scale_x_discrete(expand = c(0, 0)) +
-    scale_fill_manual(values = fill_colors, guide = FALSE) +
-    scale_color_manual(values = label_colors, guide = FALSE) +
+    scale_fill_manual(values = fill_colors, guide = "none") +
+    scale_color_manual(values = label_colors, guide = "none") +
     bro_style_white_bg() +
     bro_style_no_axis() +
     bro_style_font_size() +
